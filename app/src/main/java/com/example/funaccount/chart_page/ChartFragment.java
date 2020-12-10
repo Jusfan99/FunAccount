@@ -26,30 +26,25 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 public class ChartFragment extends Fragment {
-    List<Fragment> fragments = new ArrayList<Fragment>();
+    List<Fragment> mfragments = new ArrayList<Fragment>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.chart_frag,container,false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        fragments.add(new WeekChartFragment());
-        fragments.add(new MonthChartFragment());
-        fragments.add(new YearChartFragment());
+        View view = inflater.inflate(R.layout.chart_frag,container,false);
+        mfragments.add(new WeekChartFragment());
+        mfragments.add(new MonthChartFragment());
+        mfragments.add(new YearChartFragment());
 //        views.add(getView().findViewById(R.id.week_frag));
 //        views.add(getView().findViewById(R.id.month_frag));
 //        views.add(getView().findViewById(R.id.year_frag));
-        FragAdapter adapter = new FragAdapter(getChildFragmentManager(),fragments);
-        ViewPager viewPager = getView().findViewById(R.id.viewpaper_chart);
+        FragAdapter adapter = new FragAdapter(getChildFragmentManager(),mfragments);
+        ViewPager viewPager = view.findViewById(R.id.viewpaper_chart);
 //        ChartViewPageAdapter chartViewPageAdapter = new ChartViewPageAdapter();
 //        chartViewPageAdapter.AdapterViewpager(views);
         viewPager.setAdapter(adapter);
         //    List<View> views = new ArrayList<View>();
-        TabLayout tableLayout = (TabLayout) getView().findViewById(R.id.chart_tab);
+        TabLayout tableLayout = view.findViewById(R.id.chart_tab);
         tableLayout.setupWithViewPager(viewPager);
         tableLayout.setTabMode(TabLayout.MODE_FIXED);
         TabLayout.Tab tab1 = tableLayout.getTabAt(0);
@@ -58,5 +53,6 @@ public class ChartFragment extends Fragment {
         tab2.setText("本月");
         TabLayout.Tab tab3 = tableLayout.getTabAt(2);
         tab3.setText("今年");
+        return view;
     }
 }
