@@ -18,30 +18,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingItemAdapter extends RecyclerView.Adapter<SettingItemAdapter.MyViewHolder> {
-    private final Context context;
-    private final ArrayList<SettingItem> settingItems;
+    private final Context mcontext;
+    private final ArrayList<SettingItem> msettingItems;
 
     public SettingItemAdapter(Context context,ArrayList<SettingItem> settingItems){
-        this.context = context;
-        this.settingItems = settingItems;
+        this.mcontext = context;
+        this.msettingItems = settingItems;
     }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = View.inflate(context,R.layout.setting_item,null);
+        View itemView = View.inflate(mcontext,R.layout.setting_item,null);
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        SettingItem data = settingItems.get(position);
-        holder.settingName.setText(data.itemName);
-        holder.imageView.setImageResource(data.imgId);
+        SettingItem data = msettingItems.get(position);
+        holder.settingName.setText(data.mitemName);
+        holder.imageView.setImageResource(data.mimgId);
     }
 
     @Override
     public int getItemCount() {
-        return settingItems.size();
+        return msettingItems.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder{

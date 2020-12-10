@@ -7,32 +7,32 @@ import java.io.Serializable;
 import androidx.annotation.NonNull;
 
 public class SettingItem implements Serializable {
-    public int imgId; //icon
-    public String itemName;
+    public int mimgId; //icon
+    public String mitemName;
 
     public SettingItem(){
     }
 
     public SettingItem(int imgPath,String itemName){
-        this.imgId = imgPath;
-        this.itemName = itemName;
+        this.mimgId = imgPath;
+        this.mitemName = itemName;
     }
     public Object getImgPath(){
-        return imgId;
+        return mimgId;
     }
     public String getItemName(){
-        return itemName;
+        return mitemName;
     }
     public void setImgPath(int imgPath){
-        this.imgId = imgPath;
+        this.mimgId = imgPath;
     }
     public void setItemName(String itemName){
-        this.itemName = itemName;
+        this.mitemName = itemName;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "SettingItem{" + "imgPath='" + imgId + '\'' + "，itemName+'" + itemName + '\'' + '}';
+        return "SettingItem{" + "imgPath='" + mimgId + '\'' + "，itemName+'" + mitemName + '\'' + '}';
     }
 }

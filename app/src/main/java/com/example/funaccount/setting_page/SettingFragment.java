@@ -40,18 +40,14 @@ public class SettingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.setting_frag,container,false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        initRecyclerView();
+        View view = inflater.inflate(R.layout.setting_frag,container,false);
+        initRecyclerView(view);
         initData();
+        return view;
     }
 
-    private void initRecyclerView(){
-        recyclerView = getView().findViewById(R.id.setting_recycleview);
+    private void initRecyclerView(View view){
+        recyclerView = view.findViewById(R.id.setting_recycleview);
         settingItemAdapter = new SettingItemAdapter(getActivity(),settingItems);
         recyclerView.setAdapter(settingItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
