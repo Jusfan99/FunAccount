@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView,navController);
 
     }
-//    public void changeTextColor(){
+    //    public void changeTextColor(){
 //        NavigationView navigationView = (NavigationView)findViewById(R.id.main_nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
 //        Resources resource = (Resources)getBaseContext().getResources();
