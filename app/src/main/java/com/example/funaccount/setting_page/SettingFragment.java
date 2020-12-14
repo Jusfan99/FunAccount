@@ -12,19 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class SettingFragment extends SettingItemFragment {
-    private View mView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(mView == null){
-            mView = inflater.inflate(R.layout.setting_frag,container,false);
-            initRecyclerView(mView);
-        } else {
-            ViewGroup parent = (ViewGroup) mView.getParent();
-            if (parent != null) {
-                parent.removeView(mView);
-            }
-        }
-        return mView;
+        View view = inflater.inflate(R.layout.setting_frag,container,false);
+        SettingItemAdapter settingItemAdapter = new SettingItemAdapter(getActivity(), initData());
+        initRecyclerView(view,settingItemAdapter);
+        return view;
     }
 }

@@ -22,7 +22,7 @@ public class SettingItemFragment extends Fragment {
     String[] mTitle = {"预算中心","高级功能","其他设置","账号设置","常见问题","好评鼓励","关于我们"};
     int[] mImages = {R.drawable.setting4,R.drawable.setting2,R.drawable.setting1,R.drawable.setting3,R.drawable.setting5,R.drawable.setting6,R.drawable.setting7};
 
-    private static class SettingItemAdapter extends RecyclerView.Adapter<SettingItemAdapter.MyViewHolder>{
+    public static class SettingItemAdapter extends RecyclerView.Adapter<SettingItemAdapter.MyViewHolder>{
         private final Context mContext;
         private final ArrayList<SettingItem> mSettingItems;
         public SettingItemAdapter(Context context,ArrayList<SettingItem> settingItems){
@@ -81,7 +81,7 @@ public class SettingItemFragment extends Fragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    private ArrayList<SettingItem> initData(){
+    public ArrayList<SettingItem> initData(){
         ArrayList<SettingItem> settingItems = new ArrayList<SettingItem>();
         for(int i = 0; i < 7; i++){
             SettingItem item = new SettingItem(mImages[i], mTitle[i]);
@@ -89,11 +89,12 @@ public class SettingItemFragment extends Fragment {
         }
         return settingItems;
     }
-    public void initRecyclerView(View view){
+    public void initRecyclerView(View view,SettingItemAdapter settingItemAdapter){
         RecyclerView recyclerView = view.findViewById(R.id.setting_recycleview);
-        SettingItemAdapter settingItemAdapter = new SettingItemAdapter(getActivity(), initData());
         recyclerView.setAdapter(settingItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+    public void initListener(SettingItemAdapter settingItemAdapter){
         settingItemAdapter.setOnItemClickListener(new SettingItemAdapter.OnItemClickListener(){
             @Override
             public void OnItemClick(View view, SettingItem settingItem) {

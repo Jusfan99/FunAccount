@@ -2,14 +2,11 @@ package com.example.funaccount.chart_page;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.VerifiedInputEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 
 
 import com.example.funaccount.R;
-import com.example.funaccount.util.ChartViewPageAdapter;
 import com.example.funaccount.util.FragAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -19,21 +16,24 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 public class ChartFragment extends Fragment {
     List<Fragment> mfragments = new ArrayList<Fragment>();
     View mView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initData();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(mView == null){
             mView = inflater.inflate(R.layout.chart_frag,container,false);
-            initPager(mView);
+            dataBind(mView);
         } else {
             ViewGroup parent = (ViewGroup) mView.getParent();
             if (parent != null) {
@@ -43,10 +43,7 @@ public class ChartFragment extends Fragment {
         return mView;
     }
 
-    public void initPager(View view){
-        mfragments.add(new WeekChartFragment());
-        mfragments.add(new MonthChartFragment());
-        mfragments.add(new YearChartFragment());
+    public void dataBind(View view){
         FragAdapter adapter = new FragAdapter(getChildFragmentManager(),mfragments);
         ViewPager viewPager = view.findViewById(R.id.viewpaper_chart);
         viewPager.setAdapter(adapter);
@@ -59,5 +56,10 @@ public class ChartFragment extends Fragment {
         tab2.setText("本月");
         TabLayout.Tab tab3 = tableLayout.getTabAt(2);
         tab3.setText("今年");
+    }
+    public void initData(){
+        mfragments.add(new WeekChartFragment());
+        mfragments.add(new MonthChartFragment());
+        mfragments.add(new YearChartFragment());
     }
 }
