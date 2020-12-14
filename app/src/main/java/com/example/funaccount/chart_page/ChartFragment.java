@@ -27,23 +27,29 @@ import androidx.viewpager2.widget.ViewPager2;
 
 public class ChartFragment extends Fragment {
     List<Fragment> mfragments = new ArrayList<Fragment>();
-
+    View mView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.chart_frag,container,false);
+        if(mView == null){
+            mView = inflater.inflate(R.layout.chart_frag,container,false);
+            initPager(mView);
+        } else {
+            ViewGroup parent = (ViewGroup) mView.getParent();
+            if (parent != null) {
+                parent.removeView(mView);
+            }
+        }
+        return mView;
+    }
+
+    public void initPager(View view){
         mfragments.add(new WeekChartFragment());
         mfragments.add(new MonthChartFragment());
         mfragments.add(new YearChartFragment());
-//        views.add(getView().findViewById(R.id.week_frag));
-//        views.add(getView().findViewById(R.id.month_frag));
-//        views.add(getView().findViewById(R.id.year_frag));
         FragAdapter adapter = new FragAdapter(getChildFragmentManager(),mfragments);
         ViewPager viewPager = view.findViewById(R.id.viewpaper_chart);
-//        ChartViewPageAdapter chartViewPageAdapter = new ChartViewPageAdapter();
-//        chartViewPageAdapter.AdapterViewpager(views);
         viewPager.setAdapter(adapter);
-        //    List<View> views = new ArrayList<View>();
         TabLayout tableLayout = view.findViewById(R.id.chart_tab);
         tableLayout.setupWithViewPager(viewPager);
         tableLayout.setTabMode(TabLayout.MODE_FIXED);
@@ -53,6 +59,5 @@ public class ChartFragment extends Fragment {
         tab2.setText("本月");
         TabLayout.Tab tab3 = tableLayout.getTabAt(2);
         tab3.setText("今年");
-        return view;
     }
 }
