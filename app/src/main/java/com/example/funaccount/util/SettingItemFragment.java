@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SettingItemFragment extends Fragment {
     String[] mTitle = {"预算中心","高级功能","其他设置","账号设置","常见问题","好评鼓励","关于我们"};
     int[] mImages = {R.drawable.setting4,R.drawable.setting2,R.drawable.setting1,R.drawable.setting3,R.drawable.setting5,R.drawable.setting6,R.drawable.setting7};
-
     public static class SettingItemAdapter extends RecyclerView.Adapter<SettingItemAdapter.MyViewHolder>{
         private final Context mContext;
         private final ArrayList<SettingItem> mSettingItems;
@@ -80,7 +79,6 @@ public class SettingItemFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
-
     public ArrayList<SettingItem> initData(){
         ArrayList<SettingItem> settingItems = new ArrayList<SettingItem>();
         for(int i = 0; i < 7; i++){
