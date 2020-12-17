@@ -21,12 +21,12 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.user);
         mReturnButton = (Button)findViewById(R.id.returnback);
     }
-    public void back_to_login(View view) {
+    public void backToLogin(View view) {
         Intent intent3 = new Intent(UserActivity.this,LoginActivity.class) ;
         startActivity(intent3);
         finish();
     }
-    public void back_to_setting(View view){
+    public void backToSetting(View view){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         SettingFragment settingFragment = new SettingFragment();

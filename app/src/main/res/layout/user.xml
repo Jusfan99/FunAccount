@@ -27,7 +27,7 @@
         android:layout_marginStart="11dp"
         android:layout_marginTop="200dp"
         android:backgroundTint="#2415F3"
-        android:onClick="back_to_setting"
+        android:onClick="backToSetting"
         android:text="返回主页"
         android:textColor="#ffffff"
         android:textSize="20dp"/>
@@ -47,7 +47,7 @@
         android:layout_marginStart="11dp"
         android:layout_marginTop="277dp"
         android:backgroundTint="#d95b5b"
-        android:onClick="back_to_login"
+        android:onClick="backToLogin"
         android:text="退出登录"
         android:textColor="#ffffff"
         android:textSize="20dp" />

@@ -34,16 +34,14 @@ public class RegisterActivity extends AppCompatActivity {
         mSureButton.setOnClickListener(m_register_Listener);      //注册界面两个按钮的监听事件
         mCancelButton.setOnClickListener(m_register_Listener);
 
-        if (mUserDataManager == null) {
-            mUserDataManager = new UserDataManager(this);
-            mUserDataManager.openDataBase();                              //建立本地数据库
-        }
+        mUserDataManager = new UserDataManager(this);
+        mUserDataManager.openDataBase();                              //建立本地数据库
     }
     View.OnClickListener m_register_Listener = new View.OnClickListener() {    //不同按钮按下的监听事件选择
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.register_btn_sure:                       //确认按钮的监听事件
-                    register_check();
+                    registerCheck();
                     break;
                 case R.id.register_btn_cancel:                     //取消按钮的监听事件,由注册界面返回登录界面
                     Intent intent_Register_to_Login = new Intent(RegisterActivity.this,LoginActivity.class) ;    //切换User Activity至Login Activity
@@ -53,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     };
-    public void register_check() {                                //确认按钮的监听事件
+    public void registerCheck() {                                //确认按钮的监听事件
         if (isUserNameAndPwdValid()) {
             String userName = mAccount.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
