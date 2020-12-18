@@ -40,7 +40,7 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user);
         mReturnButton = (Button)findViewById(R.id.returnback);
-        new RequestThread().start();
+        request();
     }
     public void backToLogin(View view) {
         Intent intent3 = new Intent(UserActivity.this,LoginActivity.class) ;
@@ -53,13 +53,6 @@ public class UserActivity extends AppCompatActivity {
         SettingFragment settingFragment = new SettingFragment();
         fragmentTransaction.replace(R.id.setting_fragment,settingFragment);
         fragmentTransaction.commit();
-    }
-
-    public class RequestThread extends Thread{
-        @Override
-        public void run() {
-            request();
-        }
     }
 
     public void request(){
