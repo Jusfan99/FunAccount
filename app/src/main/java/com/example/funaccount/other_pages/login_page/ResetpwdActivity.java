@@ -15,8 +15,8 @@ import com.example.funaccount.util.UserDataManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ResetpwdActivity extends AppCompatActivity {
-    int TRUE = 1;
-    int FALSE = 0;
+    int CHECK_TRUE = 1;
+    int CHECK_FALSE = 0;
 
     private EditText mAccount;                        //用户名编辑
     private EditText mPwdOld;                        //密码编辑
@@ -63,16 +63,16 @@ public class ResetpwdActivity extends AppCompatActivity {
     public void resetpwdCheck() {                                //确认按钮的监听事件
         if (isUserNameAndPwdValid()) {
             String userName = mAccount.getText().toString().trim();
-            String userPwd_old = mPwdOld.getText().toString().trim();
-            String userPwd_new = mPwdNew.getText().toString().trim();
+            String userPwdOld = mPwdOld.getText().toString().trim();
+            String userPwdNew = mPwdNew.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
-            int result = mUserDataManager.findUserByNameAndPwd(userName, userPwd_old);
-            if (result == TRUE) {                                             //返回1说明用户名和密码均正确,继续后续操作
-                if (userPwd_new.equals(userPwdCheck) == false) {           //两次密码输入不一样
+            int result = mUserDataManager.findUserByNameAndPwd(userName, userPwdOld);
+            if (result == CHECK_TRUE) {                                             //返回1说明用户名和密码均正确,继续后续操作
+                if (userPwdNew.equals(userPwdCheck) == false) {           //两次密码输入不一样
                     Toast.makeText(this, "两次输入不一致", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    UserData mUser = new UserData(userName, userPwd_new);
+                    UserData mUser = new UserData(userName, userPwdNew);
                     mUserDataManager.openDataBase();
                     boolean flag = mUserDataManager.updateUserData(mUser);
                     if (flag == false) {
@@ -85,7 +85,7 @@ public class ResetpwdActivity extends AppCompatActivity {
                         finish();
                     }
                 }
-            } else if (result == FALSE) {                                       //返回0说明用户名和密码不匹配，重新输入
+            } else if (result == CHECK_FALSE) {                                       //返回0说明用户名和密码不匹配，重新输入
                 Toast.makeText(this, "用户名或密码有误，请重新输入", Toast.LENGTH_SHORT).show();
                 return;
             }

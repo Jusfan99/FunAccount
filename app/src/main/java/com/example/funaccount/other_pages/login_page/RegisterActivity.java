@@ -68,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return ;
             } else {
                 UserData mUser = new UserData(userName, userPwd);
+                mUser.setUserId(createId());
                 mUserDataManager.openDataBase();
                 long flag = mUserDataManager.insertUserData(mUser); //新建用户信息
                 if (flag == -1) {
@@ -97,12 +98,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return true;
     }
-//    public String createId(){
-//        String id = String.valueOf((long)(Math.random()*9*Math.pow(10,7)) + (long)Math.pow(10,7));
-//        if(!mUserDataManager.findUserById(id)){
-//            createId();
-//        }else{
-//
-//        }
-//    }
+    public String createId(){
+        String id =  String.valueOf((long)(Math.random()*9*Math.pow(10,7)) + (long)Math.pow(10,7));
+        if (mUserDataManager.findUserById(id) != 0){
+            return createId();
+        }else {
+            return id;
+        }
+    }
 }

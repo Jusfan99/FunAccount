@@ -3,7 +3,7 @@ package com.example.funaccount.util;
 public class UserData {
     private String userName; //用户名
     private String userPwd;  //密码
-    private int userId;      //用户ID
+    private String userId;      //用户ID
 
     public int pwdresetFlag = 0;
     //获取用户名
@@ -23,13 +23,14 @@ public class UserData {
         this.userPwd = userPwd;
     }
     //获取用户id
-    public int getUserId() {                   //获取用户ID号
+    public String getUserId() {                   //获取用户ID号
         return userId;
     }
     //设置用户id
-    public void setUserId(int userId) {       //设置用户ID号
+    public void setUserId(String userId) {       //设置用户ID号
         this.userId = userId;
     }
+    public UserData(){}
     public UserData(String userName, String userPwd) {  //这里只采用用户名和密码
         super();
         this.userName = userName;

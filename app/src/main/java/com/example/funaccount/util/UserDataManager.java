@@ -150,13 +150,16 @@ public class UserDataManager {
         }
         return result;
     }
-//    public boolean findUserById(String id){
-//        Cursor mCursor=mSQLiteDatabase.query(TABLE_NAME,null,ID+"='"+id+"'",null,null,null,null);
-//        if(mCursor.getCount()!=0){
-//            return false;
-//        }else{
-//            return true;
-//        }
-//    }
+    //判断是否已存在该id 用于注册分配id
+    public int findUserById(String id){
+        int result = 0;
+        Cursor mCursor=mSQLiteDatabase.query(TABLE_NAME,null,ID+"='"+id+"'",null,null,null,null);
+        if(mCursor!=null){
+            result=mCursor.getCount();
+            mCursor.close();
+            Log.i(TAG,"findUserById , result="+result);
+        }
+        return result;
+    }
 }
 

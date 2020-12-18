@@ -17,8 +17,8 @@ import com.example.funaccount.util.UserDataManager;
 import androidx.annotation.Nullable;
 
 public class LoginActivity extends Activity {
-    int TRUE = 1;
-    int FALSE = 0;
+    int PWD_TRUE = 1;
+    int PWD_FALSE = 0;
     int pwdResetFlag = 0;
     private EditText mAccount;              //用户名编辑
     private EditText mPwd;                  //密码编辑
@@ -27,6 +27,7 @@ public class LoginActivity extends Activity {
     private Button mCancleButton;           //注销按钮
     private CheckBox mRememberCheck;
 
+    private String mUserId;
     private SharedPreferences mLoginSp;
     private String mUserNameValue, mPasswordValue;
     private View mLoginView;
@@ -92,6 +93,10 @@ public class LoginActivity extends Activity {
                     finish();
                     break;
             }
+            if(mUserDataManager != null){
+                mUserDataManager.closeDataBase();
+                mUserDataManager = null;
+            }
         }
     };
     public void login() {                                              //登录按钮监听事件
@@ -101,11 +106,10 @@ public class LoginActivity extends Activity {
             SharedPreferences.Editor editor = mLoginSp.edit();
             //mUserDataManager.deleteAllUserDatas();
             int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if (result==TRUE){                                                 //返回1说明用户名和密码均正确
+            if (result== PWD_TRUE){                                                 //返回1说明用户名和密码均正确
                 //保存用户名和密码
                 editor.putString("USER_NAME", userName);
                 editor.putString("PASSWORD", userPwd);
-
                 //是否记住密码
                 if(mRememberCheck.isChecked()){
                     editor.putBoolean("mRememberCheck", true);
@@ -117,9 +121,8 @@ public class LoginActivity extends Activity {
                 Intent intent = new Intent(LoginActivity.this,UserActivity.class) ;    //切换Login Activity至User Activity
                 startActivity(intent);
                 finish();
-
                 Toast.makeText(this, "登陆成功",Toast.LENGTH_SHORT).show();//登录成功提示
-            }else if (result==FALSE){
+            }else if (result== PWD_FALSE){
                 Toast.makeText(this, "抱歉，登录失败",Toast.LENGTH_SHORT).show();  //登录失败提示
             }
         }
@@ -129,13 +132,13 @@ public class LoginActivity extends Activity {
             String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
             int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if(result==TRUE){                                             //返回1说明用户名和密码均正确
+            if(result== PWD_TRUE){                                             //返回1说明用户名和密码均正确
                 Toast.makeText(this, "您的账号已成功注销",Toast.LENGTH_SHORT).show();
 //                <span style="font-family: Arial;">//注销成功提示</span>
                 mPwd.setText("");
                 mAccount.setText("");
                 mUserDataManager.deleteUserDatabyname(userName);
-            }else if(result==FALSE){
+            }else if(result== PWD_FALSE){
                 Toast.makeText(this, "注销失败，请重试",Toast.LENGTH_SHORT).show();  //注销失败提示
             }
         }
@@ -156,10 +159,6 @@ public class LoginActivity extends Activity {
 
     @Override
     public void onResume() {
-        if (mUserDataManager == null) {
-            mUserDataManager = new UserDataManager(this);
-            mUserDataManager.openDataBase();
-        }
         super.onResume();
     }
 
@@ -170,10 +169,6 @@ public class LoginActivity extends Activity {
 
     @Override
     public void onPause() {
-        if(mUserDataManager != null){
-            mUserDataManager.closeDataBase();
-            mUserDataManager = null;
-        }
         super.onPause();
     }
 }

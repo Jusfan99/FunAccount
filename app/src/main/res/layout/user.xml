@@ -10,9 +10,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="150dp"
-        android:text="您好，欢迎回来！"
+        android:text="您好，登录成功"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="30sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/response_id"
+        android:textSize="25sp"
+        android:layout_marginTop="200dp"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

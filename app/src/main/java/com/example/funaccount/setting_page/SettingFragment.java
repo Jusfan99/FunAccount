@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class SettingFragment extends SettingItemFragment {
-    private SharedPreferences loginSp;
+    private SharedPreferences mLoginSp;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class SettingFragment extends SettingItemFragment {
         return view;
     }
     public void updateUserInfo(TextView userName){
-        loginSp = getActivity().getSharedPreferences("userInfo", 0);
-        String name= loginSp.getString("USER_NAME", "");
+        mLoginSp = getActivity().getSharedPreferences("userInfo", 0);
+        String name= mLoginSp.getString("USER_NAME", "");
         userName.setText(name);
     }
 }
