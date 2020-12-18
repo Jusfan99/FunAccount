@@ -129,35 +129,35 @@ public class UserDataManager {
     //根据用户名找用户，可以判断注册时用户名是否已经存在
     public int findUserByName(String userName){
         Log.i(TAG,"findUserByName , userName="+userName);
-        int result=0;
-        Cursor mCursor=mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME+"='"+userName+"'", null, null, null, null);
-        if(mCursor!=null){
-            result=mCursor.getCount();
+        int result = 0;
+        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME+"='"+userName+"'", null, null, null, null);
+        if(mCursor != null){
+            result = mCursor.getCount();
             mCursor.close();
-            Log.i(TAG,"findUserByName , result="+result);
+            Log.i(TAG, "findUserByName , result=" + result);
         }
         return result;
     }
     //根据用户名和密码找用户，用于登录
     public int findUserByNameAndPwd(String userName,String pwd){
         Log.i(TAG,"findUserByNameAndPwd");
-        int result=0;
-        Cursor mCursor=mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME+"='"+userName+"'"+" and "+USER_PWD+"='"+pwd+"'", null, null, null, null);
-        if(mCursor!=null){
-            result=mCursor.getCount();
+        int result = 0;
+        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME+"='"+userName+"'"+" and "+USER_PWD+"='"+pwd+"'", null, null, null, null);
+        if(mCursor != null){
+            result = mCursor.getCount();
             mCursor.close();
-            Log.i(TAG,"findUserByNameAndPwd , result="+result);
+            Log.i(TAG, "findUserByNameAndPwd , result=" + result);
         }
         return result;
     }
     //判断是否已存在该id 用于注册分配id
     public int findUserById(String id){
         int result = 0;
-        Cursor mCursor=mSQLiteDatabase.query(TABLE_NAME,null,ID+"='"+id+"'",null,null,null,null);
-        if(mCursor!=null){
-            result=mCursor.getCount();
+        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, ID+"='"+id+"'", null, null, null, null);
+        if (mCursor != null){
+            result = mCursor.getCount();
             mCursor.close();
-            Log.i(TAG,"findUserById , result="+result);
+            Log.i(TAG, "findUserById , result=" + result);
         }
         return result;
     }
