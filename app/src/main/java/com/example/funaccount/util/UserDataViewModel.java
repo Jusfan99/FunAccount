@@ -25,14 +25,14 @@ import static android.content.ContentValues.TAG;
 public class UserDataViewModel extends ViewModel {
     private String mUserId = "00000000";
     private UserData mUserData;
-    private MutableLiveData<UserData> user;
+    private MutableLiveData<UserData> mUser;
 
     public LiveData<UserData> getUser(Context context){
-        if (user == null) {
-            user = new MutableLiveData<UserData>();
+        if (mUser == null) {
+            mUser = new MutableLiveData<UserData>();
             loadUser(context);
         }
-        return user;
+        return mUser;
     }
 
     private void loadUser(Context context) {
@@ -56,7 +56,7 @@ public class UserDataViewModel extends ViewModel {
                     @Override
                     public void onNext(@NonNull UserDataReception userDataReception) {
                         mUserData = userDataReception.getUserData();
-                        user.setValue(mUserData);
+                        mUser.setValue(mUserData);
                     }
 
                     @Override
