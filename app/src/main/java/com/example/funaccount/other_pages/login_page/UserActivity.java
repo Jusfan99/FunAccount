@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
 import com.example.funaccount.setting_page.SettingFragment;
+import com.example.funaccount.util.UserData;
 import com.example.funaccount.util.UserDataViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class UserActivity extends AppCompatActivity {
     private TextView mResponseId;
+    private UserData mUserData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +30,9 @@ public class UserActivity extends AppCompatActivity {
         UserDataViewModel model = new ViewModelProvider(this).get(UserDataViewModel.class);
         model.getUser(this).observe(this, userData -> {
             mResponseId = findViewById(R.id.response_id);
-            String text = "id:"+userData.getUserId()+" name:"+userData.getUserName();
-            mResponseId.setText(text);
+            String userId = "id:"+userData.getUserId()+" name:"+userData.getUserName();
+            mResponseId.setText(userId);
+            mUserData = userData;
         });
     }
     public void backToLogin(View view) {
@@ -37,10 +41,11 @@ public class UserActivity extends AppCompatActivity {
         finish();
     }
     public void backToSetting(View view){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        SettingFragment settingFragment = new SettingFragment();
-        fragmentTransaction.replace(R.id.setting_fragment,settingFragment);
-        fragmentTransaction.commit();
+        Intent intent = new Intent(UserActivity.this,MainActivity.class);
+        intent.putExtra("userName",mUserData.getUserName());
+        intent.putExtra("userId",mUserData.getUserId());
+        intent.putExtra("status",1);
+        startActivity(intent);
+        finish();
     }
 }
