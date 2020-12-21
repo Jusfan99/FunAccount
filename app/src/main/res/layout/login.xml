@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/login_edit_pwd"
+            android:layout_below="@+id/pwd_layout"
             android:layout_marginTop="52dp"
             android:backgroundTint="#545bcb"
             android:onClick="finish_login"
@@ -55,29 +55,49 @@
             android:layout_alignWithParentIfMissing="false"
             android:background="#ffffff" />
 
-        <EditText
-            android:layout_width="400dp"
-            android:layout_height="60dp"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/login_edit_pwd"
-            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-            android:hint="请输入您的密码"
-            android:layout_below="@+id/login_edit_account"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:layout_width="400dp"
-            android:layout_height="60dp"
-            android:inputType="textPersonName"
-            android:id="@+id/login_edit_account"
-            android:drawableLeft="@android:drawable/ic_menu_myplaces"
-            android:hint="请输入您的用户名"
-            android:layout_below="@+id/logo"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pwd_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="20dp" />
+            android:layout_below="@+id/account_layout"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#00BCD4"
+            app:endIconTint="#00BCD4"
+            app:hintTextColor="#00BCD4">
+
+            <EditText
+                android:id="@+id/login_edit_pwd"
+                android:layout_width="400dp"
+                android:layout_height="60dp"
+                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+                android:ems="10"
+                android:hint="请输入您的密码"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/account_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/logo"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#00BCD4"
+            app:endIconTint="#00BCD4"
+            app:hintTextColor="#00BCD4">
+
+            <EditText
+                android:id="@+id/login_edit_account"
+                android:layout_width="400dp"
+                android:layout_height="70dp"
+                android:drawableLeft="@android:drawable/ic_menu_myplaces"
+                android:hint="请输入您的用户名"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:layout_width="fill_parent"
@@ -99,7 +119,7 @@
             android:layout_height="20dp"
             android:text="记住密码"
             android:id="@+id/Login_Remember"
-            android:layout_below="@+id/login_edit_pwd"
+            android:layout_below="@+id/pwd_layout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:checked="false"
@@ -110,7 +130,7 @@
             android:layout_height="20dp"
             android:text="修改密码"
             android:id="@+id/login_text_change_pwd"
-            android:layout_below="@+id/login_edit_pwd"
+            android:layout_below="@+id/pwd_layout"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:textSize="15dp" />
