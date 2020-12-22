@@ -18,7 +18,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/main_nav_menu"/>
 
-
     <fragment
         android:id="@+id/main_nav_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -31,5 +30,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/main_nav_fragment"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
