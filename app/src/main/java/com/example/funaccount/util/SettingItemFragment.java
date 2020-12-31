@@ -28,7 +28,7 @@ public class SettingItemFragment extends Fragment {
             this.mContext = context;
             this.mSettingItems = settingItems;
         }
-        public class MyViewHolder extends RecyclerView.ViewHolder{
+        public static class MyViewHolder extends RecyclerView.ViewHolder{
             public TextView mItemName;
             public ImageView mItemImage;
             public MyViewHolder(View itemView){
@@ -64,8 +64,8 @@ public class SettingItemFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             SettingItem data = mSettingItems.get(position);
-            holder.mItemName.setText(data.mitemName);
-            holder.mItemImage.setImageResource(data.mimgId);
+            holder.mItemName.setText(data.mItemName);
+            holder.mItemImage.setImageResource(data.mImagId);
         }
 
         @Override

@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/bill_type"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"/>
+
+    <TextView
+        android:id="@+id/bill_remark"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="60dp"
+        app:srcCompat="@drawable/arrow" />
+
+    <TextView
+        android:id="@+id/bill_money"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="120dp"
+        android:textAlignment="center"
+        android:textSize="23sp" />
+
+</LinearLayout>
