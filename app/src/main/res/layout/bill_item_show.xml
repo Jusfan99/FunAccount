@@ -5,8 +5,8 @@
     android:orientation="horizontal">
 
     <TextView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/bill_type"
         android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp"/>
@@ -14,17 +14,23 @@
     <TextView
         android:id="@+id/bill_remark"
         android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="60dp"
         app:srcCompat="@drawable/arrow" />
 
     <TextView
+        android:layout_width="30dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="60dp"
+        android:id="@+id/bill_is_income"/>
+
+    <TextView
         android:id="@+id/bill_money"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="120dp"
+        android:layout_marginLeft="10dp"
         android:textAlignment="center"
         android:textSize="23sp" />
 

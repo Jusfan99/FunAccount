@@ -59,6 +59,7 @@ public class AddOneFragment extends Fragment {
             finishClick();
         }
     };
+
     private void finishClick() {
         if(contentIsOk()){
             long flag = mRecordManager.insertAccountRecord(mAccountRecord);
@@ -68,7 +69,7 @@ public class AddOneFragment extends Fragment {
                 Toast.makeText(this.getContext(), "已记录",Toast.LENGTH_SHORT).show();
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.remove(fragmentManager.findFragmentByTag("addone"));
+                transaction.remove(fragmentManager.findFragmentByTag("addOne"));
                 transaction.commit();
             }
         }else {
@@ -94,7 +95,7 @@ public class AddOneFragment extends Fragment {
             }
         }
     };
-    //合法性判断和数据存储
+//    合法性判断和数据存储
     public boolean contentIsOk() {
         if(mMoneyEdit.getText().toString().trim().equals("")){
             return false;

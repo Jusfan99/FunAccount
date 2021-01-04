@@ -2,9 +2,12 @@ package com.example.funaccount.util;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class AccountRecordManager {
 
@@ -70,5 +73,23 @@ public class AccountRecordManager {
         values.put(TYPE, type);
         values.put(ISINCOME, isIncome);
         return mSQLiteDatabase.insert(TABLE_NAME, RECORDID, values);
+    }
+    public void getAllRecord(ArrayList<BillItem> billItems) {
+        Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, null,
+                null, null, null, null);
+        if(cursor.moveToFirst()) {
+            do{
+                String type = cursor.getString(cursor.getColumnIndex(TYPE));
+                String remark = cursor.getString(cursor.getColumnIndex(REMARK));
+                int id = cursor.getInt(cursor.getColumnIndex(RECORDID));
+                float money = cursor.getFloat(cursor.getColumnIndex(MONEY));
+                boolean isIncome = cursor.getInt(cursor.getColumnIndex(ISINCOME)) == 1;
+                BillItem billItem = new BillItem(money, type, isIncome);
+                billItem.mRemark = remark;
+                billItem.mId = id;
+                billItems.add(billItem);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
     }
 }
