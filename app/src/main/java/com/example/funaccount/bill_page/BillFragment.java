@@ -20,10 +20,10 @@ import androidx.fragment.app.FragmentTransaction;
 public class BillFragment extends BillShowHelper {
     Button mAddOneBtn;
     BillShowAdapter billShowAdapter;
-    LinearLayout recycler;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container
+            , @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bill_frag, null);
         mAddOneBtn = view.findViewById(R.id.addone_btn);
         mAddOneBtn.setOnClickListener(new View.OnClickListener() {
@@ -32,7 +32,6 @@ public class BillFragment extends BillShowHelper {
                 addoneFragmentShow(new AddOneFragment());
             }
         });
-        recycler = view.findViewById(R.id.add_one_frag);
         billShowAdapter = new BillShowAdapter(getActivity(), initData());
         initRecyclerView(view, billShowAdapter);
         return view;

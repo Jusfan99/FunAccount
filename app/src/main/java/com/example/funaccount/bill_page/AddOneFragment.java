@@ -33,7 +33,8 @@ public class AddOneFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container
+            , @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.addone,null);
         mFinish = view.findViewById(R.id.finish_add);
         mIncome = view.findViewById(R.id.income_checked);
@@ -77,7 +78,8 @@ public class AddOneFragment extends Fragment {
         }
     }
     //定义CheckBox监听器
-    CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener(){
+    CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener
+            = new CompoundButton.OnCheckedChangeListener(){
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if(isChecked){

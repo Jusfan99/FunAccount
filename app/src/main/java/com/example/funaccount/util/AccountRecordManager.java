@@ -87,7 +87,7 @@ public class AccountRecordManager {
                 BillItem billItem = new BillItem(money, type, isIncome);
                 billItem.mRemark = remark;
                 billItem.mId = id;
-                billItems.add(billItem);
+                billItems.add(0,billItem);
             } while(cursor.moveToNext());
         }
         cursor.close();
