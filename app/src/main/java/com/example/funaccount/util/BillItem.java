@@ -9,6 +9,9 @@ public class BillItem implements Serializable {
     public String mRemark;
     public int mId;
 
+    public BillItem(){
+    }
+
     public BillItem(float money, String type, boolean isIncome) {
         this.mMoney = money;
         this.mType = type;

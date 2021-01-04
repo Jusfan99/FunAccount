@@ -78,14 +78,14 @@ public class BillShowHelper extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
-//    public ArrayList<BillItem> initData(){
-//        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
-//        for(int i = 0; i < 7; i++){
-//            BillItem item = new SettingItem();
-//            billItems.add(item);
-//        }
-//        return billItems;
-//    }
+    public ArrayList<BillItem> initData(){
+        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
+        for(int i = 0; i < 7; i++){
+            BillItem item = new BillItem();
+            billItems.add(item);
+        }
+        return billItems;
+    }
     public void initRecyclerView(View view, BillShowAdapter billShowAdapter){
         RecyclerView recyclerView = view.findViewById(R.id.bill_show_recycler);
         recyclerView.setAdapter(billShowAdapter);

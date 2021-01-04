@@ -29,11 +29,13 @@ public class BillFragment extends BillShowHelper {
                 addoneFragmentShow(new AddOneFragment());
             }
         });
+//        BillShowAdapter billShowAdapter = new BillShowAdapter(getActivity(), initData());
+//        initRecyclerView(view, billShowAdapter);
         return view;
     }
     //Fragment切换
     private void addoneFragmentShow(Fragment fragment){
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = super.getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.add_one_frag,fragment,"addone");
         transaction.addToBackStack(null);

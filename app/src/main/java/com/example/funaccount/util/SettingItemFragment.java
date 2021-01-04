@@ -19,19 +19,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingItemFragment extends Fragment {
-    String[] mTitle = {"预算中心","高级功能","其他设置","账号设置","常见问题","好评鼓励","关于我们"};
-    int[] mImages = {R.drawable.setting4,R.drawable.setting2,R.drawable.setting1,R.drawable.setting3,R.drawable.setting5,R.drawable.setting6,R.drawable.setting7};
-    public static class SettingItemAdapter extends RecyclerView.Adapter<SettingItemAdapter.MyViewHolder>{
+    String[] mTitle = {"预算中心", "高级功能", "其他设置", "账号设置", "常见问题", "好评鼓励", "关于我们"};
+    int[] mImages = {R.drawable.setting4, R.drawable.setting2, R.drawable.setting1, R.drawable.setting3, R.drawable.setting5, R.drawable.setting6, R.drawable.setting7};
+    public static class SettingItemAdapter extends RecyclerView.Adapter<SettingItemAdapter.MyViewHolder> {
         private final Context mContext;
         private final ArrayList<SettingItem> mSettingItems;
-        public SettingItemAdapter(Context context,ArrayList<SettingItem> settingItems){
+        public SettingItemAdapter(Context context, ArrayList<SettingItem> settingItems) {
             this.mContext = context;
             this.mSettingItems = settingItems;
         }
-        public static class MyViewHolder extends RecyclerView.ViewHolder{
+        public static class MyViewHolder extends RecyclerView.ViewHolder {
             public TextView mItemName;
             public ImageView mItemImage;
-            public MyViewHolder(View itemView){
+            public MyViewHolder(View itemView) {
                 super(itemView);
                 mItemName = (TextView)itemView.findViewById(R.id.setting_name);
                 mItemImage = (ImageView)itemView.findViewById(R.id.setting_image);
@@ -45,13 +45,13 @@ public class SettingItemFragment extends Fragment {
         }
 
         //设置item的监听接口
-        public interface OnItemClickListener{
+        public interface OnItemClickListener {
             //点击每一项的实现方法
             public void OnItemClick(View view, SettingItem settingItem);
         }
         private OnItemClickListener onItemClickListener;
 
-        public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
             this.onItemClickListener = onItemClickListener;
         }
         @NonNull
