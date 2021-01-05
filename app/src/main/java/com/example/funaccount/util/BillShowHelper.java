@@ -72,7 +72,7 @@ public class BillShowHelper extends Fragment {
 
         private BillShowHelper.BillShowAdapter.OnItemClickListener onItemClickListener;
 
-        public void setOnItemClickListener(BillShowHelper.BillShowAdapter.OnItemClickListener onItemClickListener){
+        public void setOnItemClickListener(BillShowHelper.BillShowAdapter.OnItemClickListener onItemClickListener) {
             this.onItemClickListener = onItemClickListener;
         }
 
@@ -120,7 +120,7 @@ public class BillShowHelper extends Fragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public ArrayList<BillItem> initData(){
+    public ArrayList<BillItem> initData() {
         AccountRecordManager mRecordManager = new AccountRecordManager(this.getContext());
         mRecordManager.openDataBase();
         ArrayList<BillItem> billItems = new ArrayList<BillItem>();
@@ -128,7 +128,7 @@ public class BillShowHelper extends Fragment {
         return billItems;
     }
 
-    public void initRecyclerView(View view, BillShowAdapter billShowAdapter){
+    public void initRecyclerView(View view, BillShowAdapter billShowAdapter) {
         RecyclerView recyclerView = view.findViewById(R.id.bill_show_recycler);
         recyclerView.setAdapter(billShowAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -39,7 +39,7 @@ public class AddOneFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.addone,null);
+        View view = inflater.inflate(R.layout.addone, null);
         mFinish = view.findViewById(R.id.finish_add);
         mIncome = view.findViewById(R.id.income_checked);
         mExpend = view.findViewById(R.id.expend_checked);
@@ -68,57 +68,57 @@ public class AddOneFragment extends Fragment {
     private void finishClick() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH)+1;
+        int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         mDate = new Date(year, month, day);
         mAccountRecord.setDate(mDate);
-        if(contentIsOk()){
+        if(contentIsOk()) {
             long flag = mRecordManager.insertAccountRecord(mAccountRecord);
             if(flag == -1)
-                Toast.makeText(this.getContext(), "记账失败",Toast.LENGTH_SHORT).show();
-            else{
-                Toast.makeText(this.getContext(), "已记录",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), "记账失败", Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(this.getContext(), "已记录", Toast.LENGTH_SHORT).show();
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.remove(fragmentManager.findFragmentByTag("addOne"));
                 transaction.commit();
             }
         }else {
-            Toast.makeText(this.getContext(), "请检查填写情况",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), "请检查填写情况", Toast.LENGTH_SHORT).show();
         }
     }
     //定义CheckBox监听器
     CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener
-            = new CompoundButton.OnCheckedChangeListener(){
+            = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if(isChecked){
+            if(isChecked) {
                 if(buttonView.getText().toString().equals(mIncome.getText().toString())){
                     cancleAnother(mExpend);
-                }else{
+                }else {
                     cancleAnother(mIncome);
                 }
             }
         }
         //实现单选
         public void cancleAnother(CheckBox checkBox){
-            if(checkBox.isChecked()){
+            if(checkBox.isChecked()) {
                 checkBox.setChecked(false);
             }
         }
     };
 //    合法性判断和数据存储
     public boolean contentIsOk() {
-        if(mMoneyEdit.getText().toString().trim().equals("")){
+        if(mMoneyEdit.getText().toString().trim().equals("")) {
             return false;
         }
         float money = Float.parseFloat(mMoneyEdit.getText().toString().trim());
         String type = mTypeEdit.getText().toString().trim();
         String remark = mRemarkEdit.getText().toString().trim();
-        if(type.equals("") || (!mIncome.isChecked() && !mExpend.isChecked())){
+        if(type.equals("") || (!mIncome.isChecked() && !mExpend.isChecked())) {
             return false;
         }else if(money <= 0) {
-            Toast.makeText(this.getContext(), "您填写的金额不合理",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), "您填写的金额不合理", Toast.LENGTH_SHORT).show();
             return false;
         }else {
             mAccountRecord.setMoney(money);

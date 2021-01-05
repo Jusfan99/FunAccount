@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.example.funaccount.R;
 import com.example.funaccount.util.BillShowHelper;
@@ -38,7 +37,7 @@ public class BillFragment extends BillShowHelper {
         return view;
     }
     //Fragment切换
-    private void addoneFragmentShow(Fragment fragment){
+    private void addoneFragmentShow(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.add_one_frag, fragment, "addOne");
@@ -49,7 +48,7 @@ public class BillFragment extends BillShowHelper {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        updataUi();
+        updateUi();
     }
 
     @Override
@@ -57,7 +56,7 @@ public class BillFragment extends BillShowHelper {
         super.onResume();
     }
 
-    private void updataUi() {
+    private void updateUi() {
         billShowAdapter = new BillShowAdapter(getActivity(), initData());
         initRecyclerView(getView(), billShowAdapter);
     }
