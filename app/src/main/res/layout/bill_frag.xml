@@ -52,4 +52,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:orientation="horizontal" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/more_msg_frag"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="horizontal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

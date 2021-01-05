@@ -18,6 +18,9 @@ public class AccountRecordManager {
     public static final String REMARK = "remark";
     public static final String ISINCOME = "is_income";
     public static final String TYPE = "type";
+    public static final String YEAR = "year";
+    public static final String MONTH = "month";
+    public static final String DAY = "day";
 
 
     private static final int DB_VERSION = 2;
@@ -28,6 +31,9 @@ public class AccountRecordManager {
             + REMARK + " varchar,"
             + TYPE + " varchar,"
             + MONEY + " real,"
+            + YEAR + " integer,"
+            + MONTH + " integer,"
+            + DAY + " integer,"
             + ISINCOME + " integer" + ");";
 
     private SQLiteDatabase mSQLiteDatabase = null;
@@ -72,6 +78,9 @@ public class AccountRecordManager {
         values.put(REMARK, remark);
         values.put(TYPE, type);
         values.put(ISINCOME, isIncome);
+        values.put(YEAR, accountRecord.getDate().getYear());
+        values.put(MONTH, accountRecord.getDate().getMonth());
+        values.put(DAY, accountRecord.getDate().getDay());
         return mSQLiteDatabase.insert(TABLE_NAME, RECORDID, values);
     }
     public void getAllRecord(ArrayList<BillItem> billItems) {
@@ -84,9 +93,12 @@ public class AccountRecordManager {
                 int id = cursor.getInt(cursor.getColumnIndex(RECORDID));
                 float money = cursor.getFloat(cursor.getColumnIndex(MONEY));
                 boolean isIncome = cursor.getInt(cursor.getColumnIndex(ISINCOME)) == 1;
+                Date date = new Date(cursor.getInt(cursor.getColumnIndex(YEAR)),
+                        cursor.getInt(cursor.getColumnIndex(MONTH)), cursor.getInt(cursor.getColumnIndex(DAY)));
                 BillItem billItem = new BillItem(money, type, isIncome);
                 billItem.mRemark = remark;
                 billItem.mId = id;
+                billItem.setDate(date);
                 billItems.add(0,billItem);
             } while(cursor.moveToNext());
         }

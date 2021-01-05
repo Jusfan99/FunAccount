@@ -5,6 +5,7 @@ public class AccountRecord {
     private String remark;      //备注
     private boolean isIncome;   //收入or支出
     private String type;        //分类
+    private Date date;
 
     public void setMoney(float money) {
         this.money = money;
@@ -20,6 +21,12 @@ public class AccountRecord {
     }
     public float getMoney() {
         return this.money;
+    }
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    public Date getDate() {
+        return date;
     }
     public String getRemark() {
         return this.remark;

@@ -33,6 +33,7 @@ public class BillFragment extends BillShowHelper {
             }
         });
         billShowAdapter = new BillShowAdapter(getActivity(), initData());
+//        initListener(billShowAdapter);
         initRecyclerView(view, billShowAdapter);
         return view;
     }

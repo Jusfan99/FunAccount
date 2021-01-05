@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.example.funaccount.R;
 import com.example.funaccount.util.AccountRecord;
 import com.example.funaccount.util.AccountRecordManager;
+import com.example.funaccount.util.Date;
+
+import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +33,7 @@ public class AddOneFragment extends Fragment {
     private EditText mRemarkEdit;
     private AccountRecordManager mRecordManager;
     private AccountRecord mAccountRecord;
+    private Date mDate;
 
     @Nullable
     @Override
@@ -62,6 +66,12 @@ public class AddOneFragment extends Fragment {
     };
 
     private void finishClick() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        mDate = new Date(year, month, day);
+        mAccountRecord.setDate(mDate);
         if(contentIsOk()){
             long flag = mRecordManager.insertAccountRecord(mAccountRecord);
             if(flag == -1)
