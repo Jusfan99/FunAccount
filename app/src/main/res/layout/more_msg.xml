@@ -49,8 +49,9 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="80dp"
         android:layout_marginRight="20dp"
+        android:gravity="center"
         app:layout_constraintRight_toRightOf="parent"
-        android:textSize="35dp"/>
+        android:textSize="30sp"/>
 
     <TextView
         android:layout_width="100dp"
@@ -71,7 +72,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:textSize="35dp"/>
+        android:gravity="center"
+        android:textSize="30sp"/>
 
     <TextView
         android:layout_width="100dp"
@@ -92,7 +94,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:textSize="35dp"/>
+        android:gravity="center"
+        android:textSize="30sp"/>
     <TextView
         android:layout_width="100dp"
         android:layout_height="50dp"
@@ -112,7 +115,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:textSize="35dp"/>
+        android:gravity="center"
+        android:textSize="30sp"/>
 
     <Button
         android:id="@+id/more_msg_close"

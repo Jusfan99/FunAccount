@@ -94,13 +94,15 @@ public class BillShowHelper extends Fragment {
             holder.setListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    intent.putExtra("date", data.getmDate().toString());
-                    intent.putExtra("type", data.getType());
-                    intent.putExtra("money", data.getMoney());
-                    intent.putExtra("income", data.mIsIncome ? "收入" : "支出");
-                    intent.putExtra("remark", data.getRemark());
+                    Bundle message = new Bundle();
+                    message.putString("date", data.getmDate().toString());
+                    message.putString("type", data.getType());
+                    message.putFloat("money", data.getMoney());
+                    message.putString("income", data.mIsIncome ? "收入" : "支出");
+                    message.putString("remark", data.getRemark());
+
                     FragmentManager fragmentManager = FragmentManager.findFragment(v).getChildFragmentManager();
+                    fragmentManager.setFragmentResult("messageKey", message);
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
                     transaction.replace(R.id.more_msg_frag, new MoreMsgFragment(), "moreMsg");
                     transaction.addToBackStack(null);

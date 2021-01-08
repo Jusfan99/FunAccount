@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MoreMsgFragment extends Fragment {
@@ -51,29 +52,20 @@ public class MoreMsgFragment extends Fragment {
         mBillRemark = view.findViewById(R.id.more_msg_remark);
         mBillIncome = view.findViewById(R.id.more_msg_income);
 
-        bindContent();
+        getParentFragmentManager().setFragmentResultListener("messageKey", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                mMoney = result.getFloat("money");
+                mDate = result.getString("date");
+                mIncome = result.getString("income");
+                mRemark = result.getString("remark");
+                mType = result.getString("type");
+
+                bindContent();
+            }
+        });
         return view;
     }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mMoney = ((MainActivity) getActivity()).getBillMoney();
-        mDate = ((MainActivity) getActivity()).getBillDate();
-        mIncome = ((MainActivity) getActivity()).getBillIsIncome();
-        mRemark = ((MainActivity) getActivity()).getBillRemark();
-        mType = ((MainActivity) getActivity()).getBillType();
-    }
-
-//    @Override
-//    public void onCreate(@NonNull Context context) {
-//        super.onAttach(context);
-//        mMoney = ((MainActivity) context).getBillMoney();
-//        mDate = ((MainActivity) context).getBillDate();
-//        mIncome = ((MainActivity) context).getBillIsIncome();
-//        mRemark = ((MainActivity) context).getBillRemark();
-//        mType = ((MainActivity) context).getBillType();
-//    }
 
     private void bindContent() {
         mBillMoney.setText(String.valueOf(mMoney));

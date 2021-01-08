@@ -31,20 +31,23 @@ public class MainActivity extends AppCompatActivity {
         mUserId = intent.getStringExtra("userId");
         mLoginStatus = intent.getIntExtra("status", 0);
         //隐藏标题
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        NavController navController = Navigation.findNavController(this,R.id.main_nav_host);
+        NavController navController = Navigation.findNavController(this, R.id.main_nav_host);
         BottomNavigationView navigationView = findViewById(R.id.main_nav_view);
-        NavigationUI.setupWithNavController(navigationView,navController);
+        NavigationUI.setupWithNavController(navigationView, navController);
     }
-    public String getUserName(){
+
+    public String getUserName() {
         return mUserName;
     }
-    public String getUserId(){
+
+    public String getUserId() {
         return mUserId;
     }
-    public int getLoginStatus(){
+
+    public int getLoginStatus() {
         return mLoginStatus;
     }
 }
