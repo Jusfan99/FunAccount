@@ -75,16 +75,16 @@ public class AddOneFragment extends Fragment {
         if (contentIsOk()) {
             long flag = mRecordManager.insertAccountRecord(mAccountRecord);
             if (flag == -1) {
-                Toast.makeText(this.getContext(), "记账失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), getString(R.string.add_fail), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this.getContext(), "已记录", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getContext(), getString(R.string.add_success), Toast.LENGTH_SHORT).show();
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.remove(fragmentManager.findFragmentByTag("addOne"));
                 transaction.commit();
             }
         } else {
-            Toast.makeText(this.getContext(), "请检查填写情况", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), getString(R.string.check_input), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -121,7 +121,7 @@ public class AddOneFragment extends Fragment {
         if (type.equals("") || (!mIncome.isChecked() && !mExpend.isChecked())) {
             return false;
         } else if (money <= 0) {
-            Toast.makeText(this.getContext(), "您填写的金额不合理", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), getString(R.string.money_input_check), Toast.LENGTH_SHORT).show();
             return false;
         } else {
             mAccountRecord.setMoney(money);

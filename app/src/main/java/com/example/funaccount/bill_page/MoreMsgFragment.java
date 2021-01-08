@@ -34,7 +34,8 @@ public class MoreMsgFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.more_msg, null);
         mCloseButton = view.findViewById(R.id.more_msg_close);
         mCloseButton.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +53,8 @@ public class MoreMsgFragment extends Fragment {
         mBillRemark = view.findViewById(R.id.more_msg_remark);
         mBillIncome = view.findViewById(R.id.more_msg_income);
 
-        getParentFragmentManager().setFragmentResultListener("messageKey", this, new FragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener("messageKey",
+                this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 mMoney = result.getFloat("money");

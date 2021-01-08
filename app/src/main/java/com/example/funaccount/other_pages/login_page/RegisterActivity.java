@@ -47,7 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
                     registerCheck();
                     break;
                 case R.id.register_btn_cancel:                     //取消按钮的监听事件,由注册界面返回登录界面
-                    Intent intent_Register_to_Login = new Intent(RegisterActivity.this, LoginActivity.class);    //切换User Activity至Login Activity
+                    Intent intent_Register_to_Login = new Intent(RegisterActivity.this,
+                            LoginActivity.class);    //切换User Activity至Login Activity
                     startActivity(intent_Register_to_Login);
                     finish();
                     break;
@@ -64,11 +65,11 @@ public class RegisterActivity extends AppCompatActivity {
             int count = mUserDataManager.findUserByName(userName);
             //用户已经存在时返回，给出提示文字
             if (count > 0) {
-                Toast.makeText(this, "用户名已存在", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.username_repeat), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (userPwd.equals(userPwdCheck) == false) {     //两次密码输入不一样
-                Toast.makeText(this, "两次输入不一致", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.password_different), Toast.LENGTH_SHORT).show();
                 return;
             } else {
                 UserData mUser = new UserData(userName, userPwd);
@@ -76,10 +77,11 @@ public class RegisterActivity extends AppCompatActivity {
                 mUserDataManager.openDataBase();
                 long flag = mUserDataManager.insertUserData(mUser); //新建用户信息
                 if (flag == -1) {
-                    Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.logup_fail), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-                    Intent intent_Register_to_Login = new Intent(RegisterActivity.this, LoginActivity.class);
+                    Toast.makeText(this, getString(R.string.logup_success), Toast.LENGTH_SHORT).show();
+                    Intent intent_Register_to_Login = new Intent(RegisterActivity.this,
+                            LoginActivity.class);
                     startActivity(intent_Register_to_Login);
                     finish();
                 }
@@ -89,15 +91,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     public boolean isUserNameAndPwdValid() {
         if (mAccount.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "用户名不能为空",
+            Toast.makeText(this, getString(R.string.user_name_empty),
                     Toast.LENGTH_SHORT).show();
             return false;
         } else if (mPwd.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "密码不能为空",
+            Toast.makeText(this, getString(R.string.password_empty),
                     Toast.LENGTH_SHORT).show();
             return false;
         } else if (mPwdCheck.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "请再次输入密码",
+            Toast.makeText(this, getString(R.string.password_check_empty),
                     Toast.LENGTH_SHORT).show();
             return false;
         }

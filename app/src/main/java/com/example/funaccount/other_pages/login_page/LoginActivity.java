@@ -24,7 +24,7 @@ public class LoginActivity extends Activity {
     private EditText mPwd;                  //密码编辑
     private Button mRegisterButton;         //注册按钮
     private Button mLoginButton;            //登录按钮
-    private Button mCancleButton;           //注销按钮
+    private Button mCancelButton;           //注销按钮
     private CheckBox mRememberCheck;
 
     private String mUserId;
@@ -33,7 +33,7 @@ public class LoginActivity extends Activity {
     private View mLoginView;
     private View mLoginSuccessView;
     private TextView mLoginSuccessShow;
-    private TextView mChangepwdText;
+    private TextView mChangePwdText;
     private UserDataManager mUserDataManager;   //用户数据管理
 
 
@@ -46,17 +46,16 @@ public class LoginActivity extends Activity {
         mPwd = (EditText) findViewById(R.id.login_edit_pwd);
         mRegisterButton = (Button) findViewById(R.id.login_btn_register);
         mLoginButton = (Button) findViewById(R.id.login_btn_login);
-        mCancleButton = (Button) findViewById(R.id.login_btn_cancle);
+        mCancelButton = (Button) findViewById(R.id.login_btn_cancle);
         mLoginView = findViewById(R.id.login_view);
         mLoginSuccessView = findViewById(R.id.login_success_view);
         mLoginSuccessShow = (TextView) findViewById(R.id.login_success_show);
-        mChangepwdText = (TextView) findViewById(R.id.login_text_change_pwd);
+        mChangePwdText = (TextView) findViewById(R.id.login_text_change_pwd);
         mRememberCheck = (CheckBox) findViewById(R.id.Login_Remember);
 
         mLoginSp = getSharedPreferences("userInfo", 0);
         String name = mLoginSp.getString("USER_NAME", "");
         String pwd = mLoginSp.getString("PASSWORD", "");
-        //boolean choseAutoLogin =login_sp.getBoolean("mAutologinCheck", false);
         //如果上次选了记住密码，那进入登录页面也自动勾选记住密码，并填上用户名和密码
         if (mLoginSp.getBoolean("mRememberCheck", false)) {
             mAccount.setText(name);
@@ -64,20 +63,21 @@ public class LoginActivity extends Activity {
             mRememberCheck.setChecked(true);
         }
 
-        mRegisterButton.setOnClickListener(mListener);                      //采用OnClickListener方法设置不同按钮按下之后的监听事件
+        mRegisterButton.setOnClickListener(mListener);
         mLoginButton.setOnClickListener(mListener);
-        mCancleButton.setOnClickListener(mListener);
-        mChangepwdText.setOnClickListener(mListener);
+        mCancelButton.setOnClickListener(mListener);
+        mChangePwdText.setOnClickListener(mListener);
 
         mUserDataManager = new UserDataManager(this);
-        mUserDataManager.openDataBase();                              //建立本地数据库
+        mUserDataManager.openDataBase();
     }
 
-    View.OnClickListener mListener = new View.OnClickListener() {                  //不同按钮按下的监听事件选择
+    View.OnClickListener mListener = new View.OnClickListener() {
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.login_btn_register:                            //登录界面的注册按钮
-                    Intent intent_Login_to_Register = new Intent(LoginActivity.this, RegisterActivity.class);
+                case R.id.login_btn_register:
+                    Intent intent_Login_to_Register = new Intent(LoginActivity.this,
+                            RegisterActivity.class);
                     startActivity(intent_Login_to_Register);
                     finish();
                     break;
@@ -88,7 +88,8 @@ public class LoginActivity extends Activity {
                     cancel();
                     break;
                 case R.id.login_text_change_pwd:                             //登录界面的修改密码按钮
-                    Intent intent_Login_to_reset = new Intent(LoginActivity.this, ResetpwdActivity.class);
+                    Intent intent_Login_to_reset = new Intent(LoginActivity.this,
+                            ResetpwdActivity.class);
                     startActivity(intent_Login_to_reset);
                     finish();
                     break;
@@ -100,14 +101,17 @@ public class LoginActivity extends Activity {
         }
     };
 
-    public void login() {                                              //登录按钮监听事件
+    //登录按钮监听事件
+    public void login() {
         if (isUserNameAndPwdValid()) {
-            String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
+            //获取当前输入的用户名和密码信息
+            String userName = mAccount.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             SharedPreferences.Editor editor = mLoginSp.edit();
             //mUserDataManager.deleteAllUserDatas();
             int result = mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if (result == PWD_TRUE) {                                                 //返回1说明用户名和密码均正确
+            //返回1说明用户名和密码均正确
+            if (result == PWD_TRUE) {
                 //保存用户名和密码
                 editor.putString("USER_NAME", userName);
                 editor.putString("PASSWORD", userPwd);
@@ -118,30 +122,35 @@ public class LoginActivity extends Activity {
                     editor.putBoolean("mRememberCheck", false);
                 }
                 editor.apply();
-
-                Intent intent = new Intent(LoginActivity.this, UserActivity.class);    //切换Login Activity至User Activity
+                //切换Login Activity至User Activity
+                Intent intent = new Intent(LoginActivity.this, UserActivity.class);
                 startActivity(intent);
                 finish();
-                Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();//登录成功提示
+                //登录成功提示
+                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
             } else if (result == PWD_FALSE) {
-                Toast.makeText(this, "抱歉，登录失败", Toast.LENGTH_SHORT).show();  //登录失败提示
+                //登录失败提示
+                Toast.makeText(this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     public void cancel() {           //注销
         if (isUserNameAndPwdValid()) {
-            String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
+            //获取当前输入的用户名和密码信息
+            String userName = mAccount.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             int result = mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if (result == PWD_TRUE) {                                             //返回1说明用户名和密码均正确
-                Toast.makeText(this, "您的账号已成功注销", Toast.LENGTH_SHORT).show();
+            if (result == PWD_TRUE) {                                             
+                //返回1说明用户名和密码均正确
+                Toast.makeText(this, getString(R.string.account_remove_success), Toast.LENGTH_SHORT).show();
 //                <span style="font-family: Arial;">//注销成功提示</span>
                 mPwd.setText("");
                 mAccount.setText("");
                 mUserDataManager.deleteUserDatabyname(userName);
             } else if (result == PWD_FALSE) {
-                Toast.makeText(this, "注销失败，请重试", Toast.LENGTH_SHORT).show();  //注销失败提示
+                //注销失败提示
+                Toast.makeText(this, getString(R.string.account_remove_fail), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -149,11 +158,10 @@ public class LoginActivity extends Activity {
 
     public boolean isUserNameAndPwdValid() {
         if (mAccount.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "用户名不能为空",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.user_name_empty), Toast.LENGTH_SHORT).show();
             return false;
         } else if (mPwd.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "密码不能为空",
+            Toast.makeText(this, getString(R.string.password_empty),
                     Toast.LENGTH_SHORT).show();
             return false;
         }

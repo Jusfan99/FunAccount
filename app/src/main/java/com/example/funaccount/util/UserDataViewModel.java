@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.funaccount.R;
 import com.example.funaccount.retrofit.GetUserData;
 import com.example.funaccount.retrofit.UserDataReception;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -37,7 +38,7 @@ public class UserDataViewModel extends ViewModel {
 
     private void loadUser(Context context) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.baidu.com/")
+                .baseUrl(context.getString(R.string.baidu_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //支持rxjava
                 .build();
@@ -50,7 +51,7 @@ public class UserDataViewModel extends ViewModel {
                 .subscribe(new Observer<UserDataReception>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.d(TAG, "开始采用subscribe连接");
+                        Log.d(TAG, context.getString(R.string.start_connect_by_subscribe));
                     }
 
                     @Override
@@ -61,12 +62,12 @@ public class UserDataViewModel extends ViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Toast.makeText(context, "发送请求失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.post_fail), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "成功");
+                        Log.d(TAG, context.getString(R.string.success));
                     }
                 });
     }

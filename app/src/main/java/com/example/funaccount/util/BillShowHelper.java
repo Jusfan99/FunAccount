@@ -52,12 +52,6 @@ public class BillShowHelper extends Fragment {
                 mType = itemView.findViewById(R.id.bill_type);
                 mDate = itemView.findViewById(R.id.bill_date);
                 mIsIncome = itemView.findViewById(R.id.bill_is_income);
-//                itemView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Toast.makeText(v.getContext(), "点击", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
             }
 
             public void setListener(View.OnClickListener listener) {
@@ -90,7 +84,7 @@ public class BillShowHelper extends Fragment {
             holder.mDate.setText(data.getmDate().toString());
             holder.mType.setText(data.mType);
             holder.mMoney.setText(String.valueOf(data.mMoney));
-            holder.mIsIncome.setText("收入");
+            holder.mIsIncome.setText(R.string.income);
             holder.setListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -98,7 +92,8 @@ public class BillShowHelper extends Fragment {
                     message.putString("date", data.getmDate().toString());
                     message.putString("type", data.getType());
                     message.putFloat("money", data.getMoney());
-                    message.putString("income", data.mIsIncome ? "收入" : "支出");
+                    message.putString("income", data.mIsIncome ?
+                            mContext.getString(R.string.income) : mContext.getString(R.string.expend));
                     message.putString("remark", data.getRemark());
 
                     FragmentManager fragmentManager = FragmentManager.findFragment(v).getChildFragmentManager();
@@ -110,7 +105,7 @@ public class BillShowHelper extends Fragment {
                 }
             });
             if (!data.mIsIncome) {
-                holder.mIsIncome.setText("支出");
+                holder.mIsIncome.setText(R.string.expend);
             }
         }
 
@@ -140,17 +135,4 @@ public class BillShowHelper extends Fragment {
         recyclerView.setAdapter(billShowAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
-
-//    public void initListener(BillShowAdapter billShowAdapter){
-//        billShowAdapter.setOnItemClickListener(new BillShowAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, BillItem billItem) {
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                transaction.replace(R.id.more_msg_frag, new MoreMsgFragment(), "moreMsg");
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//            }
-//        });
-//    }
 }

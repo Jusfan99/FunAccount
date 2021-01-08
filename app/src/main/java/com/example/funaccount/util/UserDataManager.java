@@ -101,7 +101,8 @@ public class UserDataManager {
 
     //
     public Cursor fetchAllUserDatas() {
-        return mSQLiteDatabase.query(TABLE_NAME, null, null, null, null, null,
+        return mSQLiteDatabase.query(TABLE_NAME, null, null, null,
+                null, null,
                 null);
     }
 
@@ -141,7 +142,8 @@ public class UserDataManager {
     public int findUserByName(String userName) {
         Log.i(TAG, "findUserByName , userName=" + userName);
         int result = 0;
-        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME + "='" + userName + "'", null, null, null, null);
+        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null,
+                USER_NAME + "='" + userName + "'", null, null, null, null);
         if (mCursor != null) {
             result = mCursor.getCount();
             mCursor.close();
@@ -154,7 +156,9 @@ public class UserDataManager {
     public int findUserByNameAndPwd(String userName, String pwd) {
         Log.i(TAG, "findUserByNameAndPwd");
         int result = 0;
-        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME + "='" + userName + "'" + " and " + USER_PWD + "='" + pwd + "'", null, null, null, null);
+        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null,
+                USER_NAME + "='" + userName + "'" + " and " + USER_PWD + "='" + pwd + "'",
+                null, null, null, null);
         if (mCursor != null) {
             result = mCursor.getCount();
             mCursor.close();
@@ -166,7 +170,8 @@ public class UserDataManager {
     //判断是否已存在该id 用于注册分配id
     public int findUserById(String id) {
         int result = 0;
-        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, ID + "='" + id + "'", null, null, null, null);
+        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, ID + "='" + id + "'",
+                null, null, null, null);
         if (mCursor != null) {
             result = mCursor.getCount();
             mCursor.close();

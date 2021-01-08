@@ -52,7 +52,8 @@ public class ResetpwdActivity extends AppCompatActivity {
                     resetpwdCheck();
                     break;
                 case R.id.resetpwd_btn_cancel:                     //取消按钮的监听事件,由注册界面返回登录界面
-                    Intent intent_Resetpwd_to_Login = new Intent(ResetpwdActivity.this, LoginActivity.class);    //切换Resetpwd Activity至Login Activity
+                    Intent intent_Resetpwd_to_Login = new Intent(ResetpwdActivity.this,
+                            LoginActivity.class);    //切换Resetpwd Activity至Login Activity
                     startActivity(intent_Resetpwd_to_Login);
                     finish();
                     break;
@@ -67,26 +68,27 @@ public class ResetpwdActivity extends AppCompatActivity {
             String userPwdNew = mPwdNew.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
             int result = mUserDataManager.findUserByNameAndPwd(userName, userPwdOld);
-            if (result == CHECK_TRUE) {                                             //返回1说明用户名和密码均正确,继续后续操作
+            if (result == CHECK_TRUE) {
                 if (userPwdNew.equals(userPwdCheck) == false) {           //两次密码输入不一样
-                    Toast.makeText(this, "两次输入不一致", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.password_different), Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     UserData mUser = new UserData(userName, userPwdNew);
                     mUserDataManager.openDataBase();
                     boolean flag = mUserDataManager.updateUserData(mUser);
                     if (flag == false) {
-                        Toast.makeText(this, "修改失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.reset_fail), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(this, "您已修改密码", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.reset_success), Toast.LENGTH_SHORT).show();
                         mUser.pwdresetFlag = 1;
-                        Intent intent_Register_to_Login = new Intent(ResetpwdActivity.this, LoginActivity.class);    //切换User Activity至Login Activity
+                        Intent intent_Register_to_Login = new Intent(ResetpwdActivity.this,
+                                LoginActivity.class);    //切换User Activity至Login Activity
                         startActivity(intent_Register_to_Login);
                         finish();
                     }
                 }
-            } else if (result == CHECK_FALSE) {                                       //返回0说明用户名和密码不匹配，重新输入
-                Toast.makeText(this, "用户名或密码有误，请重新输入", Toast.LENGTH_SHORT).show();
+            } else if (result == CHECK_FALSE) {
+                Toast.makeText(this, getString(R.string.user_check_false), Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -98,20 +100,20 @@ public class ResetpwdActivity extends AppCompatActivity {
         int count = mUserDataManager.findUserByName(userName);
         //用户不存在时返回，给出提示文字
         if (count <= 0) {
-            Toast.makeText(this, "用户名不存在", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.username_inexistence), Toast.LENGTH_SHORT).show();
             return false;
         }
         if (mAccount.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "用户名不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.user_name_empty), Toast.LENGTH_SHORT).show();
             return false;
         } else if (mPwdOld.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.password_empty), Toast.LENGTH_SHORT).show();
             return false;
         } else if (mPwdNew.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.password_empty), Toast.LENGTH_SHORT).show();
             return false;
         } else if (mPwdCheck.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "请再次输入密码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.password_check_empty), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
