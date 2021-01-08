@@ -25,12 +25,12 @@ public class SettingFragment extends SettingItemFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.setting_frag,null);
+        View view = inflater.inflate(R.layout.setting_frag, null);
         SettingItemAdapter settingItemAdapter = new SettingItemAdapter(getActivity(), initData());
         initRecyclerView(view, settingItemAdapter);
         TextView login = view.findViewById(R.id.user_name);
         TextView mId = view.findViewById(R.id.user_id);
-        if (mLoginStatus != 1){
+        if (mLoginStatus != 1) {
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -37,7 +37,7 @@ public class UserDataManager {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            Log.i(TAG,"db.getVersion()="+db.getVersion());
+            Log.i(TAG, "db.getVersion()=" + db.getVersion());
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME + ";");
             db.execSQL(DB_CREATE);
             Log.i(TAG, "db.execSQL(DB_CREATE)");
@@ -55,24 +55,28 @@ public class UserDataManager {
         mContext = context;
         Log.i(TAG, "UserDataManager construction!");
     }
+
     //打开数据库
     public void openDataBase() throws SQLException {
         mDatabaseHelper = new DataBaseManagementHelper(mContext);
         mSQLiteDatabase = mDatabaseHelper.getWritableDatabase();
     }
+
     //关闭数据库
     public void closeDataBase() throws SQLException {
         mDatabaseHelper.close();
     }
+
     //添加新用户，即注册
     public long insertUserData(UserData userData) {
-        String userName=userData.getUserName();
-        String userPwd=userData.getUserPwd();
+        String userName = userData.getUserName();
+        String userPwd = userData.getUserPwd();
         ContentValues values = new ContentValues();
         values.put(USER_NAME, userName);
         values.put(USER_PWD, userPwd);
         return mSQLiteDatabase.insert(TABLE_NAME, ID, values);
     }
+
     //更新用户信息，如修改密码
     public boolean updateUserData(UserData userData) {
         //int id = userData.getUserId();
@@ -81,9 +85,10 @@ public class UserDataManager {
         ContentValues values = new ContentValues();
         values.put(USER_NAME, userName);
         values.put(USER_PWD, userPwd);
-        return mSQLiteDatabase.update(TABLE_NAME, values,null, null) > 0;
+        return mSQLiteDatabase.update(TABLE_NAME, values, null, null) > 0;
         //return mSQLiteDatabase.update(TABLE_NAME, values, ID + "=" + id, null) > 0;
     }
+
     //
     public Cursor fetchUserData(int id) throws SQLException {
         Cursor mCursor = mSQLiteDatabase.query(false, TABLE_NAME, null, ID
@@ -93,19 +98,23 @@ public class UserDataManager {
         }
         return mCursor;
     }
+
     //
     public Cursor fetchAllUserDatas() {
         return mSQLiteDatabase.query(TABLE_NAME, null, null, null, null, null,
                 null);
     }
+
     //根据id删除用户
     public boolean deleteUserData(int id) {
         return mSQLiteDatabase.delete(TABLE_NAME, ID + "=" + id, null) > 0;
     }
+
     //根据用户名注销
     public boolean deleteUserDatabyname(String name) {
         return mSQLiteDatabase.delete(TABLE_NAME, USER_NAME + "=" + name, null) > 0;
     }
+
     //删除所有用户
     public boolean deleteAllUserDatas() {
         return mSQLiteDatabase.delete(TABLE_NAME, null, null) > 0;
@@ -119,6 +128,7 @@ public class UserDataManager {
         mCursor.close();
         return columnValue;
     }
+
     //
     public boolean updateUserDataById(String columnName, int id,
                                       String columnValue) {
@@ -126,35 +136,38 @@ public class UserDataManager {
         values.put(columnName, columnValue);
         return mSQLiteDatabase.update(TABLE_NAME, values, ID + "=" + id, null) > 0;
     }
+
     //根据用户名找用户，可以判断注册时用户名是否已经存在
-    public int findUserByName(String userName){
-        Log.i(TAG,"findUserByName , userName="+userName);
+    public int findUserByName(String userName) {
+        Log.i(TAG, "findUserByName , userName=" + userName);
         int result = 0;
-        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME+"='"+userName+"'", null, null, null, null);
-        if(mCursor != null){
+        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME + "='" + userName + "'", null, null, null, null);
+        if (mCursor != null) {
             result = mCursor.getCount();
             mCursor.close();
             Log.i(TAG, "findUserByName , result=" + result);
         }
         return result;
     }
+
     //根据用户名和密码找用户，用于登录
-    public int findUserByNameAndPwd(String userName,String pwd){
-        Log.i(TAG,"findUserByNameAndPwd");
+    public int findUserByNameAndPwd(String userName, String pwd) {
+        Log.i(TAG, "findUserByNameAndPwd");
         int result = 0;
-        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME+"='"+userName+"'"+" and "+USER_PWD+"='"+pwd+"'", null, null, null, null);
-        if(mCursor != null){
+        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, USER_NAME + "='" + userName + "'" + " and " + USER_PWD + "='" + pwd + "'", null, null, null, null);
+        if (mCursor != null) {
             result = mCursor.getCount();
             mCursor.close();
             Log.i(TAG, "findUserByNameAndPwd , result=" + result);
         }
         return result;
     }
+
     //判断是否已存在该id 用于注册分配id
-    public int findUserById(String id){
+    public int findUserById(String id) {
         int result = 0;
-        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, ID+"='"+id+"'", null, null, null, null);
-        if (mCursor != null){
+        Cursor mCursor = mSQLiteDatabase.query(TABLE_NAME, null, ID + "='" + id + "'", null, null, null, null);
+        if (mCursor != null) {
             result = mCursor.getCount();
             mCursor.close();
             Log.i(TAG, "findUserById , result=" + result);

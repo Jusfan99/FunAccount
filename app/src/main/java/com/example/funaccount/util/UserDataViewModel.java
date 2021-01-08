@@ -27,7 +27,7 @@ public class UserDataViewModel extends ViewModel {
     private UserData mUserData;
     private MutableLiveData<UserData> mUser;
 
-    public LiveData<UserData> getUser(Context context){
+    public LiveData<UserData> getUser(Context context) {
         if (mUser == null) {
             mUser = new MutableLiveData<UserData>();
             loadUser(context);
@@ -66,7 +66,7 @@ public class UserDataViewModel extends ViewModel {
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG,"成功");
+                        Log.d(TAG, "成功");
                     }
                 });
     }

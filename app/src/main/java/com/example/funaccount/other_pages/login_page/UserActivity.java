@@ -30,21 +30,23 @@ public class UserActivity extends AppCompatActivity {
         UserDataViewModel model = new ViewModelProvider(this).get(UserDataViewModel.class);
         model.getUser(this).observe(this, userData -> {
             mResponseId = findViewById(R.id.response_id);
-            String userId = "id:"+userData.getUserId()+" name:"+userData.getUserName();
+            String userId = "id:" + userData.getUserId() + " name:" + userData.getUserName();
             mResponseId.setText(userId);
             mUserData = userData;
         });
     }
+
     public void backToLogin(View view) {
-        Intent intent3 = new Intent(UserActivity.this,LoginActivity.class) ;
+        Intent intent3 = new Intent(UserActivity.this, LoginActivity.class);
         startActivity(intent3);
         finish();
     }
-    public void backToSetting(View view){
-        Intent intent = new Intent(UserActivity.this,MainActivity.class);
-        intent.putExtra("userName",mUserData.getUserName());
-        intent.putExtra("userId",mUserData.getUserId());
-        intent.putExtra("status",1);
+
+    public void backToSetting(View view) {
+        Intent intent = new Intent(UserActivity.this, MainActivity.class);
+        intent.putExtra("userName", mUserData.getUserName());
+        intent.putExtra("userId", mUserData.getUserId());
+        intent.putExtra("status", 1);
         startActivity(intent);
         finish();
     }

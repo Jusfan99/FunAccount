@@ -8,17 +8,17 @@ public class BillItem implements Serializable {
     public float mMoney;
     public String mRemark;
     public int mId;
-    public Date date;
+    public Date mDate;
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setmDate(Date mDate) {
+        this.mDate = mDate;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getmDate() {
+        return mDate;
     }
 
-    public BillItem(){
+    public BillItem() {
     }
 
     public BillItem(float money, String type, boolean isIncome) {

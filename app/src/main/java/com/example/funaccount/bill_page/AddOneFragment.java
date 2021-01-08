@@ -72,55 +72,58 @@ public class AddOneFragment extends Fragment {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         mDate = new Date(year, month, day);
         mAccountRecord.setDate(mDate);
-        if(contentIsOk()) {
+        if (contentIsOk()) {
             long flag = mRecordManager.insertAccountRecord(mAccountRecord);
-            if(flag == -1)
+            if (flag == -1) {
                 Toast.makeText(this.getContext(), "记账失败", Toast.LENGTH_SHORT).show();
-            else {
+            } else {
                 Toast.makeText(this.getContext(), "已记录", Toast.LENGTH_SHORT).show();
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.remove(fragmentManager.findFragmentByTag("addOne"));
                 transaction.commit();
             }
-        }else {
+        } else {
             Toast.makeText(this.getContext(), "请检查填写情况", Toast.LENGTH_SHORT).show();
         }
     }
+
     //定义CheckBox监听器
     CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener
             = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if(isChecked) {
-                if(buttonView.getText().toString().equals(mIncome.getText().toString())){
+            if (isChecked) {
+                if (buttonView.getText().toString().equals(mIncome.getText().toString())) {
                     cancleAnother(mExpend);
-                }else {
+                } else {
                     cancleAnother(mIncome);
                 }
             }
         }
+
         //实现单选
-        public void cancleAnother(CheckBox checkBox){
-            if(checkBox.isChecked()) {
+        public void cancleAnother(CheckBox checkBox) {
+            if (checkBox.isChecked()) {
                 checkBox.setChecked(false);
             }
         }
     };
-//    合法性判断和数据存储
+
+    //    合法性判断和数据存储
     public boolean contentIsOk() {
-        if(mMoneyEdit.getText().toString().trim().equals("")) {
+        if (mMoneyEdit.getText().toString().trim().equals("")) {
             return false;
         }
         float money = Float.parseFloat(mMoneyEdit.getText().toString().trim());
         String type = mTypeEdit.getText().toString().trim();
         String remark = mRemarkEdit.getText().toString().trim();
-        if(type.equals("") || (!mIncome.isChecked() && !mExpend.isChecked())) {
+        if (type.equals("") || (!mIncome.isChecked() && !mExpend.isChecked())) {
             return false;
-        }else if(money <= 0) {
+        } else if (money <= 0) {
             Toast.makeText(this.getContext(), "您填写的金额不合理", Toast.LENGTH_SHORT).show();
             return false;
-        }else {
+        } else {
             mAccountRecord.setMoney(money);
             mAccountRecord.setRemark(remark);
             mAccountRecord.setType(type);

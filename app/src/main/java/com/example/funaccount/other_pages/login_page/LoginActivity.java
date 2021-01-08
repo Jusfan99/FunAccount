@@ -47,18 +47,18 @@ public class LoginActivity extends Activity {
         mRegisterButton = (Button) findViewById(R.id.login_btn_register);
         mLoginButton = (Button) findViewById(R.id.login_btn_login);
         mCancleButton = (Button) findViewById(R.id.login_btn_cancle);
-        mLoginView =findViewById(R.id.login_view);
-        mLoginSuccessView =findViewById(R.id.login_success_view);
-        mLoginSuccessShow =(TextView) findViewById(R.id.login_success_show);
+        mLoginView = findViewById(R.id.login_view);
+        mLoginSuccessView = findViewById(R.id.login_success_view);
+        mLoginSuccessShow = (TextView) findViewById(R.id.login_success_show);
         mChangepwdText = (TextView) findViewById(R.id.login_text_change_pwd);
         mRememberCheck = (CheckBox) findViewById(R.id.Login_Remember);
 
         mLoginSp = getSharedPreferences("userInfo", 0);
-        String name= mLoginSp.getString("USER_NAME", "");
+        String name = mLoginSp.getString("USER_NAME", "");
         String pwd = mLoginSp.getString("PASSWORD", "");
         //boolean choseAutoLogin =login_sp.getBoolean("mAutologinCheck", false);
         //如果上次选了记住密码，那进入登录页面也自动勾选记住密码，并填上用户名和密码
-        if(mLoginSp.getBoolean("mRememberCheck", false)){
+        if (mLoginSp.getBoolean("mRememberCheck", false)) {
             mAccount.setText(name);
             mPwd.setText(pwd);
             mRememberCheck.setChecked(true);
@@ -77,7 +77,7 @@ public class LoginActivity extends Activity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.login_btn_register:                            //登录界面的注册按钮
-                    Intent intent_Login_to_Register = new Intent(LoginActivity.this,RegisterActivity.class) ;
+                    Intent intent_Login_to_Register = new Intent(LoginActivity.this, RegisterActivity.class);
                     startActivity(intent_Login_to_Register);
                     finish();
                     break;
@@ -88,62 +88,65 @@ public class LoginActivity extends Activity {
                     cancel();
                     break;
                 case R.id.login_text_change_pwd:                             //登录界面的修改密码按钮
-                    Intent intent_Login_to_reset = new Intent(LoginActivity.this,ResetpwdActivity.class) ;
+                    Intent intent_Login_to_reset = new Intent(LoginActivity.this, ResetpwdActivity.class);
                     startActivity(intent_Login_to_reset);
                     finish();
                     break;
             }
-            if(mUserDataManager != null){
+            if (mUserDataManager != null) {
                 mUserDataManager.closeDataBase();
                 mUserDataManager = null;
             }
         }
     };
+
     public void login() {                                              //登录按钮监听事件
         if (isUserNameAndPwdValid()) {
             String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
             SharedPreferences.Editor editor = mLoginSp.edit();
             //mUserDataManager.deleteAllUserDatas();
-            int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if (result== PWD_TRUE){                                                 //返回1说明用户名和密码均正确
+            int result = mUserDataManager.findUserByNameAndPwd(userName, userPwd);
+            if (result == PWD_TRUE) {                                                 //返回1说明用户名和密码均正确
                 //保存用户名和密码
                 editor.putString("USER_NAME", userName);
                 editor.putString("PASSWORD", userPwd);
                 //是否记住密码
-                if(mRememberCheck.isChecked()){
+                if (mRememberCheck.isChecked()) {
                     editor.putBoolean("mRememberCheck", true);
-                }else{
+                } else {
                     editor.putBoolean("mRememberCheck", false);
                 }
                 editor.apply();
 
-                Intent intent = new Intent(LoginActivity.this,UserActivity.class) ;    //切换Login Activity至User Activity
+                Intent intent = new Intent(LoginActivity.this, UserActivity.class);    //切换Login Activity至User Activity
                 startActivity(intent);
                 finish();
-                Toast.makeText(this, "登陆成功",Toast.LENGTH_SHORT).show();//登录成功提示
-            }else if (result== PWD_FALSE){
-                Toast.makeText(this, "抱歉，登录失败",Toast.LENGTH_SHORT).show();  //登录失败提示
+                Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();//登录成功提示
+            } else if (result == PWD_FALSE) {
+                Toast.makeText(this, "抱歉，登录失败", Toast.LENGTH_SHORT).show();  //登录失败提示
             }
         }
     }
+
     public void cancel() {           //注销
         if (isUserNameAndPwdValid()) {
             String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
-            int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if(result== PWD_TRUE){                                             //返回1说明用户名和密码均正确
-                Toast.makeText(this, "您的账号已成功注销",Toast.LENGTH_SHORT).show();
+            int result = mUserDataManager.findUserByNameAndPwd(userName, userPwd);
+            if (result == PWD_TRUE) {                                             //返回1说明用户名和密码均正确
+                Toast.makeText(this, "您的账号已成功注销", Toast.LENGTH_SHORT).show();
 //                <span style="font-family: Arial;">//注销成功提示</span>
                 mPwd.setText("");
                 mAccount.setText("");
                 mUserDataManager.deleteUserDatabyname(userName);
-            }else if(result== PWD_FALSE){
-                Toast.makeText(this, "注销失败，请重试",Toast.LENGTH_SHORT).show();  //注销失败提示
+            } else if (result == PWD_FALSE) {
+                Toast.makeText(this, "注销失败，请重试", Toast.LENGTH_SHORT).show();  //注销失败提示
             }
         }
 
     }
+
     public boolean isUserNameAndPwdValid() {
         if (mAccount.getText().toString().trim().equals("")) {
             Toast.makeText(this, "用户名不能为空",

@@ -15,6 +15,6 @@ public class WeekChartFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.weekchart_frag,container,false);
+        return inflater.inflate(R.layout.weekchart_frag, container, false);
     }
 }

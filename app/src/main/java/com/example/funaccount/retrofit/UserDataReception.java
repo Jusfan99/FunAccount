@@ -7,7 +7,7 @@ public class UserDataReception {
     private int status;
     private UserData userData;
 
-    public UserData getUserData(){
+    public UserData getUserData() {
         return userData;
     }
 }

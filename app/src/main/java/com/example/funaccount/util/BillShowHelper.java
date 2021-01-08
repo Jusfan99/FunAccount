@@ -1,16 +1,14 @@
 package com.example.funaccount.util;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.sip.SipSession;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
 import com.example.funaccount.bill_page.MoreMsgFragment;
 
@@ -47,6 +45,7 @@ public class BillShowHelper extends Fragment {
             public TextView mType;
             public TextView mDate;
             public TextView mIsIncome;
+
             public MyViewHolder(View itemView) {
                 super(itemView);
                 mMoney = itemView.findViewById(R.id.bill_money);
@@ -60,6 +59,7 @@ public class BillShowHelper extends Fragment {
 //                    }
 //                });
             }
+
             public void setListener(View.OnClickListener listener) {
                 itemView.setOnClickListener(listener);
             }
@@ -80,20 +80,26 @@ public class BillShowHelper extends Fragment {
         @Override
         public BillShowHelper.BillShowAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent
                 , int viewType) {
-            View itemView = View.inflate(mContext,R.layout.bill_item_show,null);
+            View itemView = View.inflate(mContext, R.layout.bill_item_show, null);
             return new MyViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             BillItem data = mBillItems.get(position);
-            holder.mDate.setText(data.getDate().toString());
+            holder.mDate.setText(data.getmDate().toString());
             holder.mType.setText(data.mType);
             holder.mMoney.setText(String.valueOf(data.mMoney));
             holder.mIsIncome.setText("收入");
             holder.setListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    intent.putExtra("date", data.getmDate().toString());
+                    intent.putExtra("type", data.getType());
+                    intent.putExtra("money", data.getMoney());
+                    intent.putExtra("income", data.mIsIncome ? "收入" : "支出");
+                    intent.putExtra("remark", data.getRemark());
                     FragmentManager fragmentManager = FragmentManager.findFragment(v).getChildFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
                     transaction.replace(R.id.more_msg_frag, new MoreMsgFragment(), "moreMsg");
@@ -101,7 +107,7 @@ public class BillShowHelper extends Fragment {
                     transaction.commit();
                 }
             });
-            if(!data.mIsIncome) {
+            if (!data.mIsIncome) {
                 holder.mIsIncome.setText("支出");
             }
         }
@@ -111,7 +117,6 @@ public class BillShowHelper extends Fragment {
             return mBillItems.size();
         }
     }
-
 
     @Nullable
     @Override

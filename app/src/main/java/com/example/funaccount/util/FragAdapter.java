@@ -11,15 +11,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class FragAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragments;
-    public FragAdapter(FragmentManager fm,List<Fragment> mFragments){
+
+    public FragAdapter(FragmentManager fm, List<Fragment> mFragments) {
         super(fm);
         this.mFragments = mFragments;
     }
+
     @NonNull
     @Override
     public Fragment getItem(int position) {
         return mFragments.get(position);
     }
+
     @Override
     public int getCount() {
         return mFragments.size();

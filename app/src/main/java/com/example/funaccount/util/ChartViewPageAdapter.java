@@ -10,9 +10,11 @@ import androidx.viewpager.widget.PagerAdapter;
 
 public class ChartViewPageAdapter extends PagerAdapter {
     private List<View> mViewList;
-    public void AdapterViewpager(List<View> mViewList){
+
+    public void AdapterViewpager(List<View> mViewList) {
         this.mViewList = mViewList;
     }
+
     @Override
     public int getCount() {
         return mViewList.size();
@@ -27,7 +29,7 @@ public class ChartViewPageAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == mViewList.get((int)Integer.parseInt(object.toString()));
+        return view == mViewList.get((int) Integer.parseInt(object.toString()));
     }
 
     @Override

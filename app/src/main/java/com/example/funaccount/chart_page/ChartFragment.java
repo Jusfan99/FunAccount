@@ -31,8 +31,8 @@ public class ChartFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(mView == null){
-            mView = inflater.inflate(R.layout.chart_frag,container,false);
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.chart_frag, container, false);
             dataBind(mView);
         } else {
             ViewGroup parent = (ViewGroup) mView.getParent();
@@ -43,8 +43,8 @@ public class ChartFragment extends Fragment {
         return mView;
     }
 
-    public void dataBind(View view){
-        FragAdapter adapter = new FragAdapter(getChildFragmentManager(),mfragments);
+    public void dataBind(View view) {
+        FragAdapter adapter = new FragAdapter(getChildFragmentManager(), mfragments);
         ViewPager viewPager = view.findViewById(R.id.viewpaper_chart);
         viewPager.setAdapter(adapter);
         TabLayout tableLayout = view.findViewById(R.id.chart_tab);
@@ -57,7 +57,8 @@ public class ChartFragment extends Fragment {
         TabLayout.Tab tab3 = tableLayout.getTabAt(2);
         tab3.setText("今年");
     }
-    public void initData(){
+
+    public void initData() {
         mfragments.add(new WeekChartFragment());
         mfragments.add(new MonthChartFragment());
         mfragments.add(new YearChartFragment());

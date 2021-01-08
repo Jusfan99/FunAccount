@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mUserName = intent.getStringExtra("userName");
         mUserId = intent.getStringExtra("userId");
-        mLoginStatus = intent.getIntExtra("status",0);
+        mLoginStatus = intent.getIntExtra("status", 0);
         //隐藏标题
         if (getSupportActionBar() != null){
             getSupportActionBar().hide();

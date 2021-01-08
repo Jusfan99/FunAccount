@@ -8,23 +8,27 @@ public class SettingItem implements Serializable {
     public int mImagId; //icon
     public String mItemName;
 
-    public SettingItem(){
+    public SettingItem() {
     }
 
-    public SettingItem(int imgPath,String itemName){
+    public SettingItem(int imgPath, String itemName) {
         this.mImagId = imgPath;
         this.mItemName = itemName;
     }
-    public Object getImgPath(){
+
+    public Object getImgPath() {
         return mImagId;
     }
-    public String getItemName(){
+
+    public String getItemName() {
         return mItemName;
     }
-    public void setImgPath(int imgPath){
+
+    public void setImgPath(int imgPath) {
         this.mImagId = imgPath;
     }
-    public void setItemName(String itemName){
+
+    public void setItemName(String itemName) {
         this.mItemName = itemName;
     }
 

@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 public class BillFragment extends BillShowHelper {
     Button mAddOneBtn;
     BillShowAdapter billShowAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container
@@ -36,6 +37,7 @@ public class BillFragment extends BillShowHelper {
         initRecyclerView(view, billShowAdapter);
         return view;
     }
+
     //Fragment切换
     private void addoneFragmentShow(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

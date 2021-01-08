@@ -1,9 +1,10 @@
 package com.example.funaccount.util;
 
 public class Date {
-    int year;
-    int month;
-    int day;
+    int mYear;
+    int mMonth;
+    int mDay;
+
     public Date(int year, int month, int day) {
         setYear(year);
         setMonth(month);
@@ -11,30 +12,30 @@ public class Date {
     }
 
     public int getYear() {
-        return year;
+        return mYear;
     }
 
     public int getMonth() {
-        return month;
+        return mMonth;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setYear(int mYear) {
+        this.mYear = mYear;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
+    public void setMonth(int mMonth) {
+        this.mMonth = mMonth;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public void setDay(int mDay) {
+        this.mDay = mDay;
     }
 
     public int getDay() {
-        return day;
+        return mDay;
     }
 
     public String toString() {
-        return String.valueOf(year) + "年" + String.valueOf(month) + "月" + String.valueOf(day) + "日";
+        return String.valueOf(mYear) + "年" + String.valueOf(mMonth) + "月" + String.valueOf(mDay) + "日";
     }
 }
