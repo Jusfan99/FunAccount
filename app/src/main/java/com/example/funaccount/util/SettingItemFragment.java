@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.funaccount.R;
 
@@ -47,6 +48,10 @@ public class SettingItemFragment extends Fragment {
                     }
                 });
             }
+
+            public void setListener(View.OnClickListener listener) {
+                itemView.setOnClickListener(listener);
+            }
         }
 
         //设置item的监听接口
@@ -73,6 +78,22 @@ public class SettingItemFragment extends Fragment {
             SettingItem data = mSettingItems.get(position);
             holder.mItemName.setText(data.mItemName);
             holder.mItemImage.setImageResource(data.mImagId);
+            switch (data.getItemName()) {
+                case ("预算中心"):
+                case ("高级功能"):
+                case ("账号设置"):
+                case ("其他设置"):
+                case ("常见问题"):
+                case ("关于我们"):
+                case ("好评鼓励"): {
+                    holder.setListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(v.getContext(), "暂不支持", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
         }
 
         @Override

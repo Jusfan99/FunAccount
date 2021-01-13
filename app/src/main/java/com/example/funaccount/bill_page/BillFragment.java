@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.funaccount.R;
 import com.example.funaccount.util.BillShowHelper;
@@ -18,7 +19,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class BillFragment extends BillShowHelper {
     Button mAddOneBtn;
-    BillShowAdapter billShowAdapter;
+    BillShowAdapter mBillShowAdapter;
+    TextView mNoBillToday;
 
     @Nullable
     @Override
@@ -26,15 +28,21 @@ public class BillFragment extends BillShowHelper {
             , @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bill_frag, null);
         mAddOneBtn = view.findViewById(R.id.addone_btn);
+        mNoBillToday = view.findViewById(R.id.no_bill_today);
+        mNoBillToday.setVisibility(View.GONE);
         mAddOneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addoneFragmentShow(new AddOneFragment());
             }
         });
-        billShowAdapter = new BillShowAdapter(getActivity(), initData());
+        mBillShowAdapter = new BillShowAdapter(getActivity(), initData());
 //        initListener(billShowAdapter);
-        initRecyclerView(view, billShowAdapter);
+        initRecyclerView(view, mBillShowAdapter);
+
+        if (mBillShowAdapter.getItemCount() == 0) {
+            mNoBillToday.setVisibility(View.VISIBLE);
+        }
         return view;
     }
 
@@ -42,6 +50,7 @@ public class BillFragment extends BillShowHelper {
     private void addoneFragmentShow(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_enter_anim);
         transaction.replace(R.id.add_one_frag, fragment, "addOne");
         transaction.addToBackStack(null);
         transaction.commit();
@@ -59,7 +68,7 @@ public class BillFragment extends BillShowHelper {
     }
 
     private void updateUi() {
-        billShowAdapter = new BillShowAdapter(getActivity(), initData());
-        initRecyclerView(getView(), billShowAdapter);
+        mBillShowAdapter = new BillShowAdapter(getActivity(), initData());
+        initRecyclerView(getView(), mBillShowAdapter);
     }
 }

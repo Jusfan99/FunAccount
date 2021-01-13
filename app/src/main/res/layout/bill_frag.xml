@@ -15,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:text="标语"
-        android:textColor="#403E3E"
+        android:text="拥抱每一种生活"
+        android:textColor="#3399cc"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -37,6 +37,19 @@
         app:layout_constraintRight_toRightOf="parent"
         android:stateListAnimator="@null"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/no_bill_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/addone_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="100dp"
+        android:text="您今天还没有记账"
+        android:textSize="30sp"
+        android:textColor="@color/purple_200"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@+id/addone_btn"

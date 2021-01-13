@@ -13,6 +13,7 @@ import com.example.funaccount.R;
 import com.example.funaccount.bill_page.MoreMsgFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -126,7 +127,8 @@ public class BillShowHelper extends Fragment {
         AccountRecordManager mRecordManager = new AccountRecordManager(this.getContext());
         mRecordManager.openDataBase();
         ArrayList<BillItem> billItems = new ArrayList<BillItem>();
-        mRecordManager.getAllRecord(billItems);
+        mRecordManager.getTodayRecord(billItems, Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         return billItems;
     }
 

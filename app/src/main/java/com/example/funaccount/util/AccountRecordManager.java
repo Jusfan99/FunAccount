@@ -112,4 +112,56 @@ public class AccountRecordManager {
             cursor.close();
         }
     }
+
+    public void getMonthRecord(ArrayList<BillItem> billItems, int year, int month) {
+        Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
+                        + "' and " + YEAR + "='" + year + "'",
+                null, null, null, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    String type = cursor.getString(cursor.getColumnIndex(TYPE));
+                    String remark = cursor.getString(cursor.getColumnIndex(REMARK));
+                    int id = cursor.getInt(cursor.getColumnIndex(RECORD_ID));
+                    float money = cursor.getFloat(cursor.getColumnIndex(MONEY));
+                    boolean isIncome = cursor.getInt(cursor.getColumnIndex(IS_INCOME)) == 1;
+                    Date date = new Date(cursor.getInt(cursor.getColumnIndex(YEAR)),
+                            cursor.getInt(cursor.getColumnIndex(MONTH)), cursor.getInt(cursor.getColumnIndex(DAY)));
+                    BillItem billItem = new BillItem(money, type, isIncome);
+                    billItem.mRemark = remark;
+                    billItem.mId = id;
+                    billItem.setmDate(date);
+                    billItems.add(0, billItem);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public void getTodayRecord(ArrayList<BillItem> billItems, int year, int month, int day) {
+        Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
+                        + "' and " + YEAR + "='" + year + "' and " + DAY + "='" + day + "'",
+                null, null, null, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    String type = cursor.getString(cursor.getColumnIndex(TYPE));
+                    String remark = cursor.getString(cursor.getColumnIndex(REMARK));
+                    int id = cursor.getInt(cursor.getColumnIndex(RECORD_ID));
+                    float money = cursor.getFloat(cursor.getColumnIndex(MONEY));
+                    boolean isIncome = cursor.getInt(cursor.getColumnIndex(IS_INCOME)) == 1;
+                    Date date = new Date(cursor.getInt(cursor.getColumnIndex(YEAR)),
+                            cursor.getInt(cursor.getColumnIndex(MONTH)), cursor.getInt(cursor.getColumnIndex(DAY)));
+                    BillItem billItem = new BillItem(money, type, isIncome);
+                    billItem.mRemark = remark;
+                    billItem.mId = id;
+                    billItem.setmDate(date);
+                    billItems.add(0, billItem);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            cursor.close();
+        }
+    }
 }
