@@ -36,9 +36,8 @@ public class BillFragment extends BillShowHelper {
                 addoneFragmentShow(new AddOneFragment());
             }
         });
-        mBillShowAdapter = new BillShowAdapter(getActivity(), initData());
-//        initListener(billShowAdapter);
-        initRecyclerView(view, mBillShowAdapter);
+        mBillShowAdapter = new BillShowAdapter(getActivity(), initBillData());
+        initRecyclerView(view.findViewById(R.id.bill_show_recycler), mBillShowAdapter);
 
         if (mBillShowAdapter.getItemCount() == 0) {
             mNoBillToday.setVisibility(View.VISIBLE);
@@ -68,7 +67,7 @@ public class BillFragment extends BillShowHelper {
     }
 
     private void updateUi() {
-        mBillShowAdapter = new BillShowAdapter(getActivity(), initData());
-        initRecyclerView(getView(), mBillShowAdapter);
+        mBillShowAdapter = new BillShowAdapter(getActivity(), initBillData());
+        initRecyclerView(getView().findViewById(R.id.bill_show_recycler), mBillShowAdapter);
     }
 }
