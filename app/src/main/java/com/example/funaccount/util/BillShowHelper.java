@@ -1,14 +1,12 @@
 package com.example.funaccount.util;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
 import com.example.funaccount.bill_page.MoreMsgFragment;
 
@@ -82,7 +80,7 @@ public class BillShowHelper extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             BillItem data = mBillItems.get(position);
-            holder.mDate.setText(data.getmDate().toString());
+            holder.mDate.setText(data.getDate().toString());
             holder.mType.setText(data.mType);
             holder.mMoney.setText(String.valueOf(data.mMoney));
             holder.mIsIncome.setText(R.string.income);
@@ -90,7 +88,7 @@ public class BillShowHelper extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Bundle message = new Bundle();
-                    message.putString("date", data.getmDate().toString());
+                    message.putString("date", data.getDate().toString());
                     message.putString("type", data.getType());
                     message.putFloat("money", data.getMoney());
                     message.putString("income", data.mIsIncome ?
@@ -123,7 +121,7 @@ public class BillShowHelper extends Fragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public ArrayList<BillItem> initBillData() {
+    public ArrayList<BillItem> todayBillList() {
         AccountRecordManager mRecordManager = new AccountRecordManager(this.getContext());
         mRecordManager.openDataBase();
         ArrayList<BillItem> billItems = new ArrayList<BillItem>();
@@ -132,11 +130,19 @@ public class BillShowHelper extends Fragment {
         return billItems;
     }
 
-    public ArrayList<BillItem> initAllData() {
+    public ArrayList<BillItem> allBillList() {
         AccountRecordManager mRecordManager = new AccountRecordManager(this.getContext());
         mRecordManager.openDataBase();
         ArrayList<BillItem> billItems = new ArrayList<BillItem>();
         mRecordManager.getAllRecord(billItems);
+        return billItems;
+    }
+
+    public ArrayList<BillItem> monthBillList(int year, int month) {
+        AccountRecordManager mRecordManager = new AccountRecordManager(this.getContext());
+        mRecordManager.openDataBase();
+        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
+        mRecordManager.getMonthRecord(billItems, year, month);
         return billItems;
     }
 

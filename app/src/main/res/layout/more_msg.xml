@@ -14,7 +14,7 @@
         android:id="@+id/imageView"
         android:layout_width="350dp"
         android:layout_height="400dp"
-        android:background="#CCD7E151"
+        android:background="#CCF0FFF0"
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -120,10 +120,10 @@
 
     <Button
         android:id="@+id/more_msg_close"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:background="@drawable/close"
-        app:backgroundTint="#FFFFFF"
+        app:backgroundTint="#009933"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

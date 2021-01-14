@@ -14,14 +14,16 @@
         android:layout_marginTop="20dp"
         android:id="@+id/detail_title">
 
-        <ImageView
+        <Button
+            android:id="@+id/turn_left_item"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:id="@+id/turn_left_item"
-            android:src="@drawable/left"/>
+            android:background="@drawable/left"
+            app:backgroundTint="#575757" />
 
         <TextView
+            android:id="@+id/checked_month"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"
@@ -31,12 +33,13 @@
             android:textColor="#3399FF"
             android:layout_gravity="center"/>
 
-        <ImageView
+        <Button
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:id="@+id/turn_right_item"
             android:layout_gravity="center"
-            android:src="@drawable/right"/>
+            android:background="@drawable/right"
+            app:backgroundTint="#575757"/>
 
     </LinearLayout>
 

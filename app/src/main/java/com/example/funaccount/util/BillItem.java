@@ -10,11 +10,11 @@ public class BillItem implements Serializable {
     public int mId;
     public Date mDate;
 
-    public void setmDate(Date mDate) {
+    public void setDate(Date mDate) {
         this.mDate = mDate;
     }
 
-    public Date getmDate() {
+    public Date getDate() {
         return mDate;
     }
 
