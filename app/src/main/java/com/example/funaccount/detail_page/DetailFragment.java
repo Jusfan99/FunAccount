@@ -1,5 +1,9 @@
 package com.example.funaccount.detail_page;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +35,7 @@ public class DetailFragment extends BillShowHelper {
     TextView mSumIncomeText;
     TextView mSumExpendText;
     AccountRecordManager mRecordManager;
+    TextView mMonthEmpty;
 
     private ArrayList<String> mMonths;
     private int mShowYear;
@@ -38,6 +44,9 @@ public class DetailFragment extends BillShowHelper {
     private int mNextClickCount = 0;
     private float mSumIncome;
     private float mSunExpend;
+    private IntentFilter intentFilter;
+    private LocalReceiver localReceiver;    //本地广播接收者
+    private LocalBroadcastManager localBroadcastManager;   //本地广播管理者   可以用来注册广播
 
     private final int mThisYear = Calendar.getInstance().get(Calendar.YEAR);
     private final int mThisMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
@@ -51,16 +60,23 @@ public class DetailFragment extends BillShowHelper {
         mRecordManager = initDataBase();
         initMonthList(mMonths);
         initUi(view);
+        localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        localReceiver = new LocalReceiver();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(LOCAL_BROADCAST);   //添加action
+        localBroadcastManager.registerReceiver(localReceiver,intentFilter);
         return view;
     }
 
     private void initUi(View view) {
         mShowMonth = mThisMonth;
         mShowYear = mThisYear;
-        mBillShowAdapter = new BillShowAdapter(getActivity(), monthBillList(mShowYear, mShowMonth, mRecordManager));
+        mMonthEmpty = view.findViewById(R.id.month_detail_empty);
 
         mRecyclerView = view.findViewById(R.id.detail_show_bill);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mBillShowAdapter = new BillShowAdapter(getActivity(),
+                monthBillList(mShowYear, mShowMonth, mRecordManager));
         initRecyclerView(mRecyclerView, mBillShowAdapter);
         mCheckedMonth = view.findViewById(R.id.checked_month);
         mCheckedMonth.setText(mMonths.get(0));
@@ -68,9 +84,7 @@ public class DetailFragment extends BillShowHelper {
         mNextMonth = view.findViewById(R.id.turn_right_item);
         mSumExpendText = view.findViewById(R.id.month_expend_sum);
         mSumIncomeText = view.findViewById(R.id.month_income_sum);
-
-        mSumIncomeText.setText(String.valueOf(sumIncome(monthBillList(mShowYear, mShowMonth, mRecordManager))));
-        mSumExpendText.setText(String.valueOf(sumExpend(monthBillList(mShowYear, mShowMonth, mRecordManager))));
+        updateUi(mShowYear, mShowMonth);
 
         mLastMonth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +135,14 @@ public class DetailFragment extends BillShowHelper {
     }
 
     private void updateUi(int year, int month) {
-        mBillShowAdapter.setBillItems(monthBillList(year, month, mRecordManager));
+        if(monthBillList(year, month, mRecordManager) != null &&
+                monthBillList(year, month, mRecordManager).size() != 0) {
+            mMonthEmpty.setVisibility(View.GONE);
+            mBillShowAdapter = new BillShowAdapter(getActivity(),
+                    monthBillList(year, month, mRecordManager));
+        } else{
+            mMonthEmpty.setVisibility(View.VISIBLE);
+        }
         initRecyclerView(mRecyclerView, mBillShowAdapter);
         mCheckedMonth.setText(monthToString(year, month));
         mSumIncomeText.setText(String.valueOf(sumIncome(monthBillList(year, month, mRecordManager))));
@@ -134,6 +155,21 @@ public class DetailFragment extends BillShowHelper {
 
     private String monthToString(int year, int month) {
         return year + "年" + month + "月";
+    }
+
+    public class LocalReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String action = intent.getAction();
+            if(!action.equals(LOCAL_BROADCAST)){
+                return ;
+            }
+            if(intent.getBooleanExtra("delete", false)) {
+                updateUi(mShowYear, mShowMonth);
+            }
+        }
     }
 }
 

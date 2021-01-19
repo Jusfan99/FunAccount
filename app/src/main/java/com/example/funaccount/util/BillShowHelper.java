@@ -3,6 +3,7 @@ package com.example.funaccount.util;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.funaccount.R;
 import com.example.funaccount.bill_page.MoreMsgFragment;
+import com.example.funaccount.detail_page.DetailFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +39,7 @@ public class BillShowHelper extends Fragment {
     public boolean mIsMoreMsgShow = false;
     private AccountRecordManager mRecordManager;
     private ArrayList<BillItem> mBillItems;
+    public static final String LOCAL_BROADCAST = "com.example.funaccount.detail_page.LOCAL_BROADCAST";
 
     public class BillShowAdapter extends RecyclerView.Adapter<BillShowAdapter.MyViewHolder> {
         public final Context mContext;
@@ -151,6 +155,11 @@ public class BillShowHelper extends Fragment {
                     removeDataFromDataBase(mBillItems.get(position).getId());
                     removeDataFromView(position);
                     backToNormal();
+
+                    LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+                    final Intent intent = new Intent(DetailFragment.LOCAL_BROADCAST);
+                    intent.putExtra("delete", true);
+                    localBroadcastManager.sendBroadcast(intent);
                 }
             });
             deleteDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {

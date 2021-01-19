@@ -2,6 +2,10 @@ package com.example.funaccount.bill_page;
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.funaccount.R;
+import com.example.funaccount.detail_page.DetailFragment;
 import com.example.funaccount.util.AccountRecordManager;
 import com.example.funaccount.util.BillItem;
 import com.example.funaccount.util.BillShowHelper;
@@ -20,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +37,9 @@ public class BillFragment extends BillShowHelper {
     static TextView mNoBillToday;
     private static RecyclerView mRecycleView;
     AccountRecordManager mRecordManager;
+    private IntentFilter intentFilter;
+    private BillFragment.LocalReceiver localReceiver;    //本地广播接收者
+    private LocalBroadcastManager localBroadcastManager;   //本地广播管理者   可以用来注册广播
 
     @Nullable
     @Override
@@ -57,6 +66,11 @@ public class BillFragment extends BillShowHelper {
         if (mBillShowAdapter.getItemCount() == 0) {
             mNoBillToday.setVisibility(View.VISIBLE);
         }
+        localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        localReceiver = new LocalReceiver();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(LOCAL_BROADCAST);   //添加action
+        localBroadcastManager.registerReceiver(localReceiver,intentFilter);
         return view;
     }
 
@@ -71,10 +85,29 @@ public class BillFragment extends BillShowHelper {
     }
 
     public static void updateView(AccountRecordManager recordManager) {
-        mNoBillToday.setVisibility(View.GONE);
         list = todayBillList(mActivity, recordManager);
-        mBillShowAdapter.setBillItems(list);
-        mRecycleView.setAdapter(mBillShowAdapter);
-        mRecycleView.setLayoutManager(new LinearLayoutManager(mActivity));
+        if(list.size() == 0) {
+            mNoBillToday.setVisibility(View.VISIBLE);
+        }else {
+            mNoBillToday.setVisibility(View.GONE);
+            mBillShowAdapter.setBillItems(list);
+            mRecycleView.setAdapter(mBillShowAdapter);
+            mRecycleView.setLayoutManager(new LinearLayoutManager(mActivity));
+        }
+    }
+
+    public class LocalReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String action = intent.getAction();
+            if(!action.equals(LOCAL_BROADCAST)){
+                return ;
+            }
+            if(intent.getBooleanExtra("delete", false)) {
+                updateView(mRecordManager);
+            }
+        }
     }
 }

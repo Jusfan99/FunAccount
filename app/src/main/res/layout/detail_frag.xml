@@ -44,6 +44,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/tongji"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -98,6 +99,18 @@
             android:textColor="#1C86EE"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/month_detail_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="您这个月没有记账"
+        app:layout_constraintTop_toBottomOf="@+id/tongji"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:textSize="35sp"
+        android:textColor="#66CCFF"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/detail_show_bill"
