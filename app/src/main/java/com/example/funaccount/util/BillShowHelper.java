@@ -1,11 +1,18 @@
 package com.example.funaccount.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.funaccount.R;
 import com.example.funaccount.bill_page.MoreMsgFragment;
@@ -17,14 +24,31 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class BillShowHelper extends Fragment {
-    public static class BillShowAdapter extends RecyclerView.Adapter<BillShowAdapter.MyViewHolder> {
-        private final Context mContext;
+    public boolean mIsMoreMsgShow = false;
+    private AccountRecordManager mRecordManager;
+    private ArrayList<BillItem> mBillItems;
+
+    public class BillShowAdapter extends RecyclerView.Adapter<BillShowAdapter.MyViewHolder> {
+        public final Context mContext;
         private ArrayList<BillItem> mBillItems;
+        private LinearLayout mItemContent;
+        private TextView mDelete;
+        private int mDeleteWidth;
+        public boolean mIsDeleteShow = false;
+        public int mScreenWidth;
+        private int mDownX;
+        private int mDownY;
+        private int mScrollY;
+        private LinearLayout.LayoutParams mLayoutParams;
 
         public ArrayList<BillItem> getBillItems() {
             return mBillItems;
@@ -37,6 +61,10 @@ public class BillShowHelper extends Fragment {
         public BillShowAdapter(Context context, ArrayList<BillItem> billItems) {
             this.mBillItems = billItems;
             this.mContext = context;
+            WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics dm = new DisplayMetrics();
+            manager.getDefaultDisplay().getMetrics(dm);
+            mScreenWidth = dm.widthPixels;
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -44,6 +72,7 @@ public class BillShowHelper extends Fragment {
             public TextView mType;
             public TextView mDate;
             public TextView mIsIncome;
+            public TextView mDelete;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -51,22 +80,13 @@ public class BillShowHelper extends Fragment {
                 mType = itemView.findViewById(R.id.bill_type);
                 mDate = itemView.findViewById(R.id.bill_date);
                 mIsIncome = itemView.findViewById(R.id.bill_is_income);
+                mDelete = itemView.findViewById(R.id.tv_delete);
             }
 
-            public void setListener(View.OnClickListener listener) {
-                itemView.setOnClickListener(listener);
+            public void setTouchListener(View.OnTouchListener onTouchListener) {
+                itemView.setOnTouchListener(onTouchListener);
             }
-        }
 
-        public interface OnItemClickListener {
-            //点击每一项的实现方法
-            public void onItemClick(View view, BillItem billItem);
-        }
-
-        private BillShowHelper.BillShowAdapter.OnItemClickListener onItemClickListener;
-
-        public void setOnItemClickListener(BillShowHelper.BillShowAdapter.OnItemClickListener onItemClickListener) {
-            this.onItemClickListener = onItemClickListener;
         }
 
         @NonNull
@@ -84,10 +104,124 @@ public class BillShowHelper extends Fragment {
             holder.mType.setText(data.mType);
             holder.mMoney.setText(String.valueOf(data.mMoney));
             holder.mIsIncome.setText(R.string.income);
-            holder.setListener(new View.OnClickListener() {
+
+            holder.setTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    updatePageStatus();
+                    if (mIsMoreMsgShow) {
+                        return false;
+                    } else {
+                        int action = event.getAction();
+                        switch (action) {
+                            case MotionEvent.ACTION_DOWN:
+                                doActionDown(event, holder);
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                return doActionMove(event);
+                            case MotionEvent.ACTION_CANCEL:
+                            case MotionEvent.ACTION_UP:
+                                doActionUp(data, v, event);
+                                break;
+                        }
+                        return true;
+                    }
+                }
+            });
+
+            holder.mDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    showDeleteDialog(position);
+                }
+            });
+
+            if (!data.mIsIncome) {
+                holder.mIsIncome.setText(R.string.expend);
+            }
+        }
+
+        private void showDeleteDialog(int position) {
+            final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getActivity());
+            deleteDialog.setTitle("删除账单");
+            deleteDialog.setMessage("是否确认删除这笔账单");
+            deleteDialog.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    removeDataFromDataBase(mBillItems.get(position).getId());
+                    removeDataFromView(position);
+                    backToNormal();
+                }
+            });
+            deleteDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    backToNormal();
+                }
+            });
+            deleteDialog.show();
+        }
+
+        private void removeDataFromView(int position) {
+            mBillItems.remove(position);
+            //删除动画
+            notifyItemRemoved(position);
+            notifyDataSetChanged();
+        }
+
+        private void doActionDown(MotionEvent e, BillShowAdapter.MyViewHolder viewHolder) {
+            if (mIsDeleteShow) {
+                backToNormal();
+            }
+            //获取按下时的坐标x、y
+            mDownX = (int) e.getX();
+            mDownY = (int) e.getY();
+
+            View itemView = viewHolder.itemView;
+            mDelete = itemView.findViewById(R.id.tv_delete);
+            mItemContent = itemView.findViewById(R.id.bill_item_content);
+            //2、获取删除按钮的宽度
+            mDeleteWidth = mDelete.getLayoutParams().width;
+            mLayoutParams = (LinearLayout.LayoutParams) mItemContent.getLayoutParams();
+            mLayoutParams.width = mScreenWidth;
+            mItemContent.setLayoutParams(mLayoutParams);
+        }
+
+        private boolean doActionMove(MotionEvent e) {
+            //计算偏移量
+            int scrollX = (int) (e.getX() - mDownX);
+            //左右滑动
+            if (e.getX() < mDownX) {
+                //向左滑动
+                if (-(scrollX / 2) >= mDeleteWidth) {
+                    scrollX = -mDeleteWidth;
+                }
+                //重新设置第一个childView的左边距
+                mLayoutParams.leftMargin = scrollX;
+                mItemContent.setLayoutParams(mLayoutParams);
+            }
+            return true;
+        }
+
+        private void doActionUp(BillItem data, View v, MotionEvent e) {
+            int y = (int) e.getY();
+            mScrollY = (int) (y - mDownY);
+            // 偏移量大于按钮尺寸的一半，则显示
+            if (-mLayoutParams.leftMargin >= mDeleteWidth / 2) {
+                mLayoutParams.leftMargin = -mDeleteWidth;
+                //给显示按钮的标识赋值
+                mIsDeleteShow = true;
+                mDelete.setVisibility(VISIBLE);
+            } else if (-mLayoutParams.leftMargin < mDeleteWidth / 2 && -mLayoutParams.leftMargin >= 10) {
+                backToNormal();
+            } else if (mScrollY > -1 && mScrollY < 10) {
+                if (mIsDeleteShow) {
+                    backToNormal();
+                    mIsDeleteShow = false;
+                } else {
+                    mIsMoreMsgShow = true;
                     Bundle message = new Bundle();
+                    message.putBoolean("isOn", mIsMoreMsgShow);
                     message.putString("date", data.getDate().toString());
                     message.putString("type", data.getType());
                     message.putFloat("money", data.getMoney());
@@ -102,10 +236,15 @@ public class BillShowHelper extends Fragment {
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
-            });
-            if (!data.mIsIncome) {
-                holder.mIsIncome.setText(R.string.expend);
             }
+            mItemContent.setLayoutParams(mLayoutParams);
+        }
+
+        public void backToNormal() {
+            //重新设置第一个childView的左边距
+            mLayoutParams.leftMargin = 0;
+            mItemContent.setLayoutParams(mLayoutParams);
+            mDelete.setVisibility(GONE);
         }
 
         @Override
@@ -114,40 +253,80 @@ public class BillShowHelper extends Fragment {
         }
     }
 
+    //用mIsMoreMsgShow判断是否已展示更多信息 决定是否开启点击事件
+    public void updatePageStatus() {
+        getChildFragmentManager().setFragmentResultListener("backMessage", this,
+                new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        mIsMoreMsgShow = result.getBoolean("isOn");
+                    }
+                });
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
+        mRecordManager = initDataBase();
+        mBillItems = new ArrayList<BillItem>();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public ArrayList<BillItem> todayBillList() {
-        AccountRecordManager mRecordManager = new AccountRecordManager(this.getContext());
-        mRecordManager.openDataBase();
+    public AccountRecordManager initDataBase() {
+        AccountRecordManager recordManager = new AccountRecordManager(getContext());
+        recordManager.openDataBase();
+        return recordManager;
+    }
+
+    public static ArrayList<BillItem> todayBillList(Context context, AccountRecordManager recordManager) {
+        recordManager = new AccountRecordManager(context);
         ArrayList<BillItem> billItems = new ArrayList<BillItem>();
-        mRecordManager.getTodayRecord(billItems, Calendar.getInstance().get(Calendar.YEAR),
+        recordManager.openDataBase();
+        billItems = recordManager.getTodayRecord(Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         return billItems;
     }
 
-    public ArrayList<BillItem> allBillList() {
-        AccountRecordManager mRecordManager = new AccountRecordManager(this.getContext());
-        mRecordManager.openDataBase();
-        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
-        mRecordManager.getAllRecord(billItems);
-        return billItems;
+    public ArrayList<BillItem> allBillList(AccountRecordManager recordManager) {
+        return recordManager.getAllRecord();
     }
 
-    public ArrayList<BillItem> monthBillList(int year, int month) {
-        AccountRecordManager mRecordManager = new AccountRecordManager(this.getContext());
-        mRecordManager.openDataBase();
-        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
-        mRecordManager.getMonthRecord(billItems, year, month);
-        return billItems;
+    public ArrayList<BillItem> monthBillList(int year, int month, AccountRecordManager recordManager) {
+        return recordManager.getMonthRecord(year, month);
     }
 
     public void initRecyclerView(RecyclerView recyclerView, BillShowAdapter billShowAdapter) {
         recyclerView.setAdapter(billShowAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    public float sumIncome(ArrayList<BillItem> billItems) {
+        float sum = 0;
+        for (BillItem billItem : billItems) {
+            if (billItem.isIncome()) {
+                sum += billItem.getMoney();
+            }
+        }
+        return sum;
+    }
+
+    public float sumExpend(ArrayList<BillItem> billItems) {
+        float sum = 0;
+        for (BillItem billItem : billItems) {
+            if (!billItem.isIncome()) {
+                sum += billItem.getMoney();
+            }
+        }
+        return sum;
+    }
+
+    private void removeDataFromDataBase(long id) {
+        long flag = initDataBase().deleteOneRecord(id);
+        if (flag == -1) {
+            Toast.makeText(getContext(), getString(R.string.delete_fail), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this.getContext(), getString(R.string.delete_bill_success), Toast.LENGTH_SHORT).show();
+        }
     }
 }

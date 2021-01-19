@@ -80,6 +80,7 @@ public class AddOneFragment extends Fragment {
                 Toast.makeText(this.getContext(), getString(R.string.add_success), Toast.LENGTH_SHORT).show();
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
+                BillFragment.updateView(mRecordManager);
                 transaction.remove(fragmentManager.findFragmentByTag("addOne"));
                 transaction.commit();
             }
@@ -128,6 +129,7 @@ public class AddOneFragment extends Fragment {
             mAccountRecord.setRemark(remark);
             mAccountRecord.setType(type);
             mAccountRecord.setIsIncome(mIncome.isChecked());
+            mAccountRecord.setId(mRecordManager.getDataCount() + 1);
             return true;
         }
     }

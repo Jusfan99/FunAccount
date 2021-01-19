@@ -22,7 +22,7 @@ public class AccountRecordManager {
     public static final String YEAR = "year";
     public static final String MONTH = "month";
     public static final String DAY = "day";
-
+    public static final String ONLY_SIGNAL = "only";
 
     private static final int DB_VERSION = 2;
     private Context mContext = null;
@@ -35,6 +35,7 @@ public class AccountRecordManager {
             + YEAR + " integer,"
             + MONTH + " integer,"
             + DAY + " integer,"
+            + ONLY_SIGNAL + " real,"
             + IS_INCOME + " integer" + ");";
 
     private SQLiteDatabase mSQLiteDatabase = null;
@@ -74,39 +75,46 @@ public class AccountRecordManager {
 
     //添加新纪录 （记账）
     public long insertAccountRecord(AccountRecord accountRecord) {
-        float money = accountRecord.getMoney();
-        String remark = accountRecord.getRemark();
-        String type = accountRecord.getType();
-        int isIncome = accountRecord.isIncome() ? 1 : 0;
         ContentValues values = new ContentValues();
-        values.put(MONEY, money);
-        values.put(REMARK, remark);
-        values.put(TYPE, type);
-        values.put(IS_INCOME, isIncome);
+        values.put(MONEY, accountRecord.getMoney());
+        values.put(REMARK, accountRecord.getRemark());
+        values.put(TYPE, accountRecord.getType());
+        values.put(IS_INCOME, accountRecord.isIncome() ? 1 : 0);
         values.put(YEAR, accountRecord.getDate().getYear());
         values.put(MONTH, accountRecord.getDate().getMonth());
         values.put(DAY, accountRecord.getDate().getDay());
+        values.put(ONLY_SIGNAL, accountRecord.getId());
         return mSQLiteDatabase.insert(TABLE_NAME, RECORD_ID, values);
     }
 
-    public void getAllRecord(ArrayList<BillItem> billItems) {
+    public long deleteOneRecord(long id) {
+        return mSQLiteDatabase.delete(TABLE_NAME, ONLY_SIGNAL + " = ?", new String[]{String.valueOf(id)});
+    }
+
+    public ArrayList<BillItem> getAllRecord() {
+        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
         Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, null,
                 null, null, null, null);
         addBillItem(billItems, cursor);
+        return billItems;
     }
 
-    public void getMonthRecord(ArrayList<BillItem> billItems, int year, int month) {
+    public ArrayList<BillItem> getMonthRecord(int year, int month) {
+        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
         Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
                         + "' and " + YEAR + "='" + year + "'",
                 null, null, null, null);
         addBillItem(billItems, cursor);
+        return billItems;
     }
 
-    public void getTodayRecord(ArrayList<BillItem> billItems, int year, int month, int day) {
+    public ArrayList<BillItem> getTodayRecord(int year, int month, int day) {
+        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
         Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
                         + "' and " + YEAR + "='" + year + "' and " + DAY + "='" + day + "'",
                 null, null, null, null);
         addBillItem(billItems, cursor);
+        return billItems;
     }
 
     private void addBillItem(ArrayList<BillItem> billItems, Cursor cursor) {
@@ -114,16 +122,15 @@ public class AccountRecordManager {
             if (cursor.moveToFirst()) {
                 do {
                     String type = cursor.getString(cursor.getColumnIndex(TYPE));
-                    String remark = cursor.getString(cursor.getColumnIndex(REMARK));
-                    int id = cursor.getInt(cursor.getColumnIndex(RECORD_ID));
                     float money = cursor.getFloat(cursor.getColumnIndex(MONEY));
                     boolean isIncome = cursor.getInt(cursor.getColumnIndex(IS_INCOME)) == 1;
-                    Date date = new Date(cursor.getInt(cursor.getColumnIndex(YEAR)),
-                            cursor.getInt(cursor.getColumnIndex(MONTH)), cursor.getInt(cursor.getColumnIndex(DAY)));
                     BillItem billItem = new BillItem(money, type, isIncome);
-                    billItem.mRemark = remark;
-                    billItem.mId = id;
-                    billItem.setDate(date);
+                    billItem.mRemark = cursor.getString(cursor.getColumnIndex(REMARK));
+                    if (cursor.getColumnIndex(ONLY_SIGNAL) != -1) {
+                        billItem.mId = cursor.getLong(cursor.getColumnIndex(ONLY_SIGNAL));
+                    }
+                    billItem.setDate(new Date(cursor.getInt(cursor.getColumnIndex(YEAR)),
+                            cursor.getInt(cursor.getColumnIndex(MONTH)), cursor.getInt(cursor.getColumnIndex(DAY))));
                     billItems.add(0, billItem);
                 } while (cursor.moveToNext());
             }
@@ -135,12 +142,24 @@ public class AccountRecordManager {
     public int getEarliestMonthIndex() {
         ArrayList<BillItem> billItems = new ArrayList<>();
         openDataBase();
-        getAllRecord(billItems);
+        billItems = getAllRecord();
+        if (billItems.size() == 0) {
+            return 1;
+        }
         BillItem earliestItem = billItems.get(billItems.size() - 1);
         int earliestYear = earliestItem.getDate().getYear();
         int earliestMonth = earliestItem.getDate().getMonth();
         int thisYear = Calendar.getInstance().get(Calendar.YEAR);
         int thisMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
         return ((thisYear - earliestYear) * 12 + (thisMonth - earliestMonth)) + 1;
+    }
+
+    public long getDataCount() {
+        String sql = "select count(*) from record_table";
+        Cursor cursor = mSQLiteDatabase.rawQuery(sql, null);
+        cursor.moveToFirst();
+        long count = cursor.getLong(0);
+        cursor.close();
+        return count;
     }
 }

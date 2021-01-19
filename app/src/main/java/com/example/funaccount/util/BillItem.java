@@ -7,7 +7,7 @@ public class BillItem implements Serializable {
     public String mType;
     public float mMoney;
     public String mRemark;
-    public int mId;
+    public long mId;
     public Date mDate;
 
     public void setDate(Date mDate) {
@@ -43,7 +43,7 @@ public class BillItem implements Serializable {
         return mRemark;
     }
 
-    public int getId() {
+    public long getId() {
         return mId;
     }
 }

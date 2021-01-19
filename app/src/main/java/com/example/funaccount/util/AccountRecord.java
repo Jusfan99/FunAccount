@@ -6,6 +6,7 @@ public class AccountRecord {
     private boolean mIsIncome;   //收入or支出
     private String mType;        //分类
     private Date mDate;
+    private long mId;
 
     public void setMoney(float mMoney) {
         this.mMoney = mMoney;
@@ -45,5 +46,13 @@ public class AccountRecord {
 
     public boolean isIncome() {
         return this.mIsIncome;
+    }
+
+    public void setId(long count) {
+        this.mId = count;
+    }
+
+    public long getId() {
+        return mId;
     }
 }

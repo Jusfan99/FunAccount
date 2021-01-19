@@ -37,4 +37,11 @@
     <string name="common_problems">常见问题</string>
     <string name="good_reputation">好评鼓励</string>
     <string name="about_us">关于我们</string>
+    <string name="all_bill_text">全部账单</string>
+    <string name="expend_name">支出:</string>
+    <string name="income_name">收入:</string>
+    <string name="yuan">元</string>
+    <string name="delete">删除</string>
+    <string name="delete_fail">删除失败</string>
+    <string name="delete_bill_success">成功删除该账单</string>
 </resources>

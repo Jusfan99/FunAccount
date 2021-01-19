@@ -141,7 +141,7 @@ public class LoginActivity extends Activity {
             String userName = mAccount.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             int result = mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if (result == PWD_TRUE) {                                             
+            if (result == PWD_TRUE) {
                 //返回1说明用户名和密码均正确
                 Toast.makeText(this, getString(R.string.account_remove_success), Toast.LENGTH_SHORT).show();
 //                <span style="font-family: Arial;">//注销成功提示</span>

@@ -1,6 +1,5 @@
 package com.example.funaccount.bill_page;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
 
 import androidx.annotation.NonNull;
@@ -31,6 +29,7 @@ public class MoreMsgFragment extends Fragment {
     private String mDate;
     private String mType;
     private String mIncome;
+    private boolean mIsMoreMsgShow;
 
     @Nullable
     @Override
@@ -38,15 +37,6 @@ public class MoreMsgFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.more_msg, null);
         mCloseButton = view.findViewById(R.id.more_msg_close);
-        mCloseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.remove(fragmentManager.findFragmentByTag("moreMsg"));
-                transaction.commit();
-            }
-        });
         mBillDate = view.findViewById(R.id.more_msg_time);
         mBillMoney = view.findViewById(R.id.more_msg_money);
         mBillType = view.findViewById(R.id.more_msg_type);
@@ -55,15 +45,31 @@ public class MoreMsgFragment extends Fragment {
 
         getParentFragmentManager().setFragmentResultListener("messageKey",
                 this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                mMoney = result.getFloat("money");
-                mDate = result.getString("date");
-                mIncome = result.getString("income");
-                mRemark = result.getString("remark");
-                mType = result.getString("type");
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        mMoney = result.getFloat("money");
+                        mDate = result.getString("date");
+                        mIncome = result.getString("income");
+                        mRemark = result.getString("remark");
+                        mType = result.getString("type");
+                        mIsMoreMsgShow = result.getBoolean("isOn");
 
-                bindContent();
+                        bindContent();
+                    }
+                });
+
+        mCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle message = new Bundle();
+                message.putBoolean("isOn", false);
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.setFragmentResult("backMessage", message);
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.remove(fragmentManager.findFragmentByTag("moreMsg"));
+                transaction.commit();
             }
         });
         return view;
