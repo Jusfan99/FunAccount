@@ -5,8 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent">
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent">
 
     <ImageView
         android:id="@+id/imageView"
@@ -14,8 +16,8 @@
         android:layout_height="400dp"
         android:background="#CCF0FFF0"
         android:scaleType="fitCenter"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="220dp"
         android:layout_marginLeft="30dp"
-        android:text="支出明细"
+        android:text="@string/expend_detail"
         android:textColor="@color/teal_700"
         android:textSize="40sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -37,7 +39,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="280dp"
-        android:text="时间:"
+        android:text="@string/time_name"
         android:textColor="#3AA81D"
         android:textSize="40sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -51,13 +53,13 @@
         android:layout_marginTop="280dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@id/imageView"
         android:textSize="30sp"/>
 
     <TextView
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:text="金额:"
+        android:text="@string/money_name"
         android:textSize="40sp"
         android:textColor="#3AA81D"
         app:layout_constraintTop_toBottomOf="@+id/more_msg_time"
@@ -79,7 +81,7 @@
     <TextView
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:text="类型:"
+        android:text="@string/type_name"
         android:textColor="#3AA81D"
         android:textSize="40sp"
         app:layout_constraintTop_toBottomOf="@+id/more_msg_money"
@@ -100,7 +102,7 @@
     <TextView
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:text="备注:"
+        android:text="@string/remark_name"
         android:textColor="#3AA81D"
         android:textSize="40sp"
         app:layout_constraintTop_toBottomOf="@+id/more_msg_type"

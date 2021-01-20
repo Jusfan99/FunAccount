@@ -42,6 +42,7 @@ public class MoreMsgFragment extends Fragment {
         mBillType = view.findViewById(R.id.more_msg_type);
         mBillRemark = view.findViewById(R.id.more_msg_remark);
         mBillIncome = view.findViewById(R.id.more_msg_income);
+        BillFragment.mAddOneBtn.setClickable(false);
 
         getParentFragmentManager().setFragmentResultListener("messageKey",
                 this, new FragmentResultListener() {
@@ -64,6 +65,7 @@ public class MoreMsgFragment extends Fragment {
 
                 Bundle message = new Bundle();
                 message.putBoolean("isOn", false);
+                BillFragment.mAddOneBtn.setClickable(true);
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 fragmentManager.setFragmentResult("backMessage", message);

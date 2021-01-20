@@ -33,7 +33,7 @@ public class BillFragment extends BillShowHelper {
     private static BillShowAdapter mBillShowAdapter;
     private static ArrayList<BillItem> list;
     private static Activity mActivity;
-    Button mAddOneBtn;
+    static Button mAddOneBtn;
     static TextView mNoBillToday;
     private static RecyclerView mRecycleView;
     AccountRecordManager mRecordManager;
@@ -86,6 +86,7 @@ public class BillFragment extends BillShowHelper {
 
     public static void updateView(AccountRecordManager recordManager) {
         list = todayBillList(mActivity, recordManager);
+        BillShowHelper.addingOne = false;
         if(list.size() == 0) {
             mNoBillToday.setVisibility(View.VISIBLE);
         }else {

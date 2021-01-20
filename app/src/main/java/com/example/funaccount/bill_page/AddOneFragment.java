@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.funaccount.R;
 import com.example.funaccount.util.AccountRecord;
 import com.example.funaccount.util.AccountRecordManager;
+import com.example.funaccount.util.BillShowHelper;
 import com.example.funaccount.util.Date;
 
 import java.util.Calendar;
@@ -46,6 +47,7 @@ public class AddOneFragment extends Fragment {
         mMoneyEdit = view.findViewById(R.id.eidt_money);
         mTypeEdit = view.findViewById(R.id.eidt_type);
         mRemarkEdit = view.findViewById(R.id.eidt_remark);
+        BillShowHelper.addingOne = true;
 
         mFinish.setOnClickListener(onClickListener);
         mIncome.setOnCheckedChangeListener(mOnCheckedChangeListener);

@@ -10,7 +10,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="150dp"
-        android:text="您好，登录成功"
+        android:text="@string/welcome_log_in"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="30sp" />
     <TextView
@@ -36,9 +36,9 @@
         android:layout_marginTop="200dp"
         android:backgroundTint="#2415F3"
         android:onClick="backToSetting"
-        android:text="返回主页"
+        android:text="@string/back_to_bill"
         android:textColor="#ffffff"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/returnback"
@@ -56,8 +56,8 @@
         android:layout_marginTop="277dp"
         android:backgroundTint="#d95b5b"
         android:onClick="backToLogin"
-        android:text="退出登录"
+        android:text="@string/log_out"
         android:textColor="#ffffff"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 </RelativeLayout>

@@ -119,7 +119,7 @@ public class SettingItemFragment extends Fragment {
     }
 
     public void initRecyclerView(View view, SettingItemAdapter settingItemAdapter) {
-        RecyclerView recyclerView = view.findViewById(R.id.setting_recycleview);
+        RecyclerView recyclerView = view.findViewById(R.id.setting_recyclerview);
         recyclerView.setAdapter(settingItemAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

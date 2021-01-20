@@ -104,7 +104,7 @@
         android:id="@+id/month_detail_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="您这个月没有记账"
+        android:text="@string/month_no_bill"
         app:layout_constraintTop_toBottomOf="@+id/tongji"
         android:layout_marginTop="100dp"
         android:gravity="center"
@@ -125,5 +125,6 @@
         android:id="@+id/more_msg_frag"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:orientation="horizontal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

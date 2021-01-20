@@ -40,6 +40,7 @@ public class BillShowHelper extends Fragment {
     private AccountRecordManager mRecordManager;
     private ArrayList<BillItem> mBillItems;
     public static final String LOCAL_BROADCAST = "com.example.funaccount.detail_page.LOCAL_BROADCAST";
+    public static boolean addingOne = false;
 
     public class BillShowAdapter extends RecyclerView.Adapter<BillShowAdapter.MyViewHolder> {
         public final Context mContext;
@@ -112,23 +113,27 @@ public class BillShowHelper extends Fragment {
             holder.setTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    updatePageStatus();
-                    if (mIsMoreMsgShow) {
-                        return false;
-                    } else {
-                        int action = event.getAction();
-                        switch (action) {
-                            case MotionEvent.ACTION_DOWN:
-                                doActionDown(event, holder);
-                                break;
-                            case MotionEvent.ACTION_MOVE:
-                                return doActionMove(event);
-                            case MotionEvent.ACTION_CANCEL:
-                            case MotionEvent.ACTION_UP:
-                                doActionUp(data, v, event);
-                                break;
+                    if(!addingOne){
+                        updatePageStatus();
+                        if (mIsMoreMsgShow) {
+                            return false;
+                        } else {
+                            int action = event.getAction();
+                            switch (action) {
+                                case MotionEvent.ACTION_DOWN:
+                                    doActionDown(event, holder);
+                                    break;
+                                case MotionEvent.ACTION_MOVE:
+                                    return doActionMove(event);
+                                case MotionEvent.ACTION_CANCEL:
+                                case MotionEvent.ACTION_UP:
+                                    doActionUp(data, v, event);
+                                    break;
+                            }
+                            return true;
                         }
-                        return true;
+                    } else {
+                        return false;
                     }
                 }
             });
