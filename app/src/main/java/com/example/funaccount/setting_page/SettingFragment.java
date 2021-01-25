@@ -2,7 +2,6 @@ package com.example.funaccount.setting_page;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +34,6 @@ public class SettingFragment extends SettingItemFragment {
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                updateUserInfo(view.findViewById(R.id.user_name));
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }

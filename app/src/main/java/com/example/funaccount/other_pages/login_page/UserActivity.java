@@ -8,14 +8,11 @@ import android.widget.TextView;
 
 import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
-import com.example.funaccount.setting_page.SettingFragment;
 import com.example.funaccount.util.UserData;
-import com.example.funaccount.util.UserDataViewModel;
 
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;

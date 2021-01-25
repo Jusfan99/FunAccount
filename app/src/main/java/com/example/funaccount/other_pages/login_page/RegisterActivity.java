@@ -12,8 +12,6 @@ import android.widget.Toast;
 import com.example.funaccount.R;
 import com.example.funaccount.util.UserData;
 
-import java.util.List;
-
 import androidx.appcompat.app.AppCompatActivity;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
