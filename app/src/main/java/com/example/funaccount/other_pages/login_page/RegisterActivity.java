@@ -1,7 +1,9 @@
 package com.example.funaccount.other_pages.login_page;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,10 +11,14 @@ import android.widget.Toast;
 
 import com.example.funaccount.R;
 import com.example.funaccount.util.UserData;
-import com.example.funaccount.util.UserDataManager;
-import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.CountListener;
+import cn.bmob.v3.listener.SaveListener;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText mAccount;                        //用户名编辑
@@ -20,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mPwdCheck;                       //密码编辑
     private Button mSureButton;                       //确定按钮
     private Button mCancelButton;                     //取消按钮
-    private UserDataManager mUserDataManager;         //用户数据管理类
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +41,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         mSureButton.setOnClickListener(m_register_Listener);      //注册界面两个按钮的监听事件
         mCancelButton.setOnClickListener(m_register_Listener);
-
-        mUserDataManager = new UserDataManager(this);
-        mUserDataManager.openDataBase();                              //建立本地数据库
     }
 
     View.OnClickListener m_register_Listener = new View.OnClickListener() {    //不同按钮按下的监听事件选择
@@ -61,31 +64,41 @@ public class RegisterActivity extends AppCompatActivity {
             String userName = mAccount.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
-            //检查用户是否存在
-            int count = mUserDataManager.findUserByName(userName);
-            //用户已经存在时返回，给出提示文字
-            if (count > 0) {
-                Toast.makeText(this, getString(R.string.username_repeat), Toast.LENGTH_SHORT).show();
-                return;
-            }
             if (userPwd.equals(userPwdCheck) == false) {     //两次密码输入不一样
                 Toast.makeText(this, getString(R.string.password_different), Toast.LENGTH_SHORT).show();
                 return;
-            } else {
-                UserData mUser = new UserData(userName, userPwd);
-                mUser.setUserId(createId());
-                mUserDataManager.openDataBase();
-                long flag = mUserDataManager.insertUserData(mUser); //新建用户信息
-                if (flag == -1) {
-                    Toast.makeText(this, getString(R.string.logup_fail), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, getString(R.string.logup_success), Toast.LENGTH_SHORT).show();
-                    Intent intent_Register_to_Login = new Intent(RegisterActivity.this,
-                            LoginActivity.class);
-                    startActivity(intent_Register_to_Login);
-                    finish();
-                }
             }
+            BmobQuery<UserData> bmobQuery = new BmobQuery<UserData>();
+            bmobQuery.addWhereEqualTo("userName", userName);
+            bmobQuery.count(UserData.class, new CountListener() {
+                @Override
+                public void done(Integer integer, BmobException e) {
+                    if(e == null) {
+                        if (integer > 0) {
+                            Toast.makeText(mContext, getString(R.string.username_repeat), Toast.LENGTH_SHORT).show();
+                        } else {
+                            UserData userData = new UserData(userName,userPwd);
+                            userData.setUserId(createId());
+                            userData.save(new SaveListener<String>() {
+                                @Override
+                                public void done(String s, BmobException e) {
+                                    if(e == null) {
+                                        Toast.makeText(mContext, getString(R.string.logup_success), Toast.LENGTH_SHORT).show();
+                                        Intent intent_Register_to_Login = new Intent(RegisterActivity.this,
+                                                LoginActivity.class);
+                                        startActivity(intent_Register_to_Login);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(mContext, getString(R.string.logup_fail), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                    }
+                }
+            });
         }
     }
 
@@ -108,7 +121,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     public String createId() {
         String id = String.valueOf((long) (Math.random() * 9 * Math.pow(10, 7)) + (long) Math.pow(10, 7));
-        if (mUserDataManager.findUserById(id) != 0) {
+        final int[] count = {0};
+        BmobQuery<UserData> bmobQuery = new BmobQuery<UserData>();
+        bmobQuery.addWhereEqualTo("userId", id);
+        bmobQuery.count(UserData.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                if(e == null) {
+                    count[0] = integer;
+                } else {
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+        if (count[0] != 0) {
             return createId();
         } else {
             return id;

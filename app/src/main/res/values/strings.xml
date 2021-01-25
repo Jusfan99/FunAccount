@@ -10,7 +10,7 @@
     <string name="this_month">本月</string>
     <string name="this_year">今年</string>
     <string name="login_success">登陆成功</string>
-    <string name="login_fail">抱歉，登录失败</string>
+    <string name="login_fail">抱歉 用户名或密码不对 登录失败</string>
     <string name="account_remove_success">您的账号已成功注销</string>
     <string name="account_remove_fail">注销失败，请重试</string>
     <string name="user_name_empty">用户名不能为空</string>

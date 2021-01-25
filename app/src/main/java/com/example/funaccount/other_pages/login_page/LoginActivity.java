@@ -1,6 +1,7 @@
 package com.example.funaccount.other_pages.login_page;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,9 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.funaccount.R;
-import com.example.funaccount.util.UserDataManager;
+import com.example.funaccount.util.UserData;
+
+import java.util.List;
 
 import androidx.annotation.Nullable;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.CountListener;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class LoginActivity extends Activity {
     int PWD_TRUE = 1;
@@ -26,6 +34,7 @@ public class LoginActivity extends Activity {
     private Button mLoginButton;            //登录按钮
     private Button mCancelButton;           //注销按钮
     private CheckBox mRememberCheck;
+    private Context mContext = this;
 
     private String mUserId;
     private SharedPreferences mLoginSp;
@@ -34,8 +43,6 @@ public class LoginActivity extends Activity {
     private View mLoginSuccessView;
     private TextView mLoginSuccessShow;
     private TextView mChangePwdText;
-    private UserDataManager mUserDataManager;   //用户数据管理
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,9 +74,6 @@ public class LoginActivity extends Activity {
         mLoginButton.setOnClickListener(mListener);
         mCancelButton.setOnClickListener(mListener);
         mChangePwdText.setOnClickListener(mListener);
-
-        mUserDataManager = new UserDataManager(this);
-        mUserDataManager.openDataBase();
     }
 
     View.OnClickListener mListener = new View.OnClickListener() {
@@ -89,14 +93,10 @@ public class LoginActivity extends Activity {
                     break;
                 case R.id.login_text_change_pwd:                             //登录界面的修改密码按钮
                     Intent intent_Login_to_reset = new Intent(LoginActivity.this,
-                            ResetpwdActivity.class);
+                            ResetPwdActivity.class);
                     startActivity(intent_Login_to_reset);
                     finish();
                     break;
-            }
-            if (mUserDataManager != null) {
-                mUserDataManager.closeDataBase();
-                mUserDataManager = null;
             }
         }
     };
@@ -108,30 +108,38 @@ public class LoginActivity extends Activity {
             String userName = mAccount.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             SharedPreferences.Editor editor = mLoginSp.edit();
-            //mUserDataManager.deleteAllUserDatas();
-            int result = mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            //返回1说明用户名和密码均正确
-            if (result == PWD_TRUE) {
-                //保存用户名和密码
-                editor.putString("USER_NAME", userName);
-                editor.putString("PASSWORD", userPwd);
-                //是否记住密码
-                if (mRememberCheck.isChecked()) {
-                    editor.putBoolean("mRememberCheck", true);
-                } else {
-                    editor.putBoolean("mRememberCheck", false);
+            BmobQuery<UserData> bmobQuery = new BmobQuery<UserData>();
+            bmobQuery.addWhereEqualTo("userName", userName);
+            bmobQuery.addWhereEqualTo("userPwd", userPwd);
+            bmobQuery.count(UserData.class, new CountListener() {
+                @Override
+                public void done(Integer integer, BmobException e) {
+                    if (e == null) {
+                        if (integer == PWD_TRUE) {
+                            //保存用户名和密码
+                            editor.putString("USER_NAME", userName);
+                            editor.putString("PASSWORD", userPwd);
+                            //是否记住密码
+                            if (mRememberCheck.isChecked()) {
+                                editor.putBoolean("mRememberCheck", true);
+                            } else {
+                                editor.putBoolean("mRememberCheck", false);
+                            }
+                            editor.apply();
+                            //切换Login Activity至User Activity
+                            Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+                            intent.putExtra("userName",userName);
+                            startActivity(intent);
+                            finish();
+                            //登录成功提示
+                            Toast.makeText(mContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+                        } else if (integer == PWD_FALSE) {
+                            //登录失败提示
+                            Toast.makeText(mContext, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
-                editor.apply();
-                //切换Login Activity至User Activity
-                Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-                startActivity(intent);
-                finish();
-                //登录成功提示
-                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
-            } else if (result == PWD_FALSE) {
-                //登录失败提示
-                Toast.makeText(this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
-            }
+            });
         }
     }
 
@@ -140,20 +148,35 @@ public class LoginActivity extends Activity {
             //获取当前输入的用户名和密码信息
             String userName = mAccount.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
-            int result = mUserDataManager.findUserByNameAndPwd(userName, userPwd);
-            if (result == PWD_TRUE) {
-                //返回1说明用户名和密码均正确
-                Toast.makeText(this, getString(R.string.account_remove_success), Toast.LENGTH_SHORT).show();
-//                <span style="font-family: Arial;">//注销成功提示</span>
-                mPwd.setText("");
-                mAccount.setText("");
-                mUserDataManager.deleteUserDatabyname(userName);
-            } else if (result == PWD_FALSE) {
-                //注销失败提示
-                Toast.makeText(this, getString(R.string.account_remove_fail), Toast.LENGTH_SHORT).show();
-            }
+            BmobQuery<UserData> bmobQuery = new BmobQuery<UserData>();
+            bmobQuery.addWhereEqualTo("userName", userName);
+            bmobQuery.addWhereEqualTo("userPwd", userPwd);
+            bmobQuery.findObjects(new FindListener<UserData>() {
+                @Override
+                public void done(List<UserData> list, BmobException e) {
+                    if (e == null) {
+                        if (list.size() == PWD_TRUE) {
+                            mPwd.setText("");
+                            mAccount.setText("");
+                            for(UserData userData : list){
+                                userData.delete(new UpdateListener() {
+                                    @Override
+                                    public void done(BmobException e) {
+                                        if (e == null) {
+                                            Toast.makeText(mContext, getString(R.string.account_remove_success), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(mContext, getString(R.string.account_remove_fail), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        } else if (list.size() == PWD_FALSE) {
+                            Toast.makeText(mContext, getString(R.string.account_remove_fail), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
         }
-
     }
 
     public boolean isUserNameAndPwdValid() {

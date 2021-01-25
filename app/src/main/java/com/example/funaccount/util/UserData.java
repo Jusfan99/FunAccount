@@ -1,6 +1,8 @@
 package com.example.funaccount.util;
 
-public class UserData {
+import cn.bmob.v3.BmobObject;
+
+public class UserData extends BmobObject {
     private String userName; //用户名
     private String userPwd;  //密码
     private String userId;      //用户ID

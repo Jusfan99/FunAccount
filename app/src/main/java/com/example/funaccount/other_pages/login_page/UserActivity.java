@@ -12,8 +12,13 @@ import com.example.funaccount.setting_page.SettingFragment;
 import com.example.funaccount.util.UserData;
 import com.example.funaccount.util.UserDataViewModel;
 
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 public class UserActivity extends AppCompatActivity {
     private TextView mResponseId;
@@ -24,13 +29,22 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user);
         Button mReturnButton = (Button) findViewById(R.id.returnback);
+        mResponseId = findViewById(R.id.response_id);
 
-        UserDataViewModel model = new ViewModelProvider(this).get(UserDataViewModel.class);
-        model.getUser(this).observe(this, userData -> {
-            mResponseId = findViewById(R.id.response_id);
-            String userId = "id:" + userData.getUserId() + " name:" + userData.getUserName();
-            mResponseId.setText(userId);
-            mUserData = userData;
+        Intent intent = getIntent();
+        mUserData = new UserData();
+        mUserData.setUserName(intent.getStringExtra("userName"));
+        BmobQuery<UserData> bmobQuery = new BmobQuery<UserData>();
+        bmobQuery.addWhereEqualTo("userName", mUserData.getUserName());
+        bmobQuery.findObjects(new FindListener<UserData>() {
+            @Override
+            public void done(List<UserData> list, BmobException e) {
+                for(UserData userData : list) {
+                    mUserData = userData;
+                    String showUserMsg = "id:" + userData.getUserId() + " name:" + userData.getUserName();
+                    mResponseId.setText(showUserMsg);
+                }
+            }
         });
     }
 
@@ -43,8 +57,8 @@ public class UserActivity extends AppCompatActivity {
     public void backToSetting(View view) {
         Intent intent = new Intent(UserActivity.this, MainActivity.class);
         intent.putExtra("userName", mUserData.getUserName());
-        intent.putExtra("userId", mUserData.getUserId());
         intent.putExtra("status", 1);
+        intent.putExtra("userId", mUserData.getUserId());
         startActivity(intent);
         finish();
     }
