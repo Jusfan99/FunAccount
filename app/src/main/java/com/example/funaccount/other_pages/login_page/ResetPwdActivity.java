@@ -82,12 +82,12 @@ public class ResetPwdActivity extends AppCompatActivity {
                             if (userPwdNew.equals(userPwdCheck) == false) {           //两次密码输入不一样
                                 Toast.makeText(mContext, getString(R.string.password_different), Toast.LENGTH_SHORT).show();
                             } else {
-                                for(UserData userData : list) {
+                                for (UserData userData : list) {
                                     userData.setUserPwd(userPwdNew);
                                     userData.update(new UpdateListener() {
                                         @Override
                                         public void done(BmobException e) {
-                                            if(e == null) {
+                                            if (e == null) {
                                                 Toast.makeText(mContext, getString(R.string.reset_success), Toast.LENGTH_SHORT).show();
                                                 userData.pwdresetFlag = 1;
                                                 Intent intent_Register_to_Login = new Intent(ResetPwdActivity.this,

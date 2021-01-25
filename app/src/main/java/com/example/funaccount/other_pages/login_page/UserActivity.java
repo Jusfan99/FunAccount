@@ -36,7 +36,7 @@ public class UserActivity extends AppCompatActivity {
         bmobQuery.findObjects(new FindListener<UserData>() {
             @Override
             public void done(List<UserData> list, BmobException e) {
-                for(UserData userData : list) {
+                for (UserData userData : list) {
                     mUserData = userData;
                     String showUserMsg = "id:" + userData.getUserId() + " name:" + userData.getUserName();
                     mResponseId.setText(showUserMsg);

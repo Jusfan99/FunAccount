@@ -128,7 +128,7 @@ public class LoginActivity extends Activity {
                             editor.apply();
                             //切换Login Activity至User Activity
                             Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-                            intent.putExtra("userName",userName);
+                            intent.putExtra("userName", userName);
                             startActivity(intent);
                             finish();
                             //登录成功提示
@@ -158,7 +158,7 @@ public class LoginActivity extends Activity {
                         if (list.size() == PWD_TRUE) {
                             mPwd.setText("");
                             mAccount.setText("");
-                            for(UserData userData : list){
+                            for (UserData userData : list) {
                                 userData.delete(new UpdateListener() {
                                     @Override
                                     public void done(BmobException e) {

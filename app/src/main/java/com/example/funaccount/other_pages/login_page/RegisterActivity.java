@@ -71,16 +71,16 @@ public class RegisterActivity extends AppCompatActivity {
             bmobQuery.count(UserData.class, new CountListener() {
                 @Override
                 public void done(Integer integer, BmobException e) {
-                    if(e == null) {
+                    if (e == null) {
                         if (integer > 0) {
                             Toast.makeText(mContext, getString(R.string.username_repeat), Toast.LENGTH_SHORT).show();
                         } else {
-                            UserData userData = new UserData(userName,userPwd);
+                            UserData userData = new UserData(userName, userPwd);
                             userData.setUserId(createId());
                             userData.save(new SaveListener<String>() {
                                 @Override
                                 public void done(String s, BmobException e) {
-                                    if(e == null) {
+                                    if (e == null) {
                                         Toast.makeText(mContext, getString(R.string.logup_success), Toast.LENGTH_SHORT).show();
                                         Intent intent_Register_to_Login = new Intent(RegisterActivity.this,
                                                 LoginActivity.class);
@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                             });
                         }
                     } else {
-                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                        Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                     }
                 }
             });
@@ -125,10 +125,10 @@ public class RegisterActivity extends AppCompatActivity {
         bmobQuery.count(UserData.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
-                if(e == null) {
+                if (e == null) {
                     count[0] = integer;
                 } else {
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });
