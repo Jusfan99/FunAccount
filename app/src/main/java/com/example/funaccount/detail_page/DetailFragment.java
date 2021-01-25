@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
 import com.example.funaccount.util.AccountRecordManager;
 import com.example.funaccount.util.BillShowHelper;
@@ -64,7 +65,7 @@ public class DetailFragment extends BillShowHelper {
         localReceiver = new LocalReceiver();
         intentFilter = new IntentFilter();
         intentFilter.addAction(LOCAL_BROADCAST);   //添加action
-        localBroadcastManager.registerReceiver(localReceiver,intentFilter);
+        localBroadcastManager.registerReceiver(localReceiver, intentFilter);
         return view;
     }
 
@@ -135,12 +136,12 @@ public class DetailFragment extends BillShowHelper {
     }
 
     private void updateUi(int year, int month) {
-        if(monthBillList(year, month, mRecordManager) != null &&
+        if (monthBillList(year, month, mRecordManager) != null &&
                 monthBillList(year, month, mRecordManager).size() != 0) {
             mMonthEmpty.setVisibility(View.GONE);
-            mBillShowAdapter = new BillShowAdapter(getActivity(),
+            mBillShowAdapter = new BillShowAdapter(mMonthEmpty.getContext(),
                     monthBillList(year, month, mRecordManager));
-        } else{
+        } else {
             mMonthEmpty.setVisibility(View.VISIBLE);
         }
         initRecyclerView(mRecyclerView, mBillShowAdapter);
@@ -163,10 +164,10 @@ public class DetailFragment extends BillShowHelper {
         public void onReceive(Context context, Intent intent) {
 
             String action = intent.getAction();
-            if(!action.equals(LOCAL_BROADCAST)){
-                return ;
+            if (!action.equals(LOCAL_BROADCAST)) {
+                return;
             }
-            if(intent.getBooleanExtra("delete", false)) {
+            if (intent.getBooleanExtra("delete", false)) {
                 updateUi(mShowYear, mShowMonth);
             }
         }

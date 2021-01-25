@@ -14,12 +14,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.funaccount.R;
-import com.example.funaccount.detail_page.DetailFragment;
 import com.example.funaccount.util.AccountRecordManager;
 import com.example.funaccount.util.BillItem;
 import com.example.funaccount.util.BillShowHelper;
 
 import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -37,9 +37,6 @@ public class BillFragment extends BillShowHelper {
     static TextView mNoBillToday;
     private static RecyclerView mRecycleView;
     AccountRecordManager mRecordManager;
-    private IntentFilter intentFilter;
-    private BillFragment.LocalReceiver localReceiver;    //本地广播接收者
-    private LocalBroadcastManager localBroadcastManager;   //本地广播管理者   可以用来注册广播
 
     @Nullable
     @Override
@@ -56,7 +53,7 @@ public class BillFragment extends BillShowHelper {
         mAddOneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addoneFragmentShow(new AddOneFragment());
+                addOneFragmentShow(new AddOneFragment());
             }
         });
         mBillShowAdapter = new BillShowAdapter(mActivity, list);
@@ -66,16 +63,18 @@ public class BillFragment extends BillShowHelper {
         if (mBillShowAdapter.getItemCount() == 0) {
             mNoBillToday.setVisibility(View.VISIBLE);
         }
-        localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
-        localReceiver = new LocalReceiver();
-        intentFilter = new IntentFilter();
+        //本地广播管理者   可以用来注册广播
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        //本地广播接收者
+        LocalReceiver localReceiver = new LocalReceiver();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LOCAL_BROADCAST);   //添加action
-        localBroadcastManager.registerReceiver(localReceiver,intentFilter);
+        localBroadcastManager.registerReceiver(localReceiver, intentFilter);
         return view;
     }
 
     //Fragment切换
-    private void addoneFragmentShow(Fragment fragment) {
+    private void addOneFragmentShow(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.nav_default_enter_anim, R.anim.nav_default_enter_anim);
@@ -87,9 +86,9 @@ public class BillFragment extends BillShowHelper {
     public static void updateView(AccountRecordManager recordManager) {
         list = todayBillList(mActivity, recordManager);
         BillShowHelper.addingOne = false;
-        if(list.size() == 0) {
+        if (list.size() == 0) {
             mNoBillToday.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mNoBillToday.setVisibility(View.GONE);
             mBillShowAdapter.setBillItems(list);
             mRecycleView.setAdapter(mBillShowAdapter);
@@ -98,15 +97,14 @@ public class BillFragment extends BillShowHelper {
     }
 
     public class LocalReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
 
             String action = intent.getAction();
-            if(!action.equals(LOCAL_BROADCAST)){
-                return ;
+            if (!action.equals(LOCAL_BROADCAST)) {
+                return;
             }
-            if(intent.getBooleanExtra("delete", false)) {
+            if (intent.getBooleanExtra("delete", false)) {
                 updateView(mRecordManager);
             }
         }

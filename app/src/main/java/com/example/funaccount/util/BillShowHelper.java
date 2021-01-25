@@ -37,8 +37,6 @@ import static android.view.View.VISIBLE;
 
 public class BillShowHelper extends Fragment {
     public boolean mIsMoreMsgShow = false;
-    private AccountRecordManager mRecordManager;
-    private ArrayList<BillItem> mBillItems;
     public static final String LOCAL_BROADCAST = "com.example.funaccount.detail_page.LOCAL_BROADCAST";
     public static boolean addingOne = false;
 
@@ -113,7 +111,7 @@ public class BillShowHelper extends Fragment {
             holder.setTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if(!addingOne){
+                    if (!addingOne) {
                         updatePageStatus();
                         if (mIsMoreMsgShow) {
                             return false;
@@ -282,8 +280,8 @@ public class BillShowHelper extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
-        mRecordManager = initDataBase();
-        mBillItems = new ArrayList<BillItem>();
+        AccountRecordManager mRecordManager = initDataBase();
+        ArrayList<BillItem> mBillItems = new ArrayList<BillItem>();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

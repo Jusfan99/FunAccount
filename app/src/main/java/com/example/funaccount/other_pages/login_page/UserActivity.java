@@ -13,8 +13,6 @@ import com.example.funaccount.util.UserData;
 import com.example.funaccount.util.UserDataViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 public class UserActivity extends AppCompatActivity {

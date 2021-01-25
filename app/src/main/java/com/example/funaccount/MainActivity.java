@@ -53,9 +53,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        for(Fragment fragment : fragments) {
-            if(fragment instanceof AddOneFragment) {
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof AddOneFragment) {
                 BillShowHelper.addingOne = false;
+                break;
             }
         }
         super.onBackPressed();
