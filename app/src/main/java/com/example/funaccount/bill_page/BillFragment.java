@@ -37,6 +37,11 @@ public class BillFragment extends BillShowHelper {
     static TextView mNoBillToday;
     private static RecyclerView mRecycleView;
     AccountRecordManager mRecordManager;
+    //本地广播管理者   可以用来注册广播
+    LocalBroadcastManager mLocalBroadcastManager;
+    //本地广播接收者
+    LocalReceiver mLocalReceiver = new LocalReceiver();
+    IntentFilter mIntentFilter = new IntentFilter();
 
     @Nullable
     @Override
@@ -63,13 +68,9 @@ public class BillFragment extends BillShowHelper {
         if (mBillShowAdapter.getItemCount() == 0) {
             mNoBillToday.setVisibility(View.VISIBLE);
         }
-        //本地广播管理者   可以用来注册广播
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
-        //本地广播接收者
-        LocalReceiver localReceiver = new LocalReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(LOCAL_BROADCAST);   //添加action
-        localBroadcastManager.registerReceiver(localReceiver, intentFilter);
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        mIntentFilter.addAction(LOCAL_BROADCAST);   //添加action
+        mLocalBroadcastManager.registerReceiver(mLocalReceiver, mIntentFilter);
         return view;
     }
 
@@ -108,5 +109,11 @@ public class BillFragment extends BillShowHelper {
                 updateView(mRecordManager);
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
+        super.onDestroy();
     }
 }

@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
 import com.example.funaccount.util.AccountRecordManager;
 import com.example.funaccount.util.BillShowHelper;
@@ -45,9 +44,9 @@ public class DetailFragment extends BillShowHelper {
     private int mNextClickCount = 0;
     private float mSumIncome;
     private float mSunExpend;
-    private IntentFilter intentFilter;
-    private LocalReceiver localReceiver;    //本地广播接收者
-    private LocalBroadcastManager localBroadcastManager;   //本地广播管理者   可以用来注册广播
+    private IntentFilter mIntentFilter;
+    private LocalReceiver mLocalReceiver;    //本地广播接收者
+    private LocalBroadcastManager mLocalBroadcastManager;   //本地广播管理者   可以用来注册广播
 
     private final int mThisYear = Calendar.getInstance().get(Calendar.YEAR);
     private final int mThisMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
@@ -61,11 +60,11 @@ public class DetailFragment extends BillShowHelper {
         mRecordManager = initDataBase();
         initMonthList(mMonths);
         initUi(view);
-        localBroadcastManager = LocalBroadcastManager.getInstance(getContext());
-        localReceiver = new LocalReceiver();
-        intentFilter = new IntentFilter();
-        intentFilter.addAction(LOCAL_BROADCAST);   //添加action
-        localBroadcastManager.registerReceiver(localReceiver, intentFilter);
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(getContext());
+        mLocalReceiver = new LocalReceiver();
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(LOCAL_BROADCAST);   //添加action
+        mLocalBroadcastManager.registerReceiver(mLocalReceiver, mIntentFilter);
         return view;
     }
 
@@ -171,6 +170,12 @@ public class DetailFragment extends BillShowHelper {
                 updateUi(mShowYear, mShowMonth);
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
+        super.onDestroy();
     }
 }
 
