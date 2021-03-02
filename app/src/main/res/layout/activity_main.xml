@@ -10,7 +10,7 @@
         android:id="@+id/main_nav_view"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        app:itemIconTint="@android:color/holo_blue_dark"
+        app:itemIconTint="#B3CFC4"
         app:itemTextColor="@color/item_color"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"

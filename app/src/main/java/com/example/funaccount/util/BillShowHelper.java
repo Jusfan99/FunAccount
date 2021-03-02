@@ -94,8 +94,8 @@ public class BillShowHelper extends Fragment {
 
         @NonNull
         @Override
-        public BillShowHelper.BillShowAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent
-                , int viewType) {
+        public BillShowHelper.BillShowAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                                              int viewType) {
             View itemView = View.inflate(mContext, R.layout.bill_item_show, null);
             return new MyViewHolder(itemView);
         }

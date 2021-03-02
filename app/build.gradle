@@ -55,4 +55,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.14.1'
     implementation 'com.squareup.okio:okio:2.4.3'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.githang:status-bar-compat:0.3'
 }

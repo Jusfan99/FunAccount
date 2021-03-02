@@ -40,8 +40,8 @@ public class DetailFragment extends BillShowHelper {
     private ArrayList<String> mMonths;
     private int mShowYear;
     private int mShowMonth;
-    private int mLastClickCount = 0;
-    private int mNextClickCount = 0;
+    private int mLastClickCount = 1;
+    private int mNextClickCount;
     private float mSumIncome;
     private float mSunExpend;
     private IntentFilter mIntentFilter;
@@ -85,12 +85,14 @@ public class DetailFragment extends BillShowHelper {
         mSumExpendText = view.findViewById(R.id.month_expend_sum);
         mSumIncomeText = view.findViewById(R.id.month_income_sum);
         updateUi(mShowYear, mShowMonth);
+        mNextClickCount = mMonths.size();
 
         mLastMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mMonths.size() > mLastClickCount + 1) {
+                if (mNextClickCount > 1) {
                     mLastClickCount++;
+                    mNextClickCount--;
                     if (mShowMonth == 1) {
                         mShowMonth = 12;
                         mShowYear--;
@@ -106,8 +108,9 @@ public class DetailFragment extends BillShowHelper {
         mNextMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mNextClickCount < mLastClickCount) {
+                if (mLastClickCount > 1) {
                     mNextClickCount++;
+                    mLastClickCount--;
                     if (mShowMonth == 12) {
                         mShowMonth = 1;
                         mShowYear++;
@@ -137,11 +140,13 @@ public class DetailFragment extends BillShowHelper {
     private void updateUi(int year, int month) {
         if (monthBillList(year, month, mRecordManager) != null &&
                 monthBillList(year, month, mRecordManager).size() != 0) {
+            mRecyclerView.setVisibility(View.VISIBLE);
             mMonthEmpty.setVisibility(View.GONE);
             mBillShowAdapter = new BillShowAdapter(mMonthEmpty.getContext(),
                     monthBillList(year, month, mRecordManager));
         } else {
             mMonthEmpty.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         }
         initRecyclerView(mRecyclerView, mBillShowAdapter);
         mCheckedMonth.setText(monthToString(year, month));

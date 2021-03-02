@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="270dp"
             android:id="@+id/set_background"
-            android:background="@color/teal_200"
+            android:background="#B3CFC4"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

@@ -1,7 +1,9 @@
 package com.example.funaccount.other_pages.login_page;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -89,8 +91,28 @@ public class LoginActivity extends Activity {
                     login();
                     break;
                 case R.id.login_btn_cancle:                             //登录界面的注销按钮
-                    cancel();
+                {
+                    final AlertDialog.Builder cancelDialog = new AlertDialog.Builder(LoginActivity.this);
+                    cancelDialog.setTitle("注销");
+                    cancelDialog.setMessage("注销后所有账号信息将被清除，是否确认注销？");
+                    cancelDialog.setPositiveButton("确认",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    cancel();
+                                }
+                            });
+                    cancelDialog.setNegativeButton("取消",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    cancelDialog.show().dismiss();
+                                }
+                            });
+                    cancelDialog.show();
+
                     break;
+                }
                 case R.id.login_text_change_pwd:                             //登录界面的修改密码按钮
                     Intent intent_Login_to_reset = new Intent(LoginActivity.this,
                             ResetPwdActivity.class);

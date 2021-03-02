@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="90dp"
             android:textSize="25sp"
-            android:textColor="@color/design_default_color_secondary_variant"
+            android:textColor="#339999"
             android:text="@string/income" />
 
         <CheckBox
@@ -34,7 +34,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:textColor="@color/design_default_color_secondary_variant"
+            android:textColor="#339999"
             android:text="@string/expend" />
 
 
@@ -49,7 +49,7 @@
         <TextView
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/design_default_color_secondary_variant"
+            android:textColor="#339999"
             android:layout_marginLeft="40dp"
             android:textSize="30sp"
             android:text="@string/money_name" />
@@ -76,7 +76,7 @@
         <TextView
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/design_default_color_secondary_variant"
+            android:textColor="#339999"
             android:layout_marginLeft="40dp"
             android:textSize="30sp"
             android:text="@string/type_name" />
@@ -98,7 +98,7 @@
         <TextView
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/design_default_color_secondary_variant"
+            android:textColor="#339999"
             android:layout_marginLeft="40dp"
             android:text="@string/remark_name"
             android:textSize="30sp" />
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/finish_add"
             android:layout_marginTop="80dp"
-            android:backgroundTint="@color/teal_700"
+            android:backgroundTint="#66CDAA"
             android:text="@string/complete"/>
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.example.funaccount;
 
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -9,10 +10,12 @@ import androidx.navigation.ui.NavigationUI;
 import cn.bmob.v3.Bmob;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.funaccount.bill_page.AddOneFragment;
 import com.example.funaccount.util.BillShowHelper;
+import com.githang.statusbar.StatusBarCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
@@ -22,11 +25,13 @@ public class MainActivity extends AppCompatActivity {
     private String mUserId;
     private int mLoginStatus;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "dd84103ea5c4f10cf1777f78c54580ad");
         setContentView(R.layout.activity_main);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.test));
         Intent intent = getIntent();
         mUserName = intent.getStringExtra("userName");
         mUserId = intent.getStringExtra("userId");

@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="205dp"
-        android:background="@color/teal_200"
+        android:background="#B3CFC4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:text="@string/topic_title"
-        android:textColor="#3399cc"
+        android:textColor="#339999"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,7 +30,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/addone_btn"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
-        android:background="@color/teal_200"/>
+        android:background="#DEC9AB"/>
 
     <Button
         android:id="@+id/addone_btn"
@@ -39,7 +39,7 @@
         android:layout_marginTop="130dp"
         android:background="@drawable/add_one_btn"
         android:stateListAnimator="@null"
-        app:backgroundTint="#0099ff"
+        app:backgroundTint="#7DAAA7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toTopOf="@+id/addone_btn"
         android:text="@string/today_no_bill"
         android:textSize="20sp"
-        android:textColor="@color/purple_200"
+        android:textColor="#CAA679"
         android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
