@@ -1,10 +1,14 @@
 package com.example.funaccount.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +31,12 @@ public class SettingItemFragment extends Fragment {
     public static class SettingItemAdapter extends RecyclerView.Adapter<SettingItemAdapter.MyViewHolder> {
         private final Context mContext;
         private final ArrayList<SettingItem> mSettingItems;
+        EditText et;
 
         public SettingItemAdapter(Context context, ArrayList<SettingItem> settingItems) {
             this.mContext = context;
             this.mSettingItems = settingItems;
+            et = new EditText(mContext);
         }
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -78,20 +84,43 @@ public class SettingItemFragment extends Fragment {
             SettingItem data = mSettingItems.get(position);
             holder.mItemName.setText(data.mItemName);
             holder.mItemImage.setImageResource(data.mImagId);
+
             switch (data.getItemName()) {
-                case ("预算中心"):
+                case ("预算中心"): {
+                    holder.setListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new AlertDialog.Builder(mContext).setTitle("设置每月预算")
+                                    .setIcon(R.drawable.setting4)
+                                    .setView(et)
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String input = et.getText().toString();
+                                            if (input.equals("")) {
+                                                Toast.makeText(mContext, "填写内容不能为空！" + input, Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Toast.makeText(mContext, "预算设置成功 " + input, Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton("取消", null)
+                                    .show();
+                        }
+                    });
+                }
                 case ("高级功能"):
                 case ("账号设置"):
                 case ("其他设置"):
                 case ("常见问题"):
                 case ("关于我们"):
                 case ("好评鼓励"): {
-                    holder.setListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(v.getContext(), "暂不支持", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+//                    holder.setListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Toast.makeText(v.getContext(), "暂不支持", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
                 }
             }
         }

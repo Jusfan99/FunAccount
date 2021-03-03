@@ -10,8 +10,8 @@ android {
         applicationId "com.example.funaccount"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,4 +56,5 @@ dependencies {
     implementation 'com.squareup.okio:okio:2.4.3'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.githang:status-bar-compat:0.3'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

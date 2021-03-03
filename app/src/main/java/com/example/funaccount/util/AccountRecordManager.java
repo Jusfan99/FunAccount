@@ -117,6 +117,19 @@ public class AccountRecordManager {
         return billItems;
     }
 
+    public ArrayList<BillItem> getThisWeekRecord() {
+        Calendar calendar = Calendar.getInstance();
+        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
+        int firstDayOfWeek = calendar.getFirstDayOfWeek();
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
+                        + "' and " + YEAR + "='" + year + "'", null, null,
+                null, null);
+        addBillItem(billItems, cursor);
+        return billItems;
+    }
+
     private void addBillItem(ArrayList<BillItem> billItems, Cursor cursor) {
         try {
             if (cursor.moveToFirst()) {

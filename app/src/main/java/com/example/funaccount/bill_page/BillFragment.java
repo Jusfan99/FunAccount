@@ -113,7 +113,9 @@ public class BillFragment extends BillShowHelper {
 
     @Override
     public void onDestroy() {
-        mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
+        if (mLocalBroadcastManager != null) {
+            mLocalBroadcastManager.unregisterReceiver(mLocalReceiver);
+        }
         super.onDestroy();
     }
 }

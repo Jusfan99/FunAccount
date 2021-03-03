@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.funaccount.R;
@@ -30,11 +34,17 @@ public class AddOneFragment extends Fragment {
     private CheckBox mIncome;
     private CheckBox mExpend;
     private EditText mMoneyEdit;
-    private EditText mTypeEdit;
+    private Spinner mTypeSpinner;
+    private ArrayAdapter<String> mAdapter;
     private EditText mRemarkEdit;
     private AccountRecordManager mRecordManager;
     private AccountRecord mAccountRecord;
     private Date mDate;
+    private String mTypeResult;
+
+    private static final String[] mIncomeType = {"理财", "工资", "兼职", "奖金", "其他"};
+    private static final String[] mExpendType = {"饮食", "出行", "生活", "服饰", "其他"};
+    private static final String[] mEmptyType = {"请先选择收入or支出"};
 
     @Nullable
     @Override
@@ -45,7 +55,22 @@ public class AddOneFragment extends Fragment {
         mIncome = view.findViewById(R.id.income_checked);
         mExpend = view.findViewById(R.id.expend_checked);
         mMoneyEdit = view.findViewById(R.id.eidt_money);
-        mTypeEdit = view.findViewById(R.id.eidt_type);
+        mTypeSpinner = view.findViewById(R.id.spinner_type);
+        mAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, mEmptyType);
+        mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mTypeSpinner.setAdapter(mAdapter);
+        mTypeSpinner.setVisibility(View.VISIBLE);
+        mTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mTypeResult = ((TextView) view).getText().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         mRemarkEdit = view.findViewById(R.id.eidt_remark);
         BillShowHelper.addingOne = true;
 
@@ -99,8 +124,10 @@ public class AddOneFragment extends Fragment {
             if (isChecked) {
                 if (buttonView.getText().toString().equals(mIncome.getText().toString())) {
                     cancleAnother(mExpend);
+                    changeSpinnerAdapter(mIncomeType);
                 } else {
                     cancleAnother(mIncome);
+                    changeSpinnerAdapter(mExpendType);
                 }
             }
         }
@@ -119,7 +146,7 @@ public class AddOneFragment extends Fragment {
             return false;
         }
         float money = Float.parseFloat(mMoneyEdit.getText().toString().trim());
-        String type = mTypeEdit.getText().toString().trim();
+        String type = mTypeResult.trim();
         String remark = mRemarkEdit.getText().toString().trim();
         if (type.equals("") || (!mIncome.isChecked() && !mExpend.isChecked())) {
             return false;
@@ -134,5 +161,13 @@ public class AddOneFragment extends Fragment {
             mAccountRecord.setId(mRecordManager.getDataCount() + 1);
             return true;
         }
+    }
+
+    public void changeSpinnerAdapter(String[] items) {
+        mAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, items);
+        mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mTypeSpinner.setAdapter(mAdapter);
+        mTypeSpinner.setVisibility(View.GONE);
+        mTypeSpinner.setVisibility(View.VISIBLE);
     }
 }
