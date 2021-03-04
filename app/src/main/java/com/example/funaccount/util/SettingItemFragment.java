@@ -108,6 +108,7 @@ public class SettingItemFragment extends Fragment {
                                     .show();
                         }
                     });
+                    break;
                 }
                 case ("高级功能"):
                 case ("账号设置"):

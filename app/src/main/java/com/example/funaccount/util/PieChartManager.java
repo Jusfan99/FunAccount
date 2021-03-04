@@ -78,7 +78,7 @@ public class PieChartManager {
         dataSet.setColors(colors);
         dataSet.setDrawValues(true);
         dataSet.setValueTextSize(14);
-        dataSet.setValueTextColor(Color.RED);
+        dataSet.setValueTextColor(Color.parseColor("#ADD8E6"));
         dataSet.setValueTypeface(Typeface.DEFAULT_BOLD);
 
         //当值位置为外边线时，表示线的前半段长度

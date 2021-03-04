@@ -99,6 +99,15 @@ public class AccountRecordManager {
         return billItems;
     }
 
+    public ArrayList<BillItem> getYearRecord(int year) {
+        ArrayList<BillItem> billItems = new ArrayList<BillItem>();
+        Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, YEAR + "='" + year + "'",
+                null, null, null, null);
+        addBillItem(billItems, cursor);
+        return billItems;
+    }
+
+
     public ArrayList<BillItem> getMonthRecord(int year, int month) {
         ArrayList<BillItem> billItems = new ArrayList<BillItem>();
         Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
@@ -117,15 +126,26 @@ public class AccountRecordManager {
         return billItems;
     }
 
+    //暂时没考虑本周刚好跨年
     public ArrayList<BillItem> getThisWeekRecord() {
         Calendar calendar = Calendar.getInstance();
         ArrayList<BillItem> billItems = new ArrayList<BillItem>();
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
+        int today = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH) + 1;
+        int lastMonth = month - 1;
         int year = calendar.get(Calendar.YEAR);
-        Cursor cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
-                        + "' and " + YEAR + "='" + year + "'", null, null,
-                null, null);
+        Cursor cursor;
+        if(today >= firstDayOfWeek) {
+            cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
+                            + "' and " + YEAR + "='" + year + "' and " + DAY + ">='" + firstDayOfWeek + "'",
+                    null, null, null, null);
+        } else {
+            cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
+                    + "' and " + YEAR + "='" + year + "' and " + DAY + "<=" + today +
+                    "' or " + MONTH + "='" + lastMonth + "' and " + YEAR + "='" + year + "' and " +
+                    DAY + ">=" + firstDayOfWeek + "'", null, null, null, null);
+        }
         addBillItem(billItems, cursor);
         return billItems;
     }
@@ -138,9 +158,9 @@ public class AccountRecordManager {
                     float money = cursor.getFloat(cursor.getColumnIndex(MONEY));
                     boolean isIncome = cursor.getInt(cursor.getColumnIndex(IS_INCOME)) == 1;
                     BillItem billItem = new BillItem(money, type, isIncome);
-                    billItem.mRemark = cursor.getString(cursor.getColumnIndex(REMARK));
+                    billItem.setRemake(cursor.getString(cursor.getColumnIndex(REMARK)));
                     if (cursor.getColumnIndex(ONLY_SIGNAL) != -1) {
-                        billItem.mId = cursor.getLong(cursor.getColumnIndex(ONLY_SIGNAL));
+                        billItem.setId(cursor.getLong(cursor.getColumnIndex(ONLY_SIGNAL)));
                     }
                     billItem.setDate(new Date(cursor.getInt(cursor.getColumnIndex(YEAR)),
                             cursor.getInt(cursor.getColumnIndex(MONTH)), cursor.getInt(cursor.getColumnIndex(DAY))));

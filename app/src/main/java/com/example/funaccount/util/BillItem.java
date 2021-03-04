@@ -3,15 +3,23 @@ package com.example.funaccount.util;
 import java.io.Serializable;
 
 public class BillItem implements Serializable {
-    public boolean mIsIncome;
-    public String mType;
-    public float mMoney;
-    public String mRemark;
-    public long mId;
-    public Date mDate;
+    private boolean mIsIncome;
+    private String mType;
+    private float mMoney;
+    private String mRemark;
+    private long mId;
+    private Date mDate;
 
     public void setDate(Date mDate) {
         this.mDate = mDate;
+    }
+
+    public void setRemake(String remake) {
+        this.mRemark = remake;
+    }
+
+    public void setId(long id) {
+        this.mId = id;
     }
 
     public Date getDate() {

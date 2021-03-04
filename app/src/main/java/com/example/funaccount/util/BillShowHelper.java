@@ -104,8 +104,8 @@ public class BillShowHelper extends Fragment {
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             BillItem data = mBillItems.get(position);
             holder.mDate.setText(data.getDate().toString());
-            holder.mType.setText(data.mType);
-            holder.mMoney.setText(String.valueOf(data.mMoney));
+            holder.mType.setText(data.getType());
+            holder.mMoney.setText(String.valueOf(data.getMoney()));
             holder.mIsIncome.setText(R.string.income);
 
             holder.setTouchListener(new View.OnTouchListener() {
@@ -143,7 +143,7 @@ public class BillShowHelper extends Fragment {
                 }
             });
 
-            if (!data.mIsIncome) {
+            if (!data.isIncome()) {
                 holder.mIsIncome.setText(R.string.expend);
             }
         }
@@ -237,7 +237,7 @@ public class BillShowHelper extends Fragment {
                     message.putString("date", data.getDate().toString());
                     message.putString("type", data.getType());
                     message.putFloat("money", data.getMoney());
-                    message.putString("income", data.mIsIncome ?
+                    message.putString("income", data.isIncome() ?
                             mContext.getString(R.string.income) : mContext.getString(R.string.expend));
                     message.putString("remark", data.getRemark());
 
