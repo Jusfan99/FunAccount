@@ -12,6 +12,18 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="50dp"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/this_month_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +51,25 @@
             android:id="@+id/pie_chat1"
             android:layout_width="match_parent"
             android:layout_height="250dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支出总额:"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/month_expend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp" />
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,6 +98,24 @@
             android:id="@+id/pie_chat2"
             android:layout_width="match_parent"
             android:layout_height="250dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收入总额:"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/month_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp" />
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

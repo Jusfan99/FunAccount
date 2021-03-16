@@ -9,9 +9,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="50dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/this_week_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,8 +51,27 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chat1"
             android:layout_width="match_parent"
-            android:layout_height="250dp"/>
+            android:layout_height="250dp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支出总额:"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/week_expend_sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp" />
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,8 +99,27 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chat2"
             android:layout_width="match_parent"
-            android:layout_height="250dp"/>
+            android:layout_height="250dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收入总额:"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/week_income_sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

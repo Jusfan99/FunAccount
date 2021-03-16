@@ -72,45 +72,46 @@ public class ChartFragment extends Fragment {
 
     //获取每种收入次数
     public void getTypeProportion(ArrayList<BillItem> billItems, float[] mIncomeMoney, float[] mExpendMoney) {
-        for(int i = 0; i < billItems.size(); i++) {
+        for (int i = 0; i < billItems.size(); i++) {
             String type = billItems.get(i).getType();
             switch (type) {
-                case ("理财") :
-                    mIncomeMoney[0] += billItems.get(i).getMoney() ;
+                case ("理财"):
+                    mIncomeMoney[0] += billItems.get(i).getMoney();
                     break;
                 case ("工资"):
-                    mIncomeMoney[1] += billItems.get(i).getMoney() ;
+                    mIncomeMoney[1] += billItems.get(i).getMoney();
                     break;
                 case ("兼职"):
-                    mIncomeMoney[2] += billItems.get(i).getMoney() ;
+                    mIncomeMoney[2] += billItems.get(i).getMoney();
                     break;
                 case ("奖金"):
-                    mIncomeMoney[3] += billItems.get(i).getMoney() ;
+                    mIncomeMoney[3] += billItems.get(i).getMoney();
                     break;
                 case ("饮食"):
-                    mExpendMoney[0] += billItems.get(i).getMoney() ;
+                    mExpendMoney[0] += billItems.get(i).getMoney();
                     break;
                 case ("出行"):
-                    mExpendMoney[1] += billItems.get(i).getMoney() ;
+                    mExpendMoney[1] += billItems.get(i).getMoney();
                     break;
                 case ("生活"):
-                    mExpendMoney[2] += billItems.get(i).getMoney() ;
+                    mExpendMoney[2] += billItems.get(i).getMoney();
                     break;
                 case ("服饰"):
-                    mExpendMoney[3] += billItems.get(i).getMoney() ;
+                    mExpendMoney[3] += billItems.get(i).getMoney();
                     break;
-                case ("其他"):{
-                    if(billItems.get(i).isIncome()) {
-                        mIncomeMoney[4] += billItems.get(i).getMoney() ;
+                case ("其他"): {
+                    if (billItems.get(i).isIncome()) {
+                        mIncomeMoney[4] += billItems.get(i).getMoney();
                     } else {
-                        mExpendMoney[4] += billItems.get(i).getMoney() ;
+                        mExpendMoney[4] += billItems.get(i).getMoney();
                     }
                     break;
                 }
             }
         }
     }
-    public void showIncomePieChart(float[] mIncomeMoney, PieChart mPieChart2) {
+
+    public float showIncomePieChart(float[] mIncomeMoney, PieChart mPieChart2) {
         //设置每份所占数量
         List<PieEntry> types = new ArrayList<>();
         types.add(new PieEntry(mIncomeMoney[0], "理财"));
@@ -127,9 +128,10 @@ public class ChartFragment extends Fragment {
         colors.add(Color.parseColor("#C1FFC1"));
         PieChartManager pieChartManager = new PieChartManager(mPieChart2);
         pieChartManager.showPieChart(types, colors);
+        return mIncomeMoney[0] + mIncomeMoney[1] + mIncomeMoney[2] + mIncomeMoney[3] + mIncomeMoney[4];
     }
 
-    public void showExpendPieChart(float[] mExpendMoney, PieChart mPieChart1) {
+    public float showExpendPieChart(float[] mExpendMoney, PieChart mPieChart1) {
         // 设置每份所占数量
         List<PieEntry> types = new ArrayList<>();
         types.add(new PieEntry(mExpendMoney[0], "饮食"));
@@ -147,6 +149,6 @@ public class ChartFragment extends Fragment {
 
         PieChartManager pieChartManager = new PieChartManager(mPieChart1);
         pieChartManager.showPieChart(types, colors);
+        return mExpendMoney[0] + mExpendMoney[1] + mExpendMoney[2] + mExpendMoney[3] + mExpendMoney[4];
     }
-
 }

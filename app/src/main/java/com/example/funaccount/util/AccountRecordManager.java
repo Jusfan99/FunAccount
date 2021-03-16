@@ -128,23 +128,25 @@ public class AccountRecordManager {
 
     //暂时没考虑本周刚好跨年
     public ArrayList<BillItem> getThisWeekRecord() {
-        Calendar calendar = Calendar.getInstance();
         ArrayList<BillItem> billItems = new ArrayList<BillItem>();
+        Calendar calendar = Calendar.getInstance();
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH) + 1;
         int lastMonth = month - 1;
         int year = calendar.get(Calendar.YEAR);
         Cursor cursor;
-        if(today >= firstDayOfWeek) {
+        if (today >= firstDayOfWeek && today - firstDayOfWeek < 7) {
             cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
                             + "' and " + YEAR + "='" + year + "' and " + DAY + ">='" + firstDayOfWeek + "'",
                     null, null, null, null);
-        } else {
+        } else if (today < firstDayOfWeek) {
             cursor = mSQLiteDatabase.query(TABLE_NAME, null, MONTH + "='" + month
                     + "' and " + YEAR + "='" + year + "' and " + DAY + "<=" + today +
                     "' or " + MONTH + "='" + lastMonth + "' and " + YEAR + "='" + year + "' and " +
                     DAY + ">=" + firstDayOfWeek + "'", null, null, null, null);
+        } else {
+            return getTodayRecord(year, month, today);
         }
         addBillItem(billItems, cursor);
         return billItems;
