@@ -19,7 +19,8 @@ import androidx.annotation.Nullable;
 public class SettingFragment extends SettingItemFragment {
     private String mUserName;
     private String mUSerId;
-    private int mLoginStatus;
+
+    public boolean mIsLogin;
 
     @Nullable
     @Override
@@ -30,7 +31,7 @@ public class SettingFragment extends SettingItemFragment {
         initRecyclerView(view, settingItemAdapter);
         TextView login = view.findViewById(R.id.user_name);
         TextView mId = view.findViewById(R.id.user_id);
-        if (mLoginStatus != 1) {
+        if (!mIsLogin) {
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -50,6 +51,6 @@ public class SettingFragment extends SettingItemFragment {
         super.onAttach(context);
         mUSerId = ((MainActivity) context).getUserId();
         mUserName = ((MainActivity) context).getUserName();
-        mLoginStatus = ((MainActivity) context).getLoginStatus();
+        mIsLogin = ((MainActivity) context).getLoginStatus();
     }
 }

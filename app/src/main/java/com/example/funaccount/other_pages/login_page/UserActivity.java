@@ -54,7 +54,7 @@ public class UserActivity extends AppCompatActivity {
     public void backToSetting(View view) {
         Intent intent = new Intent(UserActivity.this, MainActivity.class);
         intent.putExtra("userName", mUserData.getUserName());
-        intent.putExtra("status", 1);
+        intent.putExtra("status", true);
         intent.putExtra("userId", mUserData.getUserId());
         startActivity(intent);
         finish();

@@ -1,12 +1,15 @@
 package com.example.funaccount.util;
 
-public class AccountRecord {
+import cn.bmob.v3.BmobObject;
+
+public class AccountRecord extends BmobObject {
     private float mMoney;        //金额
     private String mRemark;      //备注
     private boolean mIsIncome;   //收入or支出
     private String mType;        //分类
     private Date mDate;
     private long mId;
+    private String mUserId;
 
     public void setMoney(float mMoney) {
         this.mMoney = mMoney;
@@ -54,5 +57,13 @@ public class AccountRecord {
 
     public long getId() {
         return mId;
+    }
+
+    public String getUserId() {
+        return mUserId;
+    }
+
+    public void setUserId(String userId) {
+        mUserId = userId;
     }
 }

@@ -2,13 +2,25 @@ package com.example.funaccount.util;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
+import com.example.funaccount.MainActivity;
+import com.example.funaccount.R;
+import com.example.funaccount.other_pages.login_page.LoginActivity;
+import com.example.funaccount.other_pages.login_page.RegisterActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.CountListener;
+import cn.bmob.v3.listener.SaveListener;
 
 public class AccountRecordManager {
 
@@ -85,6 +97,24 @@ public class AccountRecordManager {
         values.put(DAY, accountRecord.getDate().getDay());
         values.put(ONLY_SIGNAL, accountRecord.getId());
         return mSQLiteDatabase.insert(TABLE_NAME, RECORD_ID, values);
+    }
+
+    public void addToBomb(AccountRecord accountRecord) {
+        BmobQuery<AccountRecord> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("userId", accountRecord.getUserId());
+        bmobQuery.count(AccountRecord.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                accountRecord.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if(e == null) {
+                            Toast.makeText(mContext, "成功", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     public long deleteOneRecord(long id) {

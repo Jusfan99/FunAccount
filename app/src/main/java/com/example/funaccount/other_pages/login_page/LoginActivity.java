@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.funaccount.R;
+import com.example.funaccount.setting_page.SettingFragment;
 import com.example.funaccount.util.UserData;
 
 import java.util.List;
