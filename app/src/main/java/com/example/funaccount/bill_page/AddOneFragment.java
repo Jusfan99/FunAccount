@@ -1,6 +1,7 @@
 package com.example.funaccount.bill_page;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
 import com.example.funaccount.util.AccountRecord;
 import com.example.funaccount.util.AccountRecordManager;
@@ -110,6 +112,10 @@ public class AddOneFragment extends Fragment {
                 BillFragment.updateView(mRecordManager);
                 transaction.remove(fragmentManager.findFragmentByTag("addOne"));
                 transaction.commit();
+                if(!TextUtils.isEmpty(((MainActivity)getActivity()).getUserId())) {
+                    mAccountRecord.setUserId(((MainActivity)getActivity()).getUserId());
+                    mRecordManager.addToBomb(mAccountRecord);
+                }
             }
         } else {
             Toast.makeText(this.getContext(), getString(R.string.check_input), Toast.LENGTH_SHORT).show();

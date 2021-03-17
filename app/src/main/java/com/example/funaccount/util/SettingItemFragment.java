@@ -84,28 +84,28 @@ public class SettingItemFragment extends Fragment {
             SettingItem data = mSettingItems.get(position);
             holder.mItemName.setText(data.mItemName);
             holder.mItemImage.setImageResource(data.mImagId);
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext).setTitle("设置每月预算")
+                    .setIcon(R.drawable.setting4)
+                    .setView(et)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String input = et.getText().toString();
+                            if (input.equals("")) {
+                                Toast.makeText(mContext, "填写内容不能为空！" + input, Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(mContext, "预算设置成功 " + input, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .setNegativeButton("取消", null);
 
             switch (data.getItemName()) {
                 case ("预算中心"): {
                     holder.setListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new AlertDialog.Builder(mContext).setTitle("设置每月预算")
-                                    .setIcon(R.drawable.setting4)
-                                    .setView(et)
-                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            String input = et.getText().toString();
-                                            if (input.equals("")) {
-                                                Toast.makeText(mContext, "填写内容不能为空！" + input, Toast.LENGTH_LONG).show();
-                                            } else {
-                                                Toast.makeText(mContext, "预算设置成功 " + input, Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    })
-                                    .setNegativeButton("取消", null)
-                                    .show();
+                            builder.show();
                         }
                     });
                     break;

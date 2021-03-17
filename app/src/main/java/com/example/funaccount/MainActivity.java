@@ -23,7 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private String mUserName;
     private String mUserId;
-    private int mLoginStatus;
+    private boolean mLoginStatus;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mUserName = intent.getStringExtra("userName");
         mUserId = intent.getStringExtra("userId");
-        mLoginStatus = intent.getIntExtra("status", 0);
+        mLoginStatus = intent.getBooleanExtra("status", false);
         //隐藏标题
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -43,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.main_nav_host);
         BottomNavigationView navigationView = findViewById(R.id.main_nav_view);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    @Override
+    protected void onResume() {
+        mLoginStatus = getIntent().getBooleanExtra("status", false);
+        super.onResume();
     }
 
     public String getUserName() {
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         return mUserId;
     }
 
-    public int getLoginStatus() {
+    public boolean getLoginStatus() {
         return mLoginStatus;
     }
 
