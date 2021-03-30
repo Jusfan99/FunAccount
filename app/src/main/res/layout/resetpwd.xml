@@ -1,97 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:weightSum="1">
 
-    <EditText
-        android:drawableLeft="@android:drawable/ic_menu_myplaces"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/resetpwd_edit_name"
-        android:layout_alignParentTop="true"
-        android:hint="@string/please_input_username"
-        android:layout_alignLeft="@+id/resetpwd_edit_pwd_new"
-        android:layout_alignStart="@+id/resetpwd_edit_pwd_new"
-        android:layout_alignRight="@+id/resetpwd_edit_pwd_new"
-        android:layout_alignEnd="@+id/resetpwd_edit_pwd_new" />
+  <EditText
+    android:drawableLeft="@android:drawable/ic_menu_myplaces"
+    android:layout_width="wrap_content"
+    android:layout_height="60dp"
+    android:inputType="textPersonName"
+    android:ems="10"
+    android:id="@+id/resetpwd_edit_name"
+    android:layout_alignParentTop="true"
+    android:hint="@string/please_input_username"
+    android:layout_alignLeft="@+id/resetpwd_edit_pwd_new"
+    android:layout_alignStart="@+id/resetpwd_edit_pwd_new"
+    android:layout_alignRight="@+id/resetpwd_edit_pwd_new"
+    android:layout_alignEnd="@+id/resetpwd_edit_pwd_new" />
 
-    <!--
+  <!--
 
-        <EditText android:id="@+id/edt_operator_name" style="@style/syncEditText"
-            android:hint="@string/hint_operator_name" />
-        <ImageView android:id="@+id/syncOperatorImg" style="@style/syncImageView"
-            android:layout_alignLeft="@+id/edt_operator_name"
-            android:layout_alignTop="@+id/edt_operator_name"
-            android:layout_alignBottom="@+id/edt_operator_name" android:src="@drawable/sync_operator" />
-    -->
+      <EditText android:id="@+id/edt_operator_name" style="@style/syncEditText"
+          android:hint="@string/hint_operator_name" />
+      <ImageView android:id="@+id/syncOperatorImg" style="@style/syncImageView"
+          android:layout_alignLeft="@+id/edt_operator_name"
+          android:layout_alignTop="@+id/edt_operator_name"
+          android:layout_alignBottom="@+id/edt_operator_name" android:src="@drawable/sync_operator" />
+  -->
 
-    <EditText
-        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/resetpwd_edit_pwd_old"
-        android:hint="@string/please_input_old_password"
-        android:layout_below="@+id/resetpwd_edit_name"
-        android:layout_alignRight="@+id/resetpwd_edit_name"
-        android:layout_alignEnd="@+id/resetpwd_edit_name"
-        android:layout_alignLeft="@+id/resetpwd_edit_name"
-        android:layout_alignStart="@+id/resetpwd_edit_name" />
+  <EditText
+    android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+    android:layout_width="fill_parent"
+    android:layout_height="60dp"
+    android:inputType="textPassword"
+    android:ems="10"
+    android:id="@+id/resetpwd_edit_pwd_old"
+    android:hint="@string/please_input_old_password"
+    android:layout_below="@+id/resetpwd_edit_name"
+    android:layout_alignRight="@+id/resetpwd_edit_name"
+    android:layout_alignEnd="@+id/resetpwd_edit_name"
+    android:layout_alignLeft="@+id/resetpwd_edit_name"
+    android:layout_alignStart="@+id/resetpwd_edit_name" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/cancel"
-        android:id="@+id/resetpwd_btn_cancel"
-        android:textSize="20sp"
-        android:onClick="not_to_reset"
-        android:backgroundTint="#838B8B"
-        android:layout_below="@+id/resetpwd_btn_sure"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
+  <Button
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/cancel"
+    android:id="@+id/resetpwd_btn_cancel"
+    android:textSize="20sp"
+    android:onClick="not_to_reset"
+    android:backgroundTint="#838B8B"
+    android:layout_below="@+id/resetpwd_btn_sure"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="20dp" />
 
-    <EditText
-        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/resetpwd_edit_pwd_new"
-        android:layout_below="@+id/resetpwd_edit_pwd_old"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/please_input_new_password"
-        />
+  <EditText
+    android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+    android:layout_width="fill_parent"
+    android:layout_height="60dp"
+    android:inputType="textPassword"
+    android:ems="10"
+    android:id="@+id/resetpwd_edit_pwd_new"
+    android:layout_below="@+id/resetpwd_edit_pwd_old"
+    android:layout_centerHorizontal="true"
+    android:hint="@string/please_input_new_password" />
 
-    <Button
-        android:id="@+id/resetpwd_btn_sure"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/resetpwd_edit_pwd_new"
-        android:layout_marginLeft="-2dp"
-        android:layout_marginStart="-2dp"
-        android:layout_marginTop="81dp"
-        android:backgroundTint="#66CDAA"
-        android:onClick="sure_to_reset"
-        android:text="@string/finish"
-        android:textSize="20sp" />
+  <Button
+    android:id="@+id/resetpwd_btn_sure"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/resetpwd_edit_pwd_new"
+    android:layout_marginLeft="-2dp"
+    android:layout_marginStart="-2dp"
+    android:layout_marginTop="81dp"
+    android:backgroundTint="#66CDAA"
+    android:onClick="sure_to_reset"
+    android:text="@string/finish"
+    android:textSize="20sp" />
 
-    <EditText
-        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/resetpwd_edit_pwd_check"
-        android:hint="@string/please_input_new_password"
-        android:layout_below="@+id/resetpwd_edit_pwd_new"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+  <EditText
+    android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+    android:layout_width="fill_parent"
+    android:layout_height="60dp"
+    android:inputType="textPassword"
+    android:ems="10"
+    android:id="@+id/resetpwd_edit_pwd_check"
+    android:hint="@string/please_input_new_password"
+    android:layout_below="@+id/resetpwd_edit_pwd_new"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
 
 </RelativeLayout>

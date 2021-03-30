@@ -1,132 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  app:layout_constraintBottom_toBottomOf="parent"
+  app:layout_constraintTop_toTopOf="parent"
+  app:layout_constraintLeft_toLeftOf="parent"
+  app:layout_constraintRight_toRightOf="parent">
+
+  <ImageView
+    android:id="@+id/imageView"
+    android:layout_width="350dp"
+    android:layout_height="400dp"
+    android:background="#CCF0FFF0"
+    android:scaleType="fitCenter"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent">
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="350dp"
-        android:layout_height="400dp"
-        android:background="#CCF0FFF0"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  <TextView
+    android:id="@+id/more_msg_income"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="220dp"
+    android:layout_marginLeft="30dp"
+    android:text="@string/expend_detail"
+    android:textColor="@color/teal_700"
+    android:textSize="40sp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/more_msg_income"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
-        android:layout_marginLeft="30dp"
-        android:text="@string/expend_detail"
-        android:textColor="@color/teal_700"
-        android:textSize="40sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  <TextView
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    android:layout_marginLeft="50dp"
+    android:layout_marginTop="280dp"
+    android:text="@string/time_name"
+    android:textColor="#3AA81D"
+    android:textSize="40sp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="280dp"
-        android:text="@string/time_name"
-        android:textColor="#3AA81D"
-        android:textSize="40sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  <TextView
+    android:id="@+id/more_msg_time"
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="280dp"
+    android:layout_marginRight="20dp"
+    android:gravity="center"
+    app:layout_constraintRight_toRightOf="@id/imageView"
+    android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/more_msg_time"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="280dp"
-        android:layout_marginRight="20dp"
-        android:gravity="center"
-        app:layout_constraintRight_toRightOf="@id/imageView"
-        android:textSize="30sp"/>
+  <TextView
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    android:text="@string/money_name"
+    android:textSize="40sp"
+    android:textColor="#3AA81D"
+    app:layout_constraintTop_toBottomOf="@+id/more_msg_time"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="50dp"
+    app:layout_constraintLeft_toLeftOf="parent" />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="@string/money_name"
-        android:textSize="40sp"
-        android:textColor="#3AA81D"
-        app:layout_constraintTop_toBottomOf="@+id/more_msg_time"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="50dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+  <TextView
+    android:id="@+id/more_msg_money"
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"
+    app:layout_constraintTop_toBottomOf="@id/more_msg_time"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="20dp"
+    app:layout_constraintRight_toRightOf="parent"
+    android:gravity="center"
+    android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/more_msg_money"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@id/more_msg_time"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:gravity="center"
-        android:textSize="30sp"/>
+  <TextView
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    android:text="@string/type_name"
+    android:textColor="#3AA81D"
+    android:textSize="40sp"
+    app:layout_constraintTop_toBottomOf="@+id/more_msg_money"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="50dp"
+    app:layout_constraintLeft_toLeftOf="parent" />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="@string/type_name"
-        android:textColor="#3AA81D"
-        android:textSize="40sp"
-        app:layout_constraintTop_toBottomOf="@+id/more_msg_money"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="50dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+  <TextView
+    android:id="@+id/more_msg_type"
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"
+    app:layout_constraintTop_toBottomOf="@id/more_msg_money"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="20dp"
+    app:layout_constraintRight_toRightOf="parent"
+    android:gravity="center"
+    android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/more_msg_type"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toBottomOf="@id/more_msg_money"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:gravity="center"
-        android:textSize="30sp"/>
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="@string/remark_name"
-        android:textColor="#3AA81D"
-        android:textSize="40sp"
-        app:layout_constraintTop_toBottomOf="@+id/more_msg_type"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="50dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+  <TextView
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    android:text="@string/remark_name"
+    android:textColor="#3AA81D"
+    android:textSize="40sp"
+    app:layout_constraintTop_toBottomOf="@+id/more_msg_type"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="50dp"
+    app:layout_constraintLeft_toLeftOf="parent" />
 
-    <TextView
-        android:id="@+id/more_msg_remark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/more_msg_type"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:gravity="center"
-        android:textSize="30sp"/>
+  <TextView
+    android:id="@+id/more_msg_remark"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/more_msg_type"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="20dp"
+    app:layout_constraintRight_toRightOf="parent"
+    android:gravity="center"
+    android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/more_msg_close"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/close"
-        app:backgroundTint="#009933"
-        app:layout_constraintRight_toRightOf="@id/imageView"
-        app:layout_constraintTop_toTopOf="@id/imageView" />
+  <Button
+    android:id="@+id/more_msg_close"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:background="@drawable/close"
+    app:backgroundTint="#009933"
+    app:layout_constraintRight_toRightOf="@id/imageView"
+    app:layout_constraintTop_toTopOf="@id/imageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

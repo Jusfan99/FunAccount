@@ -3,67 +3,76 @@ package com.example.funaccount.util;
 import cn.bmob.v3.BmobObject;
 
 public class AccountRecord extends BmobObject {
-    private float mMoney;        //金额
-    private String mRemark;      //备注
-    private boolean mIsIncome;   //收入or支出
-    private String mType;        //分类
-    private Date mDate;
-    private long mId;
-    private String mUserId;
+  private float mMoney;        //金额
+  private String mRemark;      //备注
+  private boolean mIsIncome;   //收入or支出
+  private String mType;        //分类
+  private Date mDate;
+  private long mId;
+  private String mUserId;
+  private float mBudget;      //预算
 
-    public void setMoney(float mMoney) {
-        this.mMoney = mMoney;
-    }
+  public void setBudget(float budget) {
+    this.mBudget = budget;
+  }
 
-    public void setRemark(String mRemark) {
-        this.mRemark = mRemark;
-    }
+  public void setMoney(float mMoney) {
+    this.mMoney = mMoney;
+  }
 
-    public void setIsIncome(boolean isIncome) {
-        this.mIsIncome = isIncome;
-    }
+  public void setRemark(String mRemark) {
+    this.mRemark = mRemark;
+  }
 
-    public void setType(String type) {
-        this.mType = type;
-    }
+  public void setIsIncome(boolean isIncome) {
+    this.mIsIncome = isIncome;
+  }
 
-    public float getMoney() {
-        return this.mMoney;
-    }
+  public void setType(String type) {
+    this.mType = type;
+  }
 
-    public void setDate(Date date) {
-        this.mDate = date;
-    }
+  public float getMoney() {
+    return this.mMoney;
+  }
 
-    public Date getDate() {
-        return mDate;
-    }
+  public void setDate(Date date) {
+    this.mDate = date;
+  }
 
-    public String getRemark() {
-        return this.mRemark;
-    }
+  public Date getDate() {
+    return mDate;
+  }
 
-    public String getType() {
-        return this.mType;
-    }
+  public String getRemark() {
+    return this.mRemark;
+  }
 
-    public boolean isIncome() {
-        return this.mIsIncome;
-    }
+  public String getType() {
+    return this.mType;
+  }
 
-    public void setId(long count) {
-        this.mId = count;
-    }
+  public boolean isIncome() {
+    return this.mIsIncome;
+  }
 
-    public long getId() {
-        return mId;
-    }
+  public void setId(long count) {
+    this.mId = count;
+  }
 
-    public String getUserId() {
-        return mUserId;
-    }
+  public long getId() {
+    return mId;
+  }
 
-    public void setUserId(String userId) {
-        mUserId = userId;
-    }
+  public String getUserId() {
+    return mUserId;
+  }
+
+  public void setUserId(String userId) {
+    mUserId = userId;
+  }
+
+  public float getBudget() {
+    return mBudget;
+  }
 }

@@ -17,40 +17,41 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class SettingFragment extends SettingItemFragment {
-    private String mUserName;
-    private String mUSerId;
+  private String mUserName;
+  private String mUSerId;
 
-    public boolean mIsLogin;
+  public boolean mIsLogin;
+  public SettingItemAdapter mSettingItemAdapter;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.setting_frag, null);
-        SettingItemAdapter settingItemAdapter = new SettingItemAdapter(getActivity(), initData());
-        initRecyclerView(view, settingItemAdapter);
-        TextView login = view.findViewById(R.id.user_name);
-        TextView mId = view.findViewById(R.id.user_id);
-        if (!mIsLogin) {
-            login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                }
-            });
-        } else {
-            login.setText(mUserName);
-            mId.setText(mUSerId);
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                           @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.setting_frag, null);
+    mSettingItemAdapter = new SettingItemAdapter(getActivity(), initData());
+    initRecyclerView(view, mSettingItemAdapter);
+    TextView login = view.findViewById(R.id.user_name);
+    TextView mId = view.findViewById(R.id.user_id);
+    if (!mIsLogin) {
+      login.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(getActivity(), LoginActivity.class);
+          startActivity(intent);
         }
-        return view;
+      });
+    } else {
+      login.setText(mUserName);
+      mId.setText(mUSerId);
     }
+    return view;
+  }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mUSerId = ((MainActivity) context).getUserId();
-        mUserName = ((MainActivity) context).getUserName();
-        mIsLogin = ((MainActivity) context).getLoginStatus();
-    }
+  @Override
+  public void onAttach(@NonNull Context context) {
+    super.onAttach(context);
+    mUSerId = ((MainActivity) context).getUserId();
+    mUserName = ((MainActivity) context).getUserName();
+    mIsLogin = ((MainActivity) context).getLoginStatus();
+  }
 }
