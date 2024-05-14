@@ -111,6 +111,10 @@ public class ChartFragment extends Fragment {
     }
   }
 
+  public float getNecessaryExpend(ArrayList<BillItem> billItems) {
+    return billItems.stream().filter(BillItem::isNecessary).map(BillItem::getMoney).reduce(Float::sum).get();
+  }
+
   public float showIncomePieChart(float[] mIncomeMoney, PieChart mPieChart2) {
     //设置每份所占数量
     List<PieEntry> types = new ArrayList<>();

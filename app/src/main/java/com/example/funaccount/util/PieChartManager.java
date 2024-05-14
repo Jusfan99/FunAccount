@@ -11,6 +11,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PieChartManager {
   public PieChart mPieChart;
@@ -72,6 +73,7 @@ public class PieChartManager {
   }
 
   public void showPieChart(List<PieEntry> items, List<Integer> colors) {
+    items = items.stream().filter(e -> e.getValue() > 0).collect(Collectors.toList());
     //数据集合
     PieDataSet dataSet = new PieDataSet(items, "");
 

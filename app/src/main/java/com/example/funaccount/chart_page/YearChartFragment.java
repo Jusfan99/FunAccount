@@ -8,8 +8,10 @@ import android.widget.TextView;
 
 import com.example.funaccount.R;
 import com.example.funaccount.util.AccountRecordManager;
+import com.example.funaccount.util.BillItem;
 import com.github.mikephil.charting.charts.PieChart;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
@@ -25,7 +27,8 @@ public class YearChartFragment extends Fragment {
     PieChart mPieChart1 = view.findViewById(R.id.pie_chat1);
     PieChart mPieChart2 = view.findViewById(R.id.pie_chat2);
     TextView Income = view.findViewById(R.id.year_income);
-    TextView Expend = view.findViewById(R.id.year_expend);
+    TextView NeceExpend = view.findViewById(R.id.year_expend_nece);
+    TextView UnneceExpend = view.findViewById(R.id.year_expend_unnece);
     TextView yearDay = view.findViewById(R.id.this_year_date);
     Calendar calendar = Calendar.getInstance();
     int year = calendar.get(Calendar.YEAR);
@@ -35,12 +38,14 @@ public class YearChartFragment extends Fragment {
     ChartFragment chartFragment = new ChartFragment();
     float[] mIncomeMoney = {0, 0, 0, 0, 0};
     float[] mExpendMoney = {0, 0, 0, 0, 0};
-    chartFragment.getTypeProportion(recordManager.getYearRecord(Calendar.getInstance().get(Calendar.YEAR)),
-        mIncomeMoney, mExpendMoney);
+    ArrayList<BillItem> items = recordManager.getYearRecord(Calendar.getInstance().get(Calendar.YEAR));
+    chartFragment.getTypeProportion(items, mIncomeMoney, mExpendMoney);
+    float necessaryExpend = chartFragment.getNecessaryExpend(items);
     float sumIncome = chartFragment.showIncomePieChart(mIncomeMoney, mPieChart2);
     float sumExpend = chartFragment.showExpendPieChart(mExpendMoney, mPieChart1);
     Income.setText(String.valueOf(sumIncome));
-    Expend.setText(String.valueOf(sumExpend));
+    NeceExpend.setText(String.valueOf(necessaryExpend));
+    UnneceExpend.setText(String.valueOf(sumExpend - necessaryExpend));
     return view;
   }
 }

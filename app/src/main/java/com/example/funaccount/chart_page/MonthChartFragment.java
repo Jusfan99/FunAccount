@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.funaccount.R;
 import com.example.funaccount.util.AccountRecordManager;
+import com.example.funaccount.util.BillItem;
 import com.example.funaccount.util.PieChartManager;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
@@ -30,7 +31,8 @@ public class MonthChartFragment extends Fragment {
     PieChart mPieChart1 = view.findViewById(R.id.pie_chat1);
     PieChart mPieChart2 = view.findViewById(R.id.pie_chat2);
     TextView Income = view.findViewById(R.id.month_income);
-    TextView Expend = view.findViewById(R.id.month_expend);
+    TextView NeceExpend = view.findViewById(R.id.month_expend_nece);
+    TextView UnneceExpend = view.findViewById(R.id.month_expend_unnece);
     TextView monthDays = view.findViewById(R.id.this_month_date);
     Calendar calendar = Calendar.getInstance();
     int today = calendar.get(Calendar.DAY_OF_MONTH);
@@ -46,12 +48,15 @@ public class MonthChartFragment extends Fragment {
     ChartFragment chartFragment = new ChartFragment();
     float[] mIncomeMoney = {0, 0, 0, 0, 0};
     float[] mExpendMoney = {0, 0, 0, 0, 0};
-    chartFragment.getTypeProportion(recordManager.getMonthRecord(Calendar.getInstance().get(Calendar.YEAR),
-        Calendar.getInstance().get(Calendar.MONTH) + 1), mIncomeMoney, mExpendMoney);
+    ArrayList<BillItem> items = recordManager.getMonthRecord(Calendar.getInstance().get(Calendar.YEAR),
+        Calendar.getInstance().get(Calendar.MONTH) + 1);
+    chartFragment.getTypeProportion(items, mIncomeMoney, mExpendMoney);
+    float necessaryExpend = chartFragment.getNecessaryExpend(items);
     float sumIncome = chartFragment.showIncomePieChart(mIncomeMoney, mPieChart2);
     float sumExpend = chartFragment.showExpendPieChart(mExpendMoney, mPieChart1);
     Income.setText(String.valueOf(sumIncome));
-    Expend.setText(String.valueOf(sumExpend));
+    NeceExpend.setText(String.valueOf(necessaryExpend));
+    UnneceExpend.setText(String.valueOf(sumExpend - necessaryExpend));
     return view;
   }
 }

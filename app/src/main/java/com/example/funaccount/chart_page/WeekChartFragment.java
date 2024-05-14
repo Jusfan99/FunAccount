@@ -9,9 +9,12 @@ import android.widget.TextView;
 
 import com.example.funaccount.R;
 import com.example.funaccount.util.AccountRecordManager;
+import com.example.funaccount.util.BillItem;
 import com.github.mikephil.charting.charts.PieChart;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +29,8 @@ public class WeekChartFragment extends Fragment {
     PieChart mPieChart1 = view.findViewById(R.id.pie_chat1);
     PieChart mPieChart2 = view.findViewById(R.id.pie_chat2);
     TextView Income = view.findViewById(R.id.week_income_sum);
-    TextView Expend = view.findViewById(R.id.week_expend_sum);
+    TextView NeceExpend = view.findViewById(R.id.week_expend_nece);
+    TextView UnneceExpend = view.findViewById(R.id.week_expend_unnece);
     TextView weekDays = view.findViewById(R.id.this_week_date);
     Calendar calendar = Calendar.getInstance();
     int firstDayOfWeek = calendar.getFirstDayOfWeek();
@@ -47,11 +51,14 @@ public class WeekChartFragment extends Fragment {
     ChartFragment chartFragment = new ChartFragment();
     float[] mIncomeMoney = {0, 0, 0, 0, 0};
     float[] mExpendMoney = {0, 0, 0, 0, 0};
-    chartFragment.getTypeProportion(recordManager.getThisWeekRecord(), mIncomeMoney, mExpendMoney);
+    ArrayList<BillItem> items = recordManager.getThisWeekRecord();
+    chartFragment.getTypeProportion(items, mIncomeMoney, mExpendMoney);
+    float necessaryExpend = chartFragment.getNecessaryExpend(items);
     float sumIncome = chartFragment.showIncomePieChart(mIncomeMoney, mPieChart2);
     float sumExpend = chartFragment.showExpendPieChart(mExpendMoney, mPieChart1);
     Income.setText(String.valueOf(sumIncome));
-    Expend.setText(String.valueOf(sumExpend));
+    NeceExpend.setText(String.valueOf(necessaryExpend));
+    UnneceExpend.setText(String.valueOf(sumExpend - necessaryExpend));
     return view;
   }
 }

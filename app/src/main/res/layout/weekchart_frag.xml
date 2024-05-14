@@ -63,11 +63,25 @@
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="支出总额:"
+        android:text="必要支出:"
         android:textSize="11sp" />
 
       <TextView
-        android:id="@+id/week_expend_sum"
+        android:id="@+id/week_expend_nece"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp" />
+
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="非必要支出:"
+        android:textSize="11sp" />
+
+      <TextView
+        android:id="@+id/week_expend_unnece"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="11sp" />
