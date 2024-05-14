@@ -73,4 +73,6 @@
   <string name="welcome_log_in">您好，登录成功</string>
   <string name="back_to_bill">返回主页</string>
   <string name="log_out">退出登录</string>
+  <string name="necessary_spending">是否必要花费</string>
+  <string name="necessary">必要:</string>
 </resources>

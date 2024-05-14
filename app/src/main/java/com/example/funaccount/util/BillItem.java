@@ -9,6 +9,15 @@ public class BillItem implements Serializable {
   private String mRemark;
   private long mId;
   private Date mDate;
+  private boolean mIsNecessary;
+
+  public boolean isNecessary() {
+    return mIsNecessary;
+  }
+
+  public void setIsNecessary(boolean mIsNecessary) {
+    this.mIsNecessary = mIsNecessary;
+  }
 
   public void setDate(Date mDate) {
     this.mDate = mDate;

@@ -240,6 +240,7 @@ public class BillShowHelper extends Fragment {
           message.putString("income", data.isIncome() ?
               mContext.getString(R.string.income) : mContext.getString(R.string.expend));
           message.putString("remark", data.getRemark());
+          message.putString("necessary", data.isNecessary() ? "是" : "否");
 
           FragmentManager fragmentManager = FragmentManager.findFragment(v).getChildFragmentManager();
           fragmentManager.setFragmentResult("messageKey", message);

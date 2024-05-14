@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.funaccount.R;
-import com.example.funaccount.util.UserData;
+import com.example.funaccount.bmobModels.UserData;
 
 import java.util.List;
 

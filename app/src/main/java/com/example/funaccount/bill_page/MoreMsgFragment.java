@@ -22,6 +22,7 @@ public class MoreMsgFragment extends Fragment {
   private TextView mBillRemark;
   private TextView mBillDate;
   private TextView mBillIncome;
+  private TextView mBillNecessary;
   private TextView mBillType;
 
   private float mMoney;
@@ -29,6 +30,7 @@ public class MoreMsgFragment extends Fragment {
   private String mDate;
   private String mType;
   private String mIncome;
+  private String mNecessary;
   private boolean mIsMoreMsgShow;
 
   @Nullable
@@ -42,6 +44,7 @@ public class MoreMsgFragment extends Fragment {
     mBillType = view.findViewById(R.id.more_msg_type);
     mBillRemark = view.findViewById(R.id.more_msg_remark);
     mBillIncome = view.findViewById(R.id.more_msg_income);
+    mBillNecessary = view.findViewById(R.id.necessary_res);
     BillFragment.mAddOneBtn.setClickable(false);
 
     getParentFragmentManager().setFragmentResultListener("messageKey",
@@ -54,7 +57,7 @@ public class MoreMsgFragment extends Fragment {
             mRemark = result.getString("remark");
             mType = result.getString("type");
             mIsMoreMsgShow = result.getBoolean("isOn");
-
+            mNecessary = result.getString("necessary");
             bindContent();
           }
         });
@@ -82,5 +85,6 @@ public class MoreMsgFragment extends Fragment {
     mBillType.setText(mType);
     mBillIncome.setText(mIncome);
     mBillDate.setText(mDate);
+    mBillNecessary.setText(mNecessary);
   }
 }

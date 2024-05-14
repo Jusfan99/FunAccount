@@ -1,4 +1,6 @@
-package com.example.funaccount.util;
+package com.example.funaccount.bmobModels;
+
+import com.example.funaccount.util.Date;
 
 import cn.bmob.v3.BmobObject;
 
@@ -11,6 +13,15 @@ public class AccountRecord extends BmobObject {
   private long mId;
   private String mUserId;
   private float mBudget;      //预算
+  private boolean mIsNecessary; //是否必要花费
+
+  public boolean isIsNecessary() {
+    return mIsNecessary;
+  }
+
+  public void setIsNecessary(boolean mIsNecessary) {
+    this.mIsNecessary = mIsNecessary;
+  }
 
   public void setBudget(float budget) {
     this.mBudget = budget;

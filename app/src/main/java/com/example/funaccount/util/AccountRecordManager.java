@@ -2,17 +2,13 @@ package com.example.funaccount.util;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import com.example.funaccount.MainActivity;
-import com.example.funaccount.R;
-import com.example.funaccount.other_pages.login_page.LoginActivity;
-import com.example.funaccount.other_pages.login_page.RegisterActivity;
+import com.example.funaccount.bmobModels.AccountRecord;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,11 +28,12 @@ public class AccountRecordManager {
   public static final String IS_INCOME = "is_income";
   public static final String TYPE = "type";
   public static final String YEAR = "year";
+  public static final String IS_NECESSARY = "is_necessary";
   public static final String MONTH = "month";
   public static final String DAY = "day";
   public static final String ONLY_SIGNAL = "only";
 
-  private static final int DB_VERSION = 2;
+  private static final int DB_VERSION = 3;
   private Context mContext = null;
 
   private static final String DB_CREATE = "CREATE TABLE " + TABLE_NAME + " ("
@@ -46,6 +43,7 @@ public class AccountRecordManager {
       + MONEY + " real,"
       + YEAR + " integer,"
       + MONTH + " integer,"
+      + IS_NECESSARY + " integer,"
       + DAY + " integer,"
       + ONLY_SIGNAL + " real,"
       + IS_INCOME + " integer" + ");";
@@ -92,6 +90,7 @@ public class AccountRecordManager {
     values.put(REMARK, accountRecord.getRemark());
     values.put(TYPE, accountRecord.getType());
     values.put(IS_INCOME, accountRecord.isIncome() ? 1 : 0);
+    values.put(IS_NECESSARY, accountRecord.isIsNecessary() ? 1 : 0);
     values.put(YEAR, accountRecord.getDate().getYear());
     values.put(MONTH, accountRecord.getDate().getMonth());
     values.put(DAY, accountRecord.getDate().getDay());
@@ -189,7 +188,12 @@ public class AccountRecordManager {
           String type = cursor.getString(cursor.getColumnIndex(TYPE));
           float money = cursor.getFloat(cursor.getColumnIndex(MONEY));
           boolean isIncome = cursor.getInt(cursor.getColumnIndex(IS_INCOME)) == 1;
+          boolean isNecessary = false;
+          if (cursor.getColumnIndex(IS_NECESSARY) > 0) {
+            isNecessary = cursor.getInt(cursor.getColumnIndex(IS_NECESSARY)) == 1;
+          }
           BillItem billItem = new BillItem(money, type, isIncome);
+          billItem.setIsNecessary(isNecessary);
           billItem.setRemake(cursor.getString(cursor.getColumnIndex(REMARK)));
           if (cursor.getColumnIndex(ONLY_SIGNAL) != -1) {
             billItem.setId(cursor.getLong(cursor.getColumnIndex(ONLY_SIGNAL)));

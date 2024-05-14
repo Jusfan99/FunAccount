@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
-import com.example.funaccount.util.UserData;
+import com.example.funaccount.bmobModels.UserData;
 
 import java.util.List;
 

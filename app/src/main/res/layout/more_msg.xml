@@ -121,6 +121,29 @@
     android:gravity="center"
     android:textSize="30sp" />
 
+
+  <TextView
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    android:text="@string/necessary"
+    android:textColor="#3AA81D"
+    android:textSize="40sp"
+    app:layout_constraintTop_toBottomOf="@+id/more_msg_remark"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="50dp"
+    app:layout_constraintLeft_toLeftOf="parent" />
+
+  <TextView
+    android:id="@+id/necessary_res"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/more_msg_remark"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="20dp"
+    app:layout_constraintRight_toRightOf="parent"
+    android:gravity="center"
+    android:textSize="30sp" />
+
   <Button
     android:id="@+id/more_msg_close"
     android:layout_width="30dp"

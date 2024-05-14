@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.funaccount.MainActivity;
 import com.example.funaccount.R;
-import com.example.funaccount.util.AccountRecord;
+import com.example.funaccount.bmobModels.AccountRecord;
 import com.example.funaccount.util.AccountRecordManager;
 import com.example.funaccount.util.BillShowHelper;
 import com.example.funaccount.util.Date;
@@ -43,6 +43,7 @@ public class AddOneFragment extends Fragment {
   private AccountRecord mAccountRecord;
   private Date mDate;
   private String mTypeResult;
+  private CheckBox mNecessary;
 
   private static final String[] mIncomeType = {"理财", "工资", "兼职", "奖金", "其他"};
   private static final String[] mExpendType = {"饮食", "出行", "生活", "服饰", "其他"};
@@ -58,6 +59,7 @@ public class AddOneFragment extends Fragment {
     mExpend = view.findViewById(R.id.expend_checked);
     mMoneyEdit = view.findViewById(R.id.eidt_money);
     mTypeSpinner = view.findViewById(R.id.spinner_type);
+    mNecessary = view.findViewById(R.id.necessary_spending);
     mAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, mEmptyType);
     mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     mTypeSpinner.setAdapter(mAdapter);
@@ -165,6 +167,7 @@ public class AddOneFragment extends Fragment {
       mAccountRecord.setType(type);
       mAccountRecord.setIsIncome(mIncome.isChecked());
       mAccountRecord.setId(mRecordManager.getDataCount() + 1);
+      mAccountRecord.setIsNecessary(mNecessary.isChecked());
       return true;
     }
   }

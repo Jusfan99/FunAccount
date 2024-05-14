@@ -1,4 +1,4 @@
-package com.example.funaccount.util;
+package com.example.funaccount.bmobModels;
 
 import cn.bmob.v3.BmobObject;
 

@@ -129,11 +129,40 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent">
 
+  <CheckBox
+    android:id="@+id/necessary_spending"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+  android:textSize="20sp"
+  android:textColor="#339999"
+  android:checked="false"
+  android:layout_marginStart="16dp"
+    tools:ignore="MissingConstraints" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:text="@string/necessary_spending"
+  android:textSize="20sp"
+  android:textColor="#339999"
+  android:layout_marginStart="8dp"
+    tools:ignore="MissingConstraints" />
+</LinearLayout>
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@+id/fourth_line"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent">
+
     <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/finish_add"
-      android:layout_marginTop="80dp"
+      android:layout_marginTop="60dp"
       android:backgroundTint="#66CDAA"
       android:text="@string/complete" />
   </LinearLayout>
