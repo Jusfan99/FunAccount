@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -76,6 +77,7 @@ public class BillShowHelper extends Fragment {
       public TextView mDate;
       public TextView mIsIncome;
       public TextView mDelete;
+      public TextView mMark;
 
       public MyViewHolder(View itemView) {
         super(itemView);
@@ -84,6 +86,7 @@ public class BillShowHelper extends Fragment {
         mDate = itemView.findViewById(R.id.bill_date);
         mIsIncome = itemView.findViewById(R.id.bill_is_income);
         mDelete = itemView.findViewById(R.id.tv_delete);
+        mMark = itemView.findViewById(R.id.bill_remark);
       }
 
       public void setTouchListener(View.OnTouchListener onTouchListener) {
@@ -106,7 +109,15 @@ public class BillShowHelper extends Fragment {
       holder.mDate.setText(data.getDate().toString());
       holder.mType.setText(data.getType());
       holder.mMoney.setText(String.valueOf(data.getMoney()));
-      holder.mIsIncome.setText(R.string.income);
+      holder.mIsIncome.setText("入");
+      holder.mMark.setText(data.getRemark());
+      if (!data.isIncome()) {
+        if (!data.isNecessary()) {
+          holder.mMoney.setTextColor(Color.parseColor("#66FF00"));
+        }
+      } else {
+        holder.mMoney.setTextColor(Color.parseColor("#FF6633"));
+      }
 
       holder.setTouchListener(new View.OnTouchListener() {
         @Override
@@ -144,7 +155,7 @@ public class BillShowHelper extends Fragment {
       });
 
       if (!data.isIncome()) {
-        holder.mIsIncome.setText(R.string.expend);
+        holder.mIsIncome.setText("出");
       }
     }
 

@@ -20,24 +20,24 @@
     <TextView
       android:layout_width="wrap_content"
       android:layout_height="60dp"
-      android:layout_marginLeft="12dp"
+      android:layout_marginLeft="10dp"
       android:gravity="center"
       android:textColor="#8A8A8A"
       android:id="@+id/bill_is_income" />
 
     <TextView
-      android:layout_width="100dp"
+      android:layout_width="80dp"
       android:layout_height="60dp"
       android:id="@+id/bill_type"
       android:textSize="20sp"
       android:gravity="center"
       android:textColor="#8A8A8A"
-      android:layout_marginLeft="12dp"
-      android:layout_marginStart="12dp" />
+      android:layout_marginLeft="6dp"
+      android:layout_marginStart="6dp" />
 
     <TextView
       android:id="@+id/bill_date"
-      android:layout_width="100dp"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textColor="#8A8A8A"
       android:layout_marginLeft="0dp"
@@ -45,12 +45,22 @@
       app:srcCompat="@drawable/arrow" />
 
     <TextView
-      android:id="@+id/bill_money"
-      android:layout_width="wrap_content"
-      android:layout_height="60dp"
+      android:id="@+id/bill_remark"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
       android:gravity="center"
       android:textColor="#8A8A8A"
-      android:layout_marginLeft="60dp"
+      android:layout_marginLeft="20dp"
+      android:textAlignment="center"
+      android:textSize="16dp" />
+
+    <TextView
+      android:id="@+id/bill_money"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:textColor="#8A8A8A"
+      android:layout_marginLeft="20dp"
       android:textAlignment="center"
       android:textSize="23sp" />
 
